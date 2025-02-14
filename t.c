@@ -1,24 +1,27 @@
-#include <stdio.h>
+#include <libc.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/stat.h>
 
-void	check()
-{
-	system("leaks a.out");
-}
+int main() {
+	char *input;
 
-int main()
-{
-	while (1)
-	{
-		char *s = readline("test> ");
-		if (!s)
-			break ;
-		printf("%s\n", s);
-		free(s);
+	while (1) {
+		input = readline("Input> ");
+		if (!input)
+			break;
+		if (*input)
+			add_history(input);
+		if (strcmp(input, "cwd") == 0) {
+			printf("%s\n", getcwd(NULL, 0));
+		} else if (!strcmp(input, "cd")) {
+			chdir("/tmp");
+		} else {
+			printf("You entered: %s\n", input);
+		}
+		free(input);
 	}
-	atexit(check);
 	return 0;
 }
