@@ -3,25 +3,18 @@
 #include <string.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/ioctl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+
+#include <stdio.h>
+#include <term.h>
+#include <curses.h>
 
 int main() {
-	char *input;
-
-	while (1) {
-		input = readline("Input> ");
-		if (!input)
-			break;
-		if (*input)
-			add_history(input);
-		if (strcmp(input, "cwd") == 0) {
-			printf("%s\n", getcwd(NULL, 0));
-		} else if (!strcmp(input, "cd")) {
-			chdir("/tmp");
-		} else {
-			printf("You entered: %s\n", input);
-		}
-		free(input);
-	}
-	return 0;
+	char s[1000];
+	printf("%s\n", getcwd(s, 1000));
+	printf("%s\n", s);
+	struct stat
 }
