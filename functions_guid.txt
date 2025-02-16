@@ -1,59 +1,96 @@
--------------------------------------------
--------------------------------------------
--------- Functions Of MiniShell -----------
--------------------------------------------
--------------------------------------------
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+------------------------------ Functions Of MiniShell --------------------------------
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+
+**************************************************************************************
+************************************** Parsing ***************************************
+**************************************************************************************
+
 
 + char *readline(const char *)
 	like 'input' in python3.
--------------------------------------------
+--------------------------------------------------------------------------------------
 + rl_clear_history
 	?
--------------------------------------------
+--------------------------------------------------------------------------------------
 + rl_on_new_line
 	?
--------------------------------------------
+--------------------------------------------------------------------------------------
 + rl_replace_line
 	?
--------------------------------------------
+--------------------------------------------------------------------------------------
 + rl_redisplay
 	?
--------------------------------------------
+--------------------------------------------------------------------------------------
 + int add_history(const char *)
 	if you click 'Up arrow' in bash, you can
 look your history. same thing, if you get
 a str to 'add_history' you can scroll it.
--------------------------------------------
+--------------------------------------------------------------------------------------
++ signal, sigaction, sigemptyset, sigaddset, kill
+	?
+--------------------------------------------------------------------------------------
+
+
+**************************************************************************************
+************************************** Execute ***************************************
+**************************************************************************************
+
 + pid_t wait(int *)
 	It stops the current process until its
 brother finishes, regardless of father or
 son. he return that status of his brother.
--------------------------------------------
+--------------------------------------------------------------------------------------
 + pid_t waitpid(pid_t, int *, int)
 	like base 'wait', but you can give it a
-specific pid, and the three arg has to flags:
+specific pid:
+	-1 → Wait for any child process.
+	0 → Wait for any process in the same process group as the calling process.
+	> 0 → Wait only for the process whose id is pid.
+	< -1 → Wait for any process in the process group whose id is equal to the absolute value of pid.
+
+And the three arg has to flags:
 - WNOHANG: If no child has exited yet,
 return immediately with 0 instead of blocking.
 - WUNTRACED: Return if a child has stopped
 (but not terminated), and its status has
 been reported.
--------------------------------------------
-+ pid_t wait3(int *, int, struct rusage *)
-	?
--------------------------------------------
+--------------------------------------------------------------------------------------
 + pid_t wait4(pid_t, int *, int, struct rusage *)
-	?
--------------------------------------------
-+ signal, sigaction, sigemptyset, sigaddset, kill
-	?
--------------------------------------------
+	A more detailed version of waitpid() that
+allows collecting information about resource
+consumption from the child process:
+struct  rusage {
+	struct timeval ru_utime;        # user time used
+	struct timeval ru_stime;        # system time used (syscalls)
+	long    ru_maxrss;              # max resident set size (RAM)
+	long    ru_ixrss;               # integral shared memory size
+	long    ru_idrss;               # integral unshared data
+	long    ru_isrss;               # integral unshared stack
+	long    ru_minflt;              # page reclaims (NU)
+	long    ru_majflt;              # page faults (NU)
+	long    ru_nswap;               # swaps (NU)
+	long    ru_inblock;             # block input operations (atomic)
+	long    ru_oublock;             # block output operations (atomic)
+	long    ru_msgsnd;              # messages sent (atomic)
+	long    ru_msgrcv;              # messages received (atomic)
+	long    ru_nsignals;            # signals received (atomic)
+	long    ru_nvcsw;               # voluntary context switches (atomic)
+	long    ru_nivcsw;              # involuntary
+};
+--------------------------------------------------------------------------------------
++ pid_t wait3(int *, int, struct rusage *)
+	Like 'wait4' but always waits for any process (pid = -1).
+--------------------------------------------------------------------------------------
 + char *getcwd(char *, size_t)
 	get the currently pwd, and you can stord
 it in ptr.
--------------------------------------------
+--------------------------------------------------------------------------------------
 + int chdir(const char *)
 	change current directory.
--------------------------------------------
+--------------------------------------------------------------------------------------
 +  int stat(const char *, struct stat *)
 	he get to you info of file:
 struct stat
@@ -75,6 +112,72 @@ struct stat
 	__uint32_t	st_flags;         # user defined flags for file
 	__uint32_t	st_gen;           # file generation number
 }
--------------------------------------------
-
--------------------------------------------
+--------------------------------------------------------------------------------------
++ int lstat(const char *, struct stat *)
+	like 'stat' but he work with Symbolic
+Links Files.
+--------------------------------------------------------------------------------------
++ int fstat(int, struct stat *)
+	Used to get information about an already open file via the file descriptor
+instead of its name.
+--------------------------------------------------------------------------------------
++ DIR *opendir(const char *)
+	open directory, if he fail return (NULL).
+typedef struct {
+	int							__dd_fd;	 # file descriptor of dir
+	long						__dd_loc;	 # offset in current buffer
+	long						__dd_size;	 /* amount of data returned
+	char						*__dd_buf;	 /* data buffer */
+	int							__dd_len;	 /* size of data buffer */
+	long						__dd_seek;	 /* magic cookie returned */
+	__unused long				__padding;   /* (__dd_rewind space left for bincompat) */
+	int							__dd_flags;  /* flags for readdir */
+	__darwin_pthread_mutex_t	__dd_lock;   /* for thread locking */
+	struct _telldir				*__dd_td;    /* telldir position recording */
+} DIR;
+--------------------------------------------------------------------------------------
++ struct dirent *readdir(DIR *)
+	?
+--------------------------------------------------------------------------------------
++ int closedir(DIR *)
+	?
+--------------------------------------------------------------------------------------
++ int isatty(int)
+	?
+--------------------------------------------------------------------------------------
++ char *ttyname(int)
+	?
+--------------------------------------------------------------------------------------
++ int ttyslot(void)
+	?
+--------------------------------------------------------------------------------------
++ int ioctl(int, unsigned long, ...)
+	?
+--------------------------------------------------------------------------------------
++ char *getenv(const char *)
+	?
+--------------------------------------------------------------------------------------
++ int tcsetattr(int, int, const struct termios *)
+	?
+--------------------------------------------------------------------------------------
++ int tcgetattr(int, struct termios *)
+	?
+--------------------------------------------------------------------------------------
++ int tgetent(char *, const char *)
+	?
+--------------------------------------------------------------------------------------
++ int tgetflag(char *)
+	?
+--------------------------------------------------------------------------------------
++ int tgetnum(char *)
+	?
+--------------------------------------------------------------------------------------
++ char *tgetstr(char *, char **)
+	?
+--------------------------------------------------------------------------------------
++ char *tgoto(const char *, int, int)
+	?
+--------------------------------------------------------------------------------------
++ int tputs(const char *, int, int (*)(int))
+	?
+--------------------------------------------------------------------------------------

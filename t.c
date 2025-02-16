@@ -13,8 +13,8 @@
 #include <curses.h>
 
 int main() {
+	struct dirent
 	char s[1000];
 	printf("%s\n", getcwd(s, 1000));
 	printf("%s\n", s);
-	struct stat
 }
