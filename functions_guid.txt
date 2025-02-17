@@ -137,16 +137,33 @@ typedef struct {
 } DIR;
 --------------------------------------------------------------------------------------
 + struct dirent *readdir(DIR *)
-	?
+	Returns a pointer to a struct dirent that contains information about the next entry
+in the directory. If there are no more entries, or an error occurs, returns NULL.
+struct dirent {
+    ino_t          d_ino;       # The inode number of the file
+    off_t          d_off;       # Intra-directory offset (may not be supported on some systems)
+    unsigned short d_reclen;    # Length of this entry
+    unsigned char  d_type;      # Input type (file, folder, link...)
+    char           d_name[];    # File or directory name (ending with `\0`)
+};
 --------------------------------------------------------------------------------------
 + int closedir(DIR *)
-	?
+	colse directory.
 --------------------------------------------------------------------------------------
 + int isatty(int)
-	?
+	The isatty function is used to check whether a file descriptor points to a terminal
+or not.
+Return value:
+	Returns 1 if fd is connected to a terminal (such as a terminal window or console).
+	Returns 0 if fd is not connected to a terminal (such as a regular file or pipe).
 --------------------------------------------------------------------------------------
 + char *ttyname(int)
-	?
+	The ttyname function is used to get the device name associated with a file
+descriptor that represents a terminal.
+Parameter fd → File descriptor, such as STDIN_FILENO, STDOUT_FILENO, or STDERR_FILENO.
+Return value:
+	A pointer to a string (char *) representing the device name (e.g. /dev/tty1).
+	NULL if fd is not connected to a terminal, with error details stored in errno.
 --------------------------------------------------------------------------------------
 + int ttyslot(void)
 	?
@@ -155,10 +172,34 @@ typedef struct {
 	?
 --------------------------------------------------------------------------------------
 + char *getenv(const char *)
-	?
+	The getenv function is used to get the value of a given environment variable in the system.
+Parameters:
+	name → The name of the requested environment variable (e.g. "HOME", "PATH", "USER").
+Return value:
+	A pointer (char *) to a string containing the value of the environment variable
+if it exists.
+	NULL if the variable does not exist.
 --------------------------------------------------------------------------------------
 + int tcsetattr(int, int, const struct termios *)
-	?
+	The tcsetattr function is used to modify terminal settings on Unix/Linux systems.
+It is part of the terminal control library, and is primarily used to change the I/O
+behavior of the command line or serial devices.
+Parameters:
+	fd → Terminal file descriptor (usually STDIN_FILENO for input, or STDOUT_FILENO for output).
+	optional_actions → Specifies when changes are applied. Possible values:
+		TCSANOW → Apply changes immediately.
+		TCSADRAIN → Apply changes after flushing (sending) all pending data into the output buffer.
+		TCSAFLUSH → Clear all pending data in input and output before applying changes.
+	termios_p → Pointer to a struct termios containing the new terminal settings:
+		struct termios {
+			tcflag_t        c_iflag;        /* input flags */
+			tcflag_t        c_oflag;        /* output flags */
+			tcflag_t        c_cflag;        /* control flags */
+			tcflag_t        c_lflag;        /* local flags */
+			cc_t            c_cc[NCCS];     /* control chars */
+			speed_t         c_ispeed;       /* input speed */
+			speed_t         c_ospeed;       /* output speed */
+		};
 --------------------------------------------------------------------------------------
 + int tcgetattr(int, struct termios *)
 	?

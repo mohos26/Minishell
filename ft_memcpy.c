@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/17 15:29:19 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/22 13:08:27 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/17 14:40:40 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int main()
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char	*s;
+	unsigned char		*ptr;
+	const unsigned char	*aid;
 
-	while (1)
-	{
-		s = readline("-> ");
-		if (!s)
-			break ;
-		else
-		{
-			printf("%s\n", s);
-			printf("Is Valid: %d\n", ft_is_shell_command(ft_split(s, ' ')[0]));
-			if (ft_is_shell_command(s))
-				ft_do_shell_command(s);
-		}
-	}
+	if (!dst && !src)
+		return (NULL);
+	if (dst == src)
+		return (dst);
+	ptr = (unsigned char *)dst;
+	aid = (const unsigned char *)src;
+	while (n--)
+		*ptr++ = *aid++;
+	return (dst);
 }
