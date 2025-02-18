@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 12:55:25 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/23 17:29:16 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/18 08:37:53 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-int	main(void)
+char	*ft_strdup(const char *s1)
 {
-	char	**lst;
-	char	*s;
+	char	*ptr;
+	char	*head;
 
-	while (1)
-	{
-		s = readline("-> ");
-		if (!s)
-			break ;
-		else if (*s)
-		{
-			lst = ft_split(s, ' ');
-			printf("Is Valid: %d\n", ft_is_valid(*lst));
-			if (ft_is_shell_command(*lst))
-				ft_do_shell_command(lst);
-		}
-	}
+	ptr = (char *) malloc(ft_strlen(s1) * sizeof(char) + 1);
+	if (!ptr)
+		return (NULL);
+	head = ptr;
+	while (*s1)
+		*ptr++ = *s1++;
+	*ptr = '\0';
+	return (head);
 }

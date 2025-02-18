@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 12:55:25 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/24 10:55:34 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/18 08:51:11 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	**lst;
-	char	*s;
+	char	*res;
+	char	*head;
 
-	while (1)
-	{
-		s = readline("-> ");
-		if (!s)
-			break ;
-		else if (*s)
-		{
-			lst = ft_split(s, ' ');
-			printf("Is Valid: %d\n", ft_is_valid(*lst));
-			if (ft_is_shell_command(*lst))
-				ft_do_shell_command(lst);
-		}
-	}
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	res = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	head = res;
+	while (*s1)
+		*res++ = *s1++;
+	while (*s2)
+		*res++ = *s2++;
+	*res = '\0';
+	return (head);
 }

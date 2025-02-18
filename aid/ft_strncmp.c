@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 12:55:25 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/23 12:27:55 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/18 08:37:44 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-int	main(void)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	**lst;
-	char	*s;
-
-	while (1)
+	while (n && *s1 == *s2 && (*s1 || *s2))
 	{
-		s = readline("-> ");
-		if (!s)
-			break ;
-		else if (*s)
-		{
-			lst = ft_split(s, ' ');
-			printf("Is Valid: %d\n", ft_is_valid(*lst));
-			if (ft_is_shell_command(*lst))
-				ft_do_shell_command(lst);
-		}
+		n--;
+		s1++;
+		s2++;
 	}
+	if (!n)
+		return (0);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 17:29:16 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/17 14:47:14 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/18 12:51:14 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-char	*ft_strdup(const char *s1)
+void	ft_cd(char *s)
 {
-	char	*ptr;
-	char	*head;
+	DIR	*ptr;
 
-	ptr = (char *) malloc(ft_strlen(s1) * sizeof(char) + 1);
-	if (!ptr)
-		return (NULL);
-	head = ptr;
-	while (*s1)
-		*ptr++ = *s1++;
-	*ptr = '\0';
-	return (head);
+	ptr = opendir(s);
+	if (ptr)
+		chdir(s);
+	else
+	{
+		access(s, F_OK);
+		ft_print_error("cd", s);
+	}
+	closedir(ptr);
 }
