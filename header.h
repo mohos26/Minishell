@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 12:52:20 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:23:13 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ int		ft_pwd(void);
 void	ft_exit(void);
 void	ft_echo(char **lst);
 void	ft_cd(char *s);
+void	ft_export(char **args, char **env);
 
 /* utils */
 int		ft_is_valid(char *s);
 int		ft_is_execute(char *s);
 int		ft_is_shell_command(char *s);
-void	ft_do_shell_command(char **lst);
+void	ft_do_shell_command(char **lst, char **env);
 void	ft_print_error(char *command_name, char *arg);
 
 #endif

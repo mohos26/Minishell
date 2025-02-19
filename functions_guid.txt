@@ -32,6 +32,60 @@ a str to 'add_history' you can scroll it.
 + signal, sigaction, sigemptyset, sigaddset, kill
 	?
 --------------------------------------------------------------------------------------
++ int tcsetattr(int, int, const struct termios *)
+	The tcsetattr function is used to modify terminal settings on Unix/Linux systems.
+It is part of the terminal control library, and is primarily used to change the I/O
+behavior of the command line or serial devices.
+Parameters:
+	fd → Terminal file descriptor (usually STDIN_FILENO for input, or STDOUT_FILENO for output).
+	optional_actions → Specifies when changes are applied. Possible values:
+		TCSANOW → Apply changes immediately.
+		TCSADRAIN → Apply changes after flushing (sending) all pending data into the output buffer.
+		TCSAFLUSH → Clear all pending data in input and output before applying changes.
+	termios_p → Pointer to a struct termios containing the new terminal settings:
+		struct termios {
+			tcflag_t        c_iflag;        /* input flags */
+			tcflag_t        c_oflag;        /* output flags */
+			tcflag_t        c_cflag;        /* control flags */
+			tcflag_t        c_lflag;        /* local flags */
+			cc_t            c_cc[NCCS];     /* control chars */
+			speed_t         c_ispeed;       /* input speed */
+			speed_t         c_ospeed;       /* output speed */
+		};
+--------------------------------------------------------------------------------------
++ int tcgetattr(int, struct termios *)
+	it is like 'tcsetattr'.
+--------------------------------------------------------------------------------------
++ int tgetent(char *, const char *)
+	This function is useful when dealing with different types of terminals and adjusting
+behavior based on their capabilities, such as controlling colors, screen size, and
+input/output modes.
+--------------------------------------------------------------------------------------
++ int tgetflag(char *)
+	The tgetflag function is used with the termcap library to retrieve the values ​​of
+the boolean capabilities of a terminal. This function is useful for determining whether
+a terminal supports a particular feature or not.
+--------------------------------------------------------------------------------------
++ int tgetnum(char *)
+	The tgetnum function is used with the termcap library to retrieve numeric
+capabilities that represent terminal properties, such as the number of columns (cols)
+or the number of rows (lines).
+--------------------------------------------------------------------------------------
++ char *tgetstr(char *, char **)
+	The tgetstr function is used in the termcap library to retrieve string capabilities,
+such as Terminal Control Sequences. It can be used to get the escape sequence needed to
+perform operations such as moving the cursor, clearing the screen, and changing colors.
+--------------------------------------------------------------------------------------
++ char *tgoto(const char *, int, int)
+	The tgoto function is used in the termcap library to generate a cursor positioning
+escape sequence based on terminal information. It is used with tgetstr to retrieve the
+control code, and then with tgoto to specify a specific coordinate for the cursor.
+--------------------------------------------------------------------------------------
++ int tputs(const char *, int, int (*)(int))
+	The tputs function is used in the termcap library to print the terminal control
+codes in a safe way, taking into account possible terminal delays. It is typically
+used to print the control codes retrieved using tgetstr or tgoto.
+--------------------------------------------------------------------------------------
 
 
 **************************************************************************************
@@ -172,53 +226,12 @@ Return value:
 	?
 --------------------------------------------------------------------------------------
 + char *getenv(const char *)
-	The getenv function is used to get the value of a given environment variable in the system.
+	The getenv function is used to get the value of a given environment variable in the
+system.
 Parameters:
 	name → The name of the requested environment variable (e.g. "HOME", "PATH", "USER").
 Return value:
 	A pointer (char *) to a string containing the value of the environment variable
 if it exists.
 	NULL if the variable does not exist.
---------------------------------------------------------------------------------------
-+ int tcsetattr(int, int, const struct termios *)
-	The tcsetattr function is used to modify terminal settings on Unix/Linux systems.
-It is part of the terminal control library, and is primarily used to change the I/O
-behavior of the command line or serial devices.
-Parameters:
-	fd → Terminal file descriptor (usually STDIN_FILENO for input, or STDOUT_FILENO for output).
-	optional_actions → Specifies when changes are applied. Possible values:
-		TCSANOW → Apply changes immediately.
-		TCSADRAIN → Apply changes after flushing (sending) all pending data into the output buffer.
-		TCSAFLUSH → Clear all pending data in input and output before applying changes.
-	termios_p → Pointer to a struct termios containing the new terminal settings:
-		struct termios {
-			tcflag_t        c_iflag;        /* input flags */
-			tcflag_t        c_oflag;        /* output flags */
-			tcflag_t        c_cflag;        /* control flags */
-			tcflag_t        c_lflag;        /* local flags */
-			cc_t            c_cc[NCCS];     /* control chars */
-			speed_t         c_ispeed;       /* input speed */
-			speed_t         c_ospeed;       /* output speed */
-		};
---------------------------------------------------------------------------------------
-+ int tcgetattr(int, struct termios *)
-	?
---------------------------------------------------------------------------------------
-+ int tgetent(char *, const char *)
-	?
---------------------------------------------------------------------------------------
-+ int tgetflag(char *)
-	?
---------------------------------------------------------------------------------------
-+ int tgetnum(char *)
-	?
---------------------------------------------------------------------------------------
-+ char *tgetstr(char *, char **)
-	?
---------------------------------------------------------------------------------------
-+ char *tgoto(const char *, int, int)
-	?
---------------------------------------------------------------------------------------
-+ int tputs(const char *, int, int (*)(int))
-	?
 --------------------------------------------------------------------------------------

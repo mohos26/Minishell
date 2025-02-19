@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 11:48:09 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:21:53 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	ft_do_shell_command(char **lst)
+void	ft_do_shell_command(char **lst, char **env)
 {
 	if (!ft_strncmp(*lst, "pwd", 4))
 		ft_pwd();
@@ -22,4 +22,6 @@ void	ft_do_shell_command(char **lst)
 		ft_echo(++lst);
 	else if (!ft_strncmp(*lst, "cd", 3))
 		ft_cd(*++lst);
+	else if (!ft_strncmp(*lst, "export", 7))
+		ft_export(++lst, env);
 }

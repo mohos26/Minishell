@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/19 18:41:26 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/19 21:40:57 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	main(int ac, char **av, char **env)
+static char	**ft_sort(char **lst)
 {
-	char	**lst;
-	char	*s;
 
-	while (1)
+}
+
+void	ft_export(char **args, char **env)
+{
+	if (!args || !*args)
 	{
-		s = readline("-> ");
-		if (!s)
-			break ;
-		else if (*s)
+		env = ft_sort(env);
+		while (env && *env)
 		{
-			lst = ft_split(s, ' ');
-			printf("Is Valid: %d\n", ft_is_valid(*lst));
-			if (ft_is_shell_command(*lst))
-				ft_do_shell_command(lst, env);
+			if (ft_strncmp(*env, "_=", 2))
+				printf("declare -x %s\n", *env);
+			env++;
 		}
+		return ;
 	}
+
 }
