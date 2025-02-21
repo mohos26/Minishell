@@ -6,53 +6,74 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/20 21:44:35 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:32:35 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static char	**ft_sort(char **lst)
+static int	ft_valid_name(char *s)
 {
-	int	len;
-	int	i;
-	int	j;
-	char *tmp;
-
-	len = 0;
-	while (lst[len])
-		len++;
-	i = 0;
-	while (lst[i+1])
+	if (!ft_isalpha(*s) && *s != '_')
+		return (0);
+	s++;
+	while (*s)
 	{
-		j = i + 1;
-		while (lst[j])
-		{
-			if (ft_strncmp(lst[i], lst[j], INT_MAX) > 0)
-			{
-				tmp = lst[i];
-				lst[i] = lst[j];
-				lst[j] = tmp;
-			}
-			j++;
-		}
-		i++;
+		if (!ft_isalnum(*s) && *s != '_')
+			return (0);
+		s++;
 	}
-	return (lst);
+	return (1);
 }
 
-void	ft_export(char **args, char **env)
+static int	ft_is_onready(char **env, char *name)
 {
+	name = ft_strjoin(name, "=");
+	while (*env)
+	{
+		if (!ft_strncmp(*env, name, ft_strlen(name))
+			|| !ft_strncmp(*env, name, ft_strlen(*env)))
+			return (1);
+		env++;
+	}
+	return (0);
+}
+
+void	ft_reset_var(char **env, char *s)
+{
+	char	*name;
+
+	name = ft_strjoin(*ft_export_split(s), "=");
+	while (*env)
+	{
+		if (!ft_strncmp(*env, name, ft_strlen(name))
+			|| !ft_strncmp(*env, name, ft_strlen(*env)))
+			*env = ft_strdup(s);
+		env++;
+	}
+}
+
+void	ft_export(char **args, char ***enp)
+{
+	char	**var;
+	char	**env;
+
+	env = *enp;
 	if (!args || !*args)
 	{
-		env = ft_sort(env);
-		while (env && *env)
-		{
-			if (ft_strncmp(*env, "_=", 2))
-				printf("declare -x %s\n", *env);
-			env++;
-		}
-		return ;
+		ft_print_env(env);
 	}
-
+	while (args && *args)
+	{
+		var = ft_export_split(*args);
+		if (ft_valid_name(*var))
+		{
+			if (ft_is_onready(env, *var))
+				ft_reset_var(env, *args);
+			else
+				*enp = ft_add_var(env, *args);
+			env = *enp;
+		}
+		args++;
+	}
 }

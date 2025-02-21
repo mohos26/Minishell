@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/19 18:41:26 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:46:12 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **env)
 			lst = ft_split(s, ' ');
 			printf("Is Valid: %d\n", ft_is_valid(*lst));
 			if (ft_is_shell_command(*lst))
-				ft_do_shell_command(lst, env);
+				ft_do_shell_command(lst, &env);
 		}
 	}
 }
