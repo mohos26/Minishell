@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:36:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 18:19:51 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:44:12 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	**ft_create_lst(void)
 	char	**lst;
 	int		n;
 
-	n = 6;
+	n = 7;
 	lst = malloc(n * sizeof(char *) + 1);
 	if (!lst)
 		return (NULL);
@@ -27,6 +27,7 @@ static char	**ft_create_lst(void)
 	lst[3] = ft_strdup("cd");
 	lst[4] = ft_strdup("export");
 	lst[5] = ft_strdup("unset");
+	lst[6] = ft_strdup("env");
 	lst[n] = NULL;
 	return (lst);
 }

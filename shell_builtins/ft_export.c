@@ -6,48 +6,65 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 18:26:33 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:19:53 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static int	ft_valid_name(char *s)
+static char	**ft_sort(char **lst)
 {
-	if (!ft_isalpha(*s) && *s != '_')
-		return (0);
-	s++;
-	while (*s)
+	char	*tmp;
+	int		len;
+	int		i;
+	int		j;
+
+	len = 0;
+	while (lst[len])
+		len++;
+	i = 0;
+	while (lst[i + 1])
 	{
-		if (!ft_isalnum(*s) && *s != '_')
-			return (0);
-		s++;
+		j = i + 1;
+		while (lst[j])
+		{
+			if (ft_strncmp(lst[i], lst[j], INT_MAX) > 0)
+			{
+				tmp = lst[i];
+				lst[i] = lst[j];
+				lst[j] = tmp;
+			}
+			j++;
+		}
+		i++;
 	}
-	return (1);
+	return (lst);
 }
 
-static int	ft_is_onready(char **env, char *name)
+static void	ft_print_env(char **env)
 {
-	name = ft_strjoin(name, "=");
-	while (*env)
+	char	**var;
+
+	env = ft_sort(env);
+	while (env && *env)
 	{
-		if (!ft_strncmp(*env, name, ft_strlen(name))
-			|| !ft_strncmp(*env, name, ft_strlen(*env)))
-			return (1);
+		var = ft_export_split(*env);
+		if (ft_strncmp(*var, "_", 2))
+			printf("declare -x %s=\"%s\"\n", var[0], var[1]);
 		env++;
 	}
-	return (0);
 }
 
 void	ft_reset_var(char **env, char *s)
 {
-	char	*name;
+	char	**var;
 
-	name = ft_strjoin(*ft_export_split(s), "=");
-	while (*env)
+	var = ft_export_split(s);
+	*var = ft_strjoin(*ft_export_split(s), "=");
+	while (**(var + 1) && *env)
 	{
-		if (!ft_strncmp(*env, name, ft_strlen(name))
-			|| !ft_strncmp(*env, name, ft_strlen(*env)))
+		if (!ft_strncmp(*env, *var, ft_strlen(*var))
+			|| !ft_strncmp(*env, *var, ft_strlen(*env)))
 			*env = ft_strdup(s);
 		env++;
 	}

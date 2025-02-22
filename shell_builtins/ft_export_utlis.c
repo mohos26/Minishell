@@ -6,40 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 12:14:21 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:20:44 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-static char	**ft_sort(char **lst)
-{
-	char	*tmp;
-	int		len;
-	int		i;
-	int		j;
-
-	len = 0;
-	while (lst[len])
-		len++;
-	i = 0;
-	while (lst[i + 1])
-	{
-		j = i + 1;
-		while (lst[j])
-		{
-			if (ft_strncmp(lst[i], lst[j], INT_MAX) > 0)
-			{
-				tmp = lst[i];
-				lst[i] = lst[j];
-				lst[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (lst);
-}
 
 char	**ft_export_split(char *s)
 {
@@ -65,20 +36,6 @@ char	**ft_export_split(char *s)
 	return (res);
 }
 
-void	ft_print_env(char **env)
-{
-	char	**var;
-
-	env = ft_sort(env);
-	while (env && *env)
-	{
-		var = ft_export_split(*env);
-		if (ft_strncmp(*var, "_", 2))
-			printf("declare -x %s=\"%s\"\n", var[0], var[1]);
-		env++;
-	}
-}
-
 char	**ft_add_var(char **env, char *var)
 {
 	char	**res;
@@ -95,4 +52,31 @@ char	**ft_add_var(char **env, char *var)
 	res[len] = ft_strdup(var);
 	res[len + 1] = NULL;
 	return (res);
+}
+
+int	ft_valid_name(char *s)
+{
+	if (!ft_isalpha(*s) && *s != '_')
+		return (0);
+	s++;
+	while (*s)
+	{
+		if (!ft_isalnum(*s) && *s != '_')
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
+int	ft_is_onready(char **env, char *name)
+{
+	name = ft_strjoin(name, "=");
+	while (*env)
+	{
+		if (!ft_strncmp(*env, name, ft_strlen(name))
+			|| !ft_strncmp(*env, name, ft_strlen(*env)))
+			return (1);
+		env++;
+	}
+	return (0);
 }

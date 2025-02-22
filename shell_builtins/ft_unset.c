@@ -6,38 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 18:24:52 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:08:36 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-static int	ft_valid_name(char *s)
-{
-	if (!ft_isalpha(*s) && *s != '_')
-		return (0);
-	s++;
-	while (*s)
-	{
-		if (!ft_isalnum(*s) && *s != '_')
-			return (0);
-		s++;
-	}
-	return (1);
-}
-
-static int	ft_is_onready(char **env, char *name)
-{
-	name = ft_strjoin(name, "=");
-	while (*env)
-	{
-		if (!ft_strncmp(*env, name, ft_strlen(name))
-			|| !ft_strncmp(*env, name, ft_strlen(*env)))
-			return (1);
-		env++;
-	}
-	return (0);
-}
 
 char	**ft_do(char **env, char *name)
 {

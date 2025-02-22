@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 18:26:53 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:43:41 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,6 @@ void	ft_do_shell_command(char **lst, char ***env)
 		ft_export(++lst, env);
 	else if (!ft_strncmp(*lst, "unset", 5))
 		ft_unset(++lst, env);
+	else if (!ft_strncmp(*lst, "env", 4))
+		ft_env(*env);
 }
