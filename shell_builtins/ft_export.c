@@ -6,11 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/21 19:32:35 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:26:33 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 static int	ft_valid_name(char *s)
 {
@@ -60,9 +60,7 @@ void	ft_export(char **args, char ***enp)
 
 	env = *enp;
 	if (!args || !*args)
-	{
 		ft_print_env(env);
-	}
 	while (args && *args)
 	{
 		var = ft_export_split(*args);
@@ -74,6 +72,8 @@ void	ft_export(char **args, char ***enp)
 				*enp = ft_add_var(env, *args);
 			env = *enp;
 		}
+		else
+			ft_print_error("export", *args, "not a valid identifier");
 		args++;
 	}
 }

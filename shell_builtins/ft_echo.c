@@ -6,11 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 09:44:36 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:14:11 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 static int	ft_len(char **lst)
 {
