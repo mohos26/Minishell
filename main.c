@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 18:27:04 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:30:46 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ int	main(int ac, char **av, char **env)
 				ft_do_shell_command(lst, &env);
 		}
 	}
+	ft_exit(0);
 }

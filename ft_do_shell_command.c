@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 21:43:41 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 09:49:13 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	ft_do_shell_command(char **lst, char ***env)
 {
 	if (!ft_strncmp(*lst, "pwd", 4))
-		ft_pwd();
+		sh_pwd();
 	else if (!ft_strncmp(*lst, "exit", 5))
-		ft_exit();
+		sh_exit();
 	else if (!ft_strncmp(*lst, "echo", 5))
-		ft_echo(++lst);
+		sh_echo(++lst);
 	else if (!ft_strncmp(*lst, "cd", 3))
-		ft_cd(*++lst);
+		sh_cd(*++lst);
 	else if (!ft_strncmp(*lst, "export", 7))
-		ft_export(++lst, env);
+		sh_export(++lst, env);
 	else if (!ft_strncmp(*lst, "unset", 5))
-		ft_unset(++lst, env);
+		sh_unset(++lst, env);
 	else if (!ft_strncmp(*lst, "env", 4))
-		ft_env(*env);
+		sh_env(*env);
 }

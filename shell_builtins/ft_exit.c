@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 12:14:30 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 10:06:23 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_exit(void)
+void	sh_exit(void)
 {
-	exit(0);
+	ft_exit(0);
 }

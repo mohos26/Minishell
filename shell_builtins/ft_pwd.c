@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:08:08 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 12:14:03 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 09:35:08 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	ft_pwd(void)
+int	sh_pwd(void)
 {
 	printf("%s\n", getcwd(NULL, 0));
 	return (0);

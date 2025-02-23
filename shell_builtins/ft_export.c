@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 19:19:53 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:27:53 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static char	**ft_sort(char **lst)
 	int		j;
 
 	len = 0;
-	while (lst[len])
+	while (lst && lst[len])
 		len++;
 	i = 0;
-	while (lst[i + 1])
+	while (lst && lst[i + 1])
 	{
 		j = i + 1;
 		while (lst[j])
@@ -61,7 +61,7 @@ void	ft_reset_var(char **env, char *s)
 
 	var = ft_export_split(s);
 	*var = ft_strjoin(*ft_export_split(s), "=");
-	while (**(var + 1) && *env)
+	while (**(var + 1) && env && *env)
 	{
 		if (!ft_strncmp(*env, *var, ft_strlen(*var))
 			|| !ft_strncmp(*env, *var, ft_strlen(*env)))
@@ -70,7 +70,7 @@ void	ft_reset_var(char **env, char *s)
 	}
 }
 
-void	ft_export(char **args, char ***enp)
+void	sh_export(char **args, char ***enp)
 {
 	char	**var;
 	char	**env;

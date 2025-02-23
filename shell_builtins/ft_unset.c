@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 19:08:36 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:31:59 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ char	**ft_do(char **env, char *name)
 	int		len;
 
 	len = 0;
-	while (env[len])
+	while (env && env[len])
 		len++;
-	res = malloc((len - 1) * sizeof(char *) + 1);
+	res = ft_calloc((len - 1) * sizeof(char *) + 1);
 	aid = res;
-	while (*env)
+	while (env && *env)
 	{
 		if (ft_strncmp(*env, name, ft_strlen(name))
 			&& ft_strncmp(*env, name, ft_strlen(*env)))
@@ -34,7 +34,7 @@ char	**ft_do(char **env, char *name)
 	return (res);
 }
 
-void	ft_unset(char **args, char ***enp)
+void	sh_unset(char **args, char ***enp)
 {
 	while (args && *args)
 	{

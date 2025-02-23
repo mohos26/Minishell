@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 19:20:44 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:31:35 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ char	**ft_export_split(char *s)
 	len = 0;
 	while (s[len] && s[len] != '=')
 		len++;
-	name = malloc(sizeof(char) * len + 1);
+	name = ft_calloc(sizeof(char) * len + 1);
 	ft_memcpy(name, s, len);
 	name[len] = '\0';
 	if (s[len])
 		len++;
-	value = malloc(sizeof(char) * (ft_strlen(s) - len) + 1);
+	value = ft_calloc(sizeof(char) * (ft_strlen(s) - len) + 1);
 	ft_memcpy(value, s + len, ft_strlen(s) - len);
 	value[ft_strlen(s) - len] = '\0';
-	res = malloc(sizeof(char *) * 2);
+	res = ft_calloc(sizeof(char *) * 2);
 	res[0] = name;
 	res[1] = value;
 	return (res);
@@ -43,9 +43,9 @@ char	**ft_add_var(char **env, char *var)
 	int		i;
 
 	len = 0;
-	while (env[len])
+	while (env && env[len])
 		len++;
-	res = malloc(sizeof(char *) * (len + 1) + 1);
+	res = ft_calloc(sizeof(char *) * (len + 1) + 1);
 	i = 0;
 	while (i < len)
 		res[i++] = ft_strdup(*env++);
@@ -71,7 +71,7 @@ int	ft_valid_name(char *s)
 int	ft_is_onready(char **env, char *name)
 {
 	name = ft_strjoin(name, "=");
-	while (*env)
+	while (env && *env)
 	{
 		if (!ft_strncmp(*env, name, ft_strlen(name))
 			|| !ft_strncmp(*env, name, ft_strlen(*env)))

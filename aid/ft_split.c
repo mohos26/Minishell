@@ -6,25 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:29:49 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 08:37:56 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:36:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-static void	*free_array(char **ptr, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		free(ptr[i]);
-		i++;
-	}
-	free(ptr);
-	return (NULL);
-}
 
 static int	count_word(const char *s, char c)
 {
@@ -62,9 +48,7 @@ char	**ft_split(const char *s, char c)
 
 	if (!s)
 		return (NULL);
-	res = (char **)malloc((count_word(s, c) + 1) * sizeof(char *));
-	if (!res)
-		return (NULL);
+	res = ft_calloc((count_word(s, c) + 1) * sizeof(char *));
 	i = 0;
 	while (*s)
 	{
@@ -72,9 +56,7 @@ char	**ft_split(const char *s, char c)
 			s++;
 		if (*s)
 		{
-			res[i] = (char *)malloc((find(s, c) + 1) * sizeof(char));
-			if (!res[i])
-				return (free_array(res, i));
+			res[i] = ft_calloc((find(s, c) + 1) * sizeof(char));
 			ft_memcpy(res[i], s, find(s, c));
 			res[i++][find(s, c)] = '\0';
 			s += find(s, c);

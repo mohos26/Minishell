@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 21:46:27 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 09:34:49 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_env(char **env)
+void	sh_env(char **env)
 {
 	while (env && *env)
 	{

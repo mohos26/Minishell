@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:55:34 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/18 08:51:11 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:38:27 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s2));
 	if (!s2)
 		return (ft_strdup(s1));
-	res = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
+	res = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	head = res;
 	while (*s1)
 		*res++ = *s1++;

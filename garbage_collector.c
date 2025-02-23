@@ -1,30 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 09:34:37 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/23 12:00:40 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "header.h"
 
-void	sh_cd(char *s)
+static void	ft_free(void *ptr, int flag)
 {
-	DIR	*ptr;
+	static void	*lst[10000];
+	static int	i;
+	int			d;
 
-	ptr = opendir(s);
-	if (ptr)
+	if (flag)
 	{
-		chdir(s);
-		closedir(ptr);
+		d = 0;
+		while (lst[d])
+			free(lst[d++]);
 	}
 	else
-	{
-		access(s, F_OK);
-		ft_print_error("cd", s, NULL);
-	}
+		lst[i++] = ptr;
+}
+
+void	ft_exit(int status)
+{
+	ft_free(NULL, 1);
+	exit(status);
+}
+
+void	*ft_calloc(size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(size);
+	if (!ptr)
+		ft_exit(1);
+	ft_bzero(ptr, size);
+	ft_free(ptr, 0);
+	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:36:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 21:44:12 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:31:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static char	**ft_create_lst(void)
 	int		n;
 
 	n = 7;
-	lst = malloc(n * sizeof(char *) + 1);
-	if (!lst)
-		return (NULL);
+	lst = ft_calloc(n * sizeof(char *) + 1);
 	lst[0] = ft_strdup("pwd");
 	lst[1] = ft_strdup("exit");
 	lst[2] = ft_strdup("echo");

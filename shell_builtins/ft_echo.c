@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/22 12:14:11 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:25:31 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_len(char **lst)
 	return (len);
 }
 
-void	ft_echo(char **lst)
+void	sh_echo(char **lst)
 {
 	int		sing;
 	char	*res;
