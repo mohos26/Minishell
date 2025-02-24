@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 11:29:45 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:42:39 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 # include <dirent.h>
 # include <term.h>
 # include <curses.h>
+
+typedef struct	s_args
+{
+	char	**args;
+	char	*frist;
+}			t_args;
+
 
 /* aid files */
 void	*ft_memcpy(void *dst, const void *src, size_t n);

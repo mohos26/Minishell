@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 10:06:23 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:45:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 void	sh_exit(void)
 {
+	ft_putstr_fd("exit\n", 2);
 	ft_exit(0);
 }

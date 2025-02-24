@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_error.c                                   :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 11:11:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 11:24:57 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/24 15:42:53 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-void	ft_print_error(char *command_name, char *arg, char *arg2)
+int	main(int ac, char **av, char **env)
 {
+	char	**lst;
 	char	*s;
 
-	s = ft_strjoin("Minishell: ", command_name);
-	s = ft_strjoin(s, ": ");
-	s = ft_strjoin(s, arg);
-	if (arg2)
+	while (1)
 	{
-		ft_putstr_fd(s, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(arg2, 2);
-		ft_putstr_fd("\n", 2);
+		s = readline("-> ");
+		if (!s)
+			break ;
+		else if (*s)
+		{
+			lst = ft_split(s, ' ');
+			printf("Is Valid: %d\n", ft_is_valid(*lst));
+			if (ft_is_shell_command(*lst))
+				ft_do_shell_command(lst, &env);
+		}
 	}
-	else
-		perror(s);
+	ft_exit(0);
 }

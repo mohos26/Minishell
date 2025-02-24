@@ -6,11 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 12:00:40 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:43:07 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 static void	ft_free(void *ptr, int flag)
 {

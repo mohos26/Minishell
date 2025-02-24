@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 11:27:53 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:51:05 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 static char	**ft_sort(char **lst)
 {
 	char	*tmp;
-	int		len;
 	int		i;
 	int		j;
 
-	len = 0;
-	while (lst && lst[len])
-		len++;
 	i = 0;
-	while (lst && lst[i + 1])
+	while (lst && *lst && lst[i + 1])
 	{
 		j = i + 1;
 		while (lst[j])
@@ -50,7 +46,13 @@ static void	ft_print_env(char **env)
 	{
 		var = ft_export_split(*env);
 		if (ft_strncmp(*var, "_", 2))
-			printf("declare -x %s=\"%s\"\n", var[0], var[1]);
+		{
+			printf("declare -x ");
+			if (ft_strchr(*env, '='))
+				printf("%s=\"%s\"\n", var[0], var[1]);
+			else
+				printf("%s\n", *env);
+		}
 		env++;
 	}
 }

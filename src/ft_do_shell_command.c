@@ -6,11 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 09:49:13 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:42:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 void	ft_do_shell_command(char **lst, char ***env)
 {
