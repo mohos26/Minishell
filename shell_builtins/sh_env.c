@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   sh_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:08:08 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 09:35:08 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/25 10:22:00 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	sh_pwd(void)
+void	sh_env(t_args *args)
 {
-	printf("%s\n", getcwd(NULL, 0));
-	return (0);
+	char	**env;
+
+	env = *(args->env);
+	while (env && *env)
+	{
+		if (ft_strchr(*env, '='))
+			printf("%s\n", *env);
+		env++;
+	}
 }

@@ -6,26 +6,26 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/24 15:42:43 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:48:47 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_do_shell_command(char **lst, char ***env)
+void	ft_do_shell_command(t_args *args)
 {
-	if (!ft_strncmp(*lst, "pwd", 4))
+	if (!ft_strncmp(args->frist, "pwd", 4))
 		sh_pwd();
-	else if (!ft_strncmp(*lst, "exit", 5))
+	else if (!ft_strncmp(args->frist, "exit", 5))
 		sh_exit();
-	else if (!ft_strncmp(*lst, "echo", 5))
-		sh_echo(++lst);
-	else if (!ft_strncmp(*lst, "cd", 3))
-		sh_cd(*++lst);
-	else if (!ft_strncmp(*lst, "export", 7))
-		sh_export(++lst, env);
-	else if (!ft_strncmp(*lst, "unset", 5))
-		sh_unset(++lst, env);
-	else if (!ft_strncmp(*lst, "env", 4))
-		sh_env(*env);
+	else if (!ft_strncmp(args->frist, "echo", 5))
+		sh_echo(args);
+	else if (!ft_strncmp(args->frist, "cd", 3))
+		sh_cd(args);
+	else if (!ft_strncmp(args->frist, "export", 7))
+		sh_export(args);
+	else if (!ft_strncmp(args->frist, "unset", 5))
+		sh_unset(args);
+	else if (!ft_strncmp(args->frist, "env", 4))
+		sh_env(args);
 }

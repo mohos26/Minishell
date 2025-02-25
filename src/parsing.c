@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:36:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/24 15:42:57 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:20:48 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**ft_create_lst(void)
 	return (lst);
 }
 
-int	ft_is_shell_command(char *s)
+int	ft_is_sh(char *s)
 {
 	char	**lst;
 
@@ -42,9 +42,4 @@ int	ft_is_shell_command(char *s)
 		lst++;
 	}
 	return (0);
-}
-
-int	ft_is_valid(char *s)
-{
-	return (ft_is_shell_command(s) || ft_is_execute(s));
 }

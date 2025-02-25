@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   sh_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 11:25:31 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:19:15 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,28 @@ static int	ft_len(char **lst)
 	return (len);
 }
 
-void	sh_echo(char **lst)
+char	*ft_aid(char **lst)
+{
+	char	*res;
+
+	res = NULL;
+	while (*lst)
+	{
+		if (res)
+			res = ft_strjoin(res, " ");
+		res = ft_strjoin(res, *lst++);
+	}
+	return (res);
+}
+
+void	sh_echo(t_args *args)
 {
 	int		sing;
 	char	*res;
+	char	**lst;
 
 	sing = 1;
+	lst = args->args;
 	if (!lst || !*lst)
 	{
 		printf("\n");
@@ -41,13 +57,7 @@ void	sh_echo(char **lst)
 		sing--;
 		lst++;
 	}
-	res = NULL;
-	while (*lst)
-	{
-		if (res)
-			res = ft_strjoin(res, " ");
-		res = ft_strjoin(res, *lst++);
-	}
+	res = ft_aid(lst);
 	if (res)
 		printf("%s", res);
 	if (sing)

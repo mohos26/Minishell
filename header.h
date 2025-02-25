@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/24 19:42:39 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:23:59 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@
 # include <term.h>
 # include <curses.h>
 
-typedef struct	s_args
+typedef struct s_args
 {
-	char	**args;
 	char	*frist;
+	char	**args;
+	int		is_cmd;
+	int		is_sh;
+	int		valid;
+	char	***env;
 }			t_args;
-
 
 /* aid files */
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -48,22 +51,22 @@ char	*ft_strchr(const char *s, int c);
 void	ft_bzero(void *s, size_t n);
 
 /* shell commands */
-int		sh_pwd(void);
+void	sh_pwd(void);
 void	sh_exit(void);
-void	sh_echo(char **lst);
-void	sh_cd(char *s);
-void	sh_export(char **args, char ***env);
-void	sh_unset(char **args, char ***enp);
-void	sh_env(char **env);
+void	sh_echo(t_args *args);
+void	sh_cd(t_args *args);
+void	sh_export(t_args *args);
+void	sh_unset(t_args *args);
+void	sh_env(t_args *args);
 
 /* utils */
-int		ft_is_valid(char *s);
 int		ft_is_execute(char *s);
-int		ft_is_shell_command(char *s);
-void	ft_do_shell_command(char **lst, char ***env);
+int		ft_is_sh(char *s);
+void	ft_do_shell_command(t_args *args);
 void	ft_print_error(char *command_name, char *arg, char *arg2);
 void	*ft_calloc(size_t size);
 void	ft_exit(int status);
+t_args	*ft_init(char *s, char ***env);
 
 /* export */
 char	**ft_add_var(char **env, char *var);

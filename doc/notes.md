@@ -3,3 +3,6 @@
 - bash-3.2$ export | grep OLDPWD
 	declare -x OLDPWD
 	# I Don't Have any Way to access to no active variables
+- bash-3.2$ export ZZ="q"
+	bash-3.2$ export | grep ZZ
+	declare -x ZZ="q"

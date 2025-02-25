@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/24 15:42:53 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:15:58 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	**lst;
+	t_args	*args;
 	char	*s;
 
 	while (1)
@@ -24,10 +24,10 @@ int	main(int ac, char **av, char **env)
 			break ;
 		else if (*s)
 		{
-			lst = ft_split(s, ' ');
-			printf("Is Valid: %d\n", ft_is_valid(*lst));
-			if (ft_is_shell_command(*lst))
-				ft_do_shell_command(lst, &env);
+			args = ft_init(s, &env);
+			printf("Valid: %d\n", args->valid);
+			if (args->is_sh)
+				ft_do_shell_command(args);
 		}
 	}
 	ft_exit(0);

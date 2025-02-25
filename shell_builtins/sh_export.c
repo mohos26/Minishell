@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   sh_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/24 14:51:05 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:19:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,27 +72,29 @@ void	ft_reset_var(char **env, char *s)
 	}
 }
 
-void	sh_export(char **args, char ***enp)
+void	sh_export(t_args *args)
 {
 	char	**var;
 	char	**env;
+	char	**lst;
 
-	env = *enp;
-	if (!args || !*args)
+	lst = args->args;
+	env = *(args->env);
+	if (!lst || !*lst)
 		ft_print_env(env);
-	while (args && *args)
+	while (lst && *lst)
 	{
-		var = ft_export_split(*args);
+		var = ft_export_split(*lst);
 		if (ft_valid_name(*var))
 		{
 			if (ft_is_onready(env, *var))
-				ft_reset_var(env, *args);
+				ft_reset_var(env, *lst);
 			else
-				*enp = ft_add_var(env, *args);
-			env = *enp;
+				*(args->env) = ft_add_var(env, *lst);
+			env = *(args->env);
 		}
 		else
-			ft_print_error("export", *args, "not a valid identifier");
-		args++;
+			ft_print_error("export", *lst, "not a valid identifier");
+		lst++;
 	}
 }

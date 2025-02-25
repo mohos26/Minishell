@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   sh_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 09:34:37 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/25 10:19:26 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	sh_cd(char *s)
+void	sh_exit(void)
 {
-	DIR	*ptr;
-
-	ptr = opendir(s);
-	if (ptr)
-	{
-		chdir(s);
-		closedir(ptr);
-	}
-	else
-	{
-		access(s, F_OK);
-		ft_print_error("cd", s, NULL);
-	}
+	ft_putstr_fd("exit\n", 2);
+	ft_exit(0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   sh_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/23 11:31:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:19:36 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,20 @@ char	**ft_do(char **env, char *name)
 	return (res);
 }
 
-void	sh_unset(char **args, char ***enp)
+void	sh_unset(t_args *args)
 {
-	while (args && *args)
+	char	**lst;
+
+	lst = args->args;
+	while (lst && *lst)
 	{
-		if (ft_valid_name(*args))
+		if (ft_valid_name(*lst))
 		{
-			if (ft_is_onready(*enp, *args))
-				*enp = ft_do(*enp, *args);
+			if (ft_is_onready(*(args->env), *lst))
+				*(args->env) = ft_do(*(args->env), *lst);
 		}
 		else
-			ft_print_error("unset", *args, "not a valid identifier");
-		args++;
+			ft_print_error("unset", *lst, "not a valid identifier");
+		lst++;
 	}
 }
