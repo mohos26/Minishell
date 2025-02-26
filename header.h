@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 10:23:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/26 09:44:45 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,15 @@ void	sh_unset(t_args *args);
 void	sh_env(t_args *args);
 
 /* utils */
-int		ft_is_execute(char *s);
+int		ft_is_execute(t_args *args);
 int		ft_is_sh(char *s);
-void	ft_do_shell_command(t_args *args);
+void	ft_do_sh(t_args *args);
 void	ft_print_error(char *command_name, char *arg, char *arg2);
 void	*ft_calloc(size_t size);
 void	ft_exit(int status);
 t_args	*ft_init(char *s, char ***env);
+void	ft_execute(t_args *args);
+pid_t	ft_fork(void);
 
 /* export */
 char	**ft_add_var(char **env, char *var);

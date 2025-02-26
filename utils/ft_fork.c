@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_execute.c                                    :+:      :+:    :+:   */
+/*   ft_fork.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:00:29 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/26 09:32:26 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/26 09:41:18 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/02/26 09:47:00 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	ft_is_execute(t_args *args)
+pid_t	ft_fork(void)
 {
-	char	**lst;
-	char	*path;
-	char	*s;
+	pid_t	pid;
 
-	if (args->is_sh)
-		return (0);
-	s = args->frist;
-	if (ft_strchr(s, '/'))
-		return (!access(s, X_OK));
-	lst = ft_split(getenv("PATH"), ':');
-	s = ft_strjoin("/", s);
-	while (lst && *lst)
+	pid = fork();
+	if (pid < 0)
 	{
-		path = ft_strjoin(*lst, s);
-		if (!access(path, X_OK))
-		{
-			args->frist = path;
-			return (1);
-		}
-		lst++;
+		perror("Execve failed");
+		ft_exit(1);
 	}
-	return (0);
+	return (pid);
 }
