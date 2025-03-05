@@ -6,24 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 10:19:15 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:15:00 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-static int	ft_len(char **lst)
-{
-	int	len;
-
-	len = 0;
-	while (lst && *lst)
-	{
-		len++;
-		lst++;
-	}
-	return (len);
-}
 
 char	*ft_aid(char **lst)
 {

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 10:19:29 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:31:16 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	ft_reset_var(char **env, char *s)
 	*var = ft_strjoin(*ft_export_split(s), "=");
 	while (**(var + 1) && env && *env)
 	{
-		if (!ft_strncmp(*env, *var, ft_strlen(*var))
-			|| !ft_strncmp(*env, *var, ft_strlen(*env)))
+		if ((!ft_strncmp(*env, *var, ft_strlen(*var))
+				|| !ft_strncmp(*env, *var, ft_strlen(*env)))
+			&& ft_strncmp(*var, "_=", 3))
 			*env = ft_strdup(s);
 		env++;
 	}

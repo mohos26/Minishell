@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 12:48:19 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/02/28 09:56:10 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,9 @@ int	ft_is_onready(char **env, char *name)
 		env++;
 	}
 	return (0);
+}
+
+int	ft_is_forbiden(char *name)
+{
+	return (!ft_strncmp("_", name, 2));
 }
