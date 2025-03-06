@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/05 15:14:41 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/06 21:39:28 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,41 @@ static void	ft_process_command(t_args *args)
 	ft_close_redirection(args);
 }
 
+static void	ft_process_prompt(t_prompt *prompt)
+{
+	t_args	**lst;
+	pid_t	pid;
+
+	lst = prompt->args;
+	while (lst && *lst && prompt->length > 1)
+	{
+		pid = fork();
+		if (!pid)
+		{
+			ft_process_command(*lst);
+			ft_exit(0);
+		}
+		lst++;
+	}
+	waitpid(-1, NULL, 0);
+	if (prompt->length == 1)
+		ft_process_command(*lst);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	char	*s;
+	char	*prompt;
 
 	ac--;
 	av++;
 	ft_init(&env);
 	while (1)
 	{
-		s = readline("-> ");
-		if (!s)
+		prompt = readline("-> ");
+		if (!prompt)
 			break ;
-		else if (*s)
-			ft_process_command(ft_init_args(s, &env));
+		else if (*prompt)
+			ft_process_prompt(ft_init_prompt(prompt, &env));
 	}
 	ft_exit(0);
 }
