@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/06 21:39:28 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/07 08:39:45 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	ft_process_prompt(t_prompt *prompt)
 		}
 		lst++;
 	}
-	waitpid(-1, NULL, 0);
+	while (waitpid(-1, NULL, 0) > 0);
 	if (prompt->length == 1)
 		ft_process_command(*lst);
 }

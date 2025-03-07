@@ -1,8 +1,0 @@
-a.out
-aid
-doc
-header.h
-sh
-src
-t.txt
-utils
