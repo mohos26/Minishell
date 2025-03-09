@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 10:14:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 14:34:08 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/31 15:55:44 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/03/09 12:21:08 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_init(char **env)
+int	ft_lstsize(t_list *lst)
 {
-	ft_getenv(ft_build_env(env));
+	int	len;
+
+	if (!lst)
+		return (0);
+	len = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		len++;
+	}
+	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/07 08:39:45 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:36:41 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int	main(int ac, char **av, char **env)
 
 	ac--;
 	av++;
-	ft_init(&env);
+	ft_init(env);
 	while (1)
 	{
 		prompt = readline("-> ");
 		if (!prompt)
 			break ;
 		else if (*prompt)
-			ft_process_prompt(ft_init_prompt(prompt, &env));
+			ft_process_prompt(ft_init_prompt(prompt));
 	}
 	ft_exit(0);
 }

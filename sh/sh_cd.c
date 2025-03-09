@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 12:43:27 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:40:45 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@ static void	ft_local_print_error(void)
 	ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 }
 
-char	*ft_get_home(char **env)
+static char	*ft_get_home(void)
 {
-	while (env && *env)
+	t_list	*env;
+
+	env = *ft_getenv(NULL);
+	while (env)
 	{
-		if (!ft_strncmp(*env, "HOME=", 5))
-			return (*env + 5);
-		env++;
+		if (!ft_strncmp(env->content, "HOME=", 5))
+			return (env->content + 5);
+		env = env->next;
 	}
 	return (NULL);
 }
@@ -35,7 +38,7 @@ void	sh_cd(t_args *args)
 
 	if (!args->args || !*(args->args))
 	{
-		aid = ft_get_home(*(args->env));
+		aid = ft_get_home();
 		if (!aid)
 			return (ft_local_print_error());
 		else if (!*aid)
