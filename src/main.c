@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 14:36:41 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:42:07 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static void	ft_process_prompt(t_prompt *prompt)
 		pid = fork();
 		if (!pid)
 		{
+			
 			ft_process_command(*lst);
 			ft_exit(0);
 		}
 		lst++;
 	}
-	while (waitpid(-1, NULL, 0) > 0);
+	while (waitpid(-1, NULL, 0) > 0)
+		;
 	if (prompt->length == 1)
 		ft_process_command(*lst);
 }
@@ -52,16 +54,15 @@ int	main(int ac, char **av, char **env)
 {
 	char	*prompt;
 
-	ac--;
-	av++;
 	ft_init(env);
-	while (1)
+	while (ac || av)
 	{
 		prompt = readline("-> ");
 		if (!prompt)
 			break ;
 		else if (*prompt)
 			ft_process_prompt(ft_init_prompt(prompt));
+		ft_clean();
 	}
 	ft_exit(0);
 }

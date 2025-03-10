@@ -6,21 +6,26 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 10:22:00 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:36:45 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	sh_env(t_args *args)
+void	sh_env(void)
 {
-	char	**env;
+	t_list	*env;
 
-	env = *(args->env);
-	while (env && *env)
+	env = *ft_getenv(NULL);
+	while (env)
 	{
-		if (ft_strchr(*env, '='))
-			printf("%s\n", *env);
-		env++;
+		if (env->active)
+		{
+			printf("%s=", env->name);
+			if (env->value)
+				printf("%s", env->value);
+			printf("\n");
+		}
+		env = env->next;
 	}
 }

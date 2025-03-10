@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/28 09:56:10 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:39:31 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,13 @@ char	**ft_export_split(char *s)
 	return (res);
 }
 
-char	**ft_add_var(char **env, char *var)
+void	ft_add_var(char *var)
 {
 	char	**res;
-	int		len;
-	int		i;
 
-	len = 0;
-	while (env && env[len])
-		len++;
-	res = ft_calloc(sizeof(char *) * (len + 1) + 1);
-	i = 0;
-	while (i < len)
-		res[i++] = ft_strdup(*env++);
-	res[len] = ft_strdup(var);
-	res[len + 1] = NULL;
-	return (res);
+	res = ft_export_split(var);
+	ft_lstadd_back(ft_getenv(NULL), ft_lstnew(ft_local_strdup(res[0]),
+			ft_local_strdup(res[1]), !!ft_strchr(var, '=')));
 }
 
 int	ft_valid_name(char *s)
@@ -68,15 +59,17 @@ int	ft_valid_name(char *s)
 	return (1);
 }
 
-int	ft_is_onready(char **env, char *name)
+int	ft_is_onready(char *name)
 {
+	t_list	*env;
+
+	env = *ft_getenv(NULL);
 	name = ft_strjoin(name, "=");
-	while (env && *env)
+	while (env)
 	{
-		if (!ft_strncmp(*env, name, ft_strlen(name))
-			|| !ft_strncmp(*env, name, ft_strlen(*env)))
+		if (!ft_strncmp(env->name, name, ft_strlen(name) + 1))
 			return (1);
-		env++;
+		env = env->next;
 	}
 	return (0);
 }

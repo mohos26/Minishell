@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:31:05 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/05 14:09:44 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 08:09:48 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-t_args	*ft_init_args(char *s, char ***env)
+t_args	*ft_init_args(char *s)
 {
 	t_args	*args;
 	char	**aid;
@@ -22,7 +22,6 @@ t_args	*ft_init_args(char *s, char ***env)
 	aid = ft_split(s, ' ');
 	args->frist = *aid;
 	args->args = aid + 1;
-	args->env = env;
 	args->is_sh = ft_is_sh(args->frist);
 	args->is_cmd = ft_is_execute(args);
 	args->valid = args->is_cmd || args->is_sh;

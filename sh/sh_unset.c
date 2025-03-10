@@ -6,32 +6,28 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/28 10:01:38 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 07:50:31 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char	**ft_do(char **env, char *name)
+static void	ft_do(char *name)
 {
-	char	**res;
-	char	**aid;
-	int		len;
+	t_list	*env;
+	int		i;
 
-	len = 0;
-	while (env && env[len])
-		len++;
-	res = ft_calloc((len - 1) * sizeof(char *) + 1);
-	aid = res;
-	while (env && *env)
+	i = 0;
+	env = *ft_getenv(NULL);
+	while (env)
 	{
-		if (ft_strncmp(*env, name, ft_strlen(name))
-			&& ft_strncmp(*env, name, ft_strlen(*env)))
-			*aid++ = ft_strdup(*env);
-		env++;
+		if (!ft_strncmp(env->name, name, ft_strlen(name) + 1))
+		{
+			ft_lstdel_in(ft_getenv(NULL), i);
+			break ;
+		}
+		i++;
 	}
-	*aid = NULL;
-	return (res);
 }
 
 void	sh_unset(t_args *args)
@@ -43,8 +39,8 @@ void	sh_unset(t_args *args)
 	{
 		if (ft_valid_name(*lst) && !ft_is_forbiden(*lst))
 		{
-			if (ft_is_onready(*(args->env), *lst))
-				*(args->env) = ft_do(*(args->env), *lst);
+			if (ft_is_onready(*lst))
+				ft_do(*lst);
 		}
 		else if (!ft_is_forbiden(*lst))
 			ft_print_error("unset", *lst, "not a valid identifier");

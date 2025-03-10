@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/26 09:35:12 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:37:24 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	ft_do_sh(t_args *args)
 	else if (!ft_strncmp(args->frist, "unset", 5))
 		sh_unset(args);
 	else if (!ft_strncmp(args->frist, "env", 4))
-		sh_env(args);
+		sh_env();
 }

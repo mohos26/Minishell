@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 14:47:00 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:44:09 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ int			ft_isdigit(int c);
 char		*ft_itoa(int n);
 int			ft_lstsize(t_list *lst);
 void		ft_lstadd_back(t_list **lst, t_list *new);
-t_list		*ft_lstnew(char *name, char *value);
+t_list		*ft_lstnew(char *name, char *value, int active);
 t_list		*ft_lstlast(t_list *lst);
 void		ft_lstclear(t_list **lst);
+void		ft_lstdel_in(t_list **lst, int i);
 
 /* shell commands */
 void		sh_pwd(void);
@@ -81,7 +82,7 @@ void		sh_echo(t_args *args);
 void		sh_cd(t_args *args);
 void		sh_export(t_args *args);
 void		sh_unset(t_args *args);
-void		sh_env(t_args *args);
+void		sh_env(void);
 int			ft_is_forbiden(char *name);
 
 /* utils */
@@ -102,11 +103,14 @@ void		ft_close_redirection(t_args *args);
 t_prompt	*ft_init_prompt(char *s);
 t_list		*ft_build_env(char **env);
 t_list		**ft_getenv(t_list *lst);
+char		*ft_local_strdup(char *s);
+char		**ft_convert_env(void);
+void		ft_clean(void);
 
 /* export */
-char		**ft_add_var(char **env, char *var);
+void		ft_add_var(char *var);
 char		**ft_export_split(char *s);
 int			ft_valid_name(char *s);
-int			ft_is_onready(char **env, char *name);
+int			ft_is_onready(char *name);
 
 #endif

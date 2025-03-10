@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:03:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 14:53:43 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:00:38 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-static char	*ft_local_strdup(char *s)
+char	*ft_local_strdup(char *s)
 {
 	char	*ptr;
 	char	*head;
@@ -32,15 +32,19 @@ static void	ft_path_var(t_list *lst, char *s)
 	char	**var;
 
 	if (!ft_strncmp(s, "PATH", 5))
-		ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("PATH"), ft_local_strdup("/mnt/homes/mhoussas/.docker/bin:/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+		ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("PATH"),
+				ft_local_strdup("/mnt/homes/mhoussas/.docker/bin:/usr/gnu/bin:\
+				/usr/local/bin:/bin:/usr/bin:."), 1));
 	else if (ft_strncmp(s, "PATH=/mnt/homes/mhoussas/.docker/bin:", 39))
-		ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("PATH"), ft_strjoin("/mnt/homes/mhoussas/.docker/bin:", s + 5)));
+		ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("PATH"),
+				ft_local_strdup(ft_strjoin("/mnt/homes/mhoussas/.docker/bin:",
+						s + 5)), 1));
 	else
 	{
 		var = ft_export_split(s);
-		ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup(var[0]), ft_local_strdup(var[1])));
+		ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup(var[0]),
+				ft_local_strdup(var[1]), 1));
 	}
-	ft_lstlast(lst)->active = 1;
 }
 
 static int	ft_is_number(char *s)
@@ -63,7 +67,7 @@ static void	ft_shlv_var(t_list *lst, char *s)
 	int		n;
 	char	*aid;
 
-	var = ft_export_split(aid);
+	var = ft_export_split(s);
 	if (ft_is_number(var[1]))
 	{
 		n = ft_atoi(var[1]);
@@ -79,29 +83,36 @@ static void	ft_shlv_var(t_list *lst, char *s)
 	}
 	else
 		aid = ft_strdup("SHLVL=1");
-	ft_lstadd_back(&lst, ft_lstnew(aid));
+	var = ft_export_split(aid);
+	ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup(var[0]),
+			ft_local_strdup(var[1]), 1));
 }
 
 t_list	*ft_build_env(char **env)
 {
 	t_list	*lst;
+	char	**var;
 
 	lst = NULL;
 	while (env && *env)
 	{
-		if (!ft_strncmp(*env, "PATH=", 5) || !ft_strncmp(*env, "PATH", 5))
-			ft_path_var(&lst, *env);
-		else if (!ft_strncmp(*env, "_=", 2) || !ft_strncmp(*env, "_", 2))
-			ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("_=/usr/bin/env")));
-		else if (!ft_strncmp(*env, "SHLVL", 5) || !ft_strncmp(*env, "SHLVL=", 5))
+		var = ft_export_split(*env);
+		if (!ft_strncmp(var[0], "PATH", 5))
+			ft_path_var(lst, *env);
+		else if (!ft_strncmp(var[0], "_", 2))
+			ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("_"),
+					ft_local_strdup("/usr/bin/env"), 1));
+		else if (!ft_strncmp(var[0], "SHLVL", 6))
 			ft_shlv_var(lst, *env);
-		else if (!ft_strncmp(*env, "OLDPWD", 6) || !ft_strncmp(*env, "OLDPWD=", 6))
-			ft_lstadd_back(&lst, ft_lstnew("OLDPWD"));
-		else if (!ft_strncmp(*env, "PWD", 4) || !ft_strncmp(*env, "PWD=", 4))
-			ft_lstadd_back(&lst, ft_lstnew(ft_strjoin("PWD=", getcwd(NULL, 0))));
+		else if (!ft_strncmp(var[0], "OLDPWD", 7))
+			ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("OLDPWD"), NULL, 0));
+		else if (!ft_strncmp(var[0], "PWD", 4))
+			ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup("PWD"),
+					ft_local_strdup(getcwd(NULL, 0)), 1));
 		else
-			ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup(*env)));
-		lst->active = !!ft_strchr(ft_lstlast(lst)->content, '=');
+			ft_lstadd_back(&lst, ft_lstnew(ft_local_strdup(var[0]),
+					ft_local_strdup(var[1]), !!ft_strchr(*env, '=')));
+		env++;
 	}
 	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 14:40:45 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 07:21:28 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static char	*ft_get_home(void)
 	env = *ft_getenv(NULL);
 	while (env)
 	{
-		if (!ft_strncmp(env->content, "HOME=", 5))
-			return (env->content + 5);
+		if (env->active && !ft_strncmp(env->name, "HOME", 5))
+			return (env->value);
 		env = env->next;
 	}
 	return (NULL);

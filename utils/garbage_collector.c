@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/24 15:43:07 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:52:52 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,39 @@
 
 static void	ft_free(void *ptr, int flag)
 {
-	static void	*lst[10000];
+	static void	*lst[INT_MAX];
 	static int	i;
-	int			d;
 
 	if (flag)
 	{
-		d = 0;
-		while (lst[d])
-			free(lst[d++]);
+		while (i)
+		{
+			free(lst[i]);
+			lst[i--] = NULL;
+		}
 	}
 	else
 		lst[i++] = ptr;
 }
 
-void	ft_exit(int status)
+void	ft_clean(void)
 {
 	ft_free(NULL, 1);
+}
+
+void	ft_exit(int status)
+{
+	t_list	*lst;
+
+	ft_free(NULL, 1);
+	lst = *ft_getenv(NULL);
+	while (lst)
+	{
+		free(lst->name);
+		free(lst->value);
+		free(lst);
+		lst = lst->next;
+	}
 	exit(status);
 }
 
