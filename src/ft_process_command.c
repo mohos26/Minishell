@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_process_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/12 09:10:48 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/03/12 09:09:54 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/03/12 09:10:14 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_process_command(t_args *args)
 {
-	char	*prompt;
-
-	ft_init(env);
-	while (ac || av)
+	if (!args->valid)
 	{
-		prompt = readline("-> ");
-		if (!prompt)
-			break ;
-		else if (*prompt)
-			ft_process_prompt(ft_init_prompt(prompt));
-		ft_clean();
+		ft_putstr_fd("No Valid\n", 2);
+		return ;
 	}
-	ft_exit(0);
+	ft_do_redirection(args);
+	if (args->is_sh)
+		ft_do_sh(args);
+	else if (args->is_cmd)
+		ft_execute(args);
+	ft_close_redirection(args);
 }

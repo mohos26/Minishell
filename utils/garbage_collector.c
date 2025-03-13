@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 10:52:52 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:04:58 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	ft_free(void *ptr, int flag)
 	{
 		while (i)
 		{
-			free(lst[i]);
-			lst[i--] = NULL;
+			free(lst[--i]);
+			lst[i] = NULL;
 		}
 	}
 	else

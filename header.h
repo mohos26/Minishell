@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 10:44:09 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:11:12 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ t_list		**ft_getenv(t_list *lst);
 char		*ft_local_strdup(char *s);
 char		**ft_convert_env(void);
 void		ft_clean(void);
+void		ft_pipe_redirection(int fd, int flag);
+void		ft_close_pipe_redirection(int flag);
+void		ft_process_command(t_args *args);
+void		ft_process_prompt(t_prompt *prompt);
 
 /* export */
 void		ft_add_var(char *var);
