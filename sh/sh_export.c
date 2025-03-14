@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 09:38:20 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:34:38 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,29 @@ static void	ft_print_env(void)
 	}
 }
 
+static void	ft_add_var(char *var)
+{
+	char	**res;
+
+	res = ft_var_split(var);
+	ft_lstadd_back(ft_getenv(NULL), ft_lstnew(ft_env_strdup(res[0]),
+			ft_env_strdup(res[1]), !!ft_strchr(var, '=')));
+}
+
 static void	ft_reset_var(char *s)
 {
 	char	**var;
 	t_list	*env;
 
 	env = *ft_getenv(NULL);
-	var = ft_export_split(s);
+	var = ft_var_split(s);
 	while (**(var + 1) && env)
 	{
 		if ((!ft_strncmp(env->name, *var, ft_strlen(*var) + 1))
 			&& ft_strncmp(*var, "_", 2))
 		{
 			free(env->value);
-			env->value = ft_local_strdup(var[1]);
+			env->value = ft_env_strdup(var[1]);
 			env->active = 1;
 			break ;
 		}
@@ -83,7 +92,7 @@ void	sh_export(t_args *args)
 		ft_print_env();
 	while (lst && *lst)
 	{
-		var = ft_export_split(*lst);
+		var = ft_var_split(*lst);
 		if (ft_valid_name(*var))
 		{
 			if (ft_is_onready(*var))

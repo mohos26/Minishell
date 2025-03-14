@@ -6,43 +6,31 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 09:39:31 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:33:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char	**ft_export_split(char *s)
+char	**ft_var_split(char *s)
 {
-	char	*value;
-	char	*name;
-	int		len;
 	char	**res;
+	int		len;
 
 	len = 0;
+	res = ft_calloc(sizeof(char *) * 2 + 1);
+	res[0] = ft_calloc(sizeof(char) * len + 1);
 	while (s[len] && s[len] != '=')
 		len++;
-	name = ft_calloc(sizeof(char) * len + 1);
-	ft_memcpy(name, s, len);
-	name[len] = '\0';
+	ft_memcpy(res[0], s, len);
+	res[0][len] = '\0';
 	if (s[len])
 		len++;
-	value = ft_calloc(sizeof(char) * (ft_strlen(s) - len) + 1);
-	ft_memcpy(value, s + len, ft_strlen(s) - len);
-	value[ft_strlen(s) - len] = '\0';
-	res = ft_calloc(sizeof(char *) * 2);
-	res[0] = name;
-	res[1] = value;
+	res[1] = ft_calloc(sizeof(char) * (ft_strlen(s) - len) + 1);
+	ft_memcpy(res[1], s + len, ft_strlen(s) - len);
+	res[1][ft_strlen(s) - len] = '\0';
+	res[2] = NULL;
 	return (res);
-}
-
-void	ft_add_var(char *var)
-{
-	char	**res;
-
-	res = ft_export_split(var);
-	ft_lstadd_back(ft_getenv(NULL), ft_lstnew(ft_local_strdup(res[0]),
-			ft_local_strdup(res[1]), !!ft_strchr(var, '=')));
 }
 
 int	ft_valid_name(char *s)
