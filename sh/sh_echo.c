@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/01 11:15:00 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:38:56 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sh_echo(t_args *args)
 	lst = args->args;
 	if (!lst || !*lst)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 		return ;
 	}
 	if (!ft_strncmp(*lst, "-n", 3))
@@ -46,7 +46,7 @@ void	sh_echo(t_args *args)
 	}
 	res = ft_aid(lst);
 	if (res)
-		printf("%s", res);
+		ft_putstr_fd(res, 1);
 	if (sing)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:14:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 07:19:23 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:35:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_init(char **env)
 {
-	ft_getenv(ft_build_env(env));
+	ft_env(ft_build_env(env));
 }

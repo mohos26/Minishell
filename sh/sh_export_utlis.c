@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/14 17:33:02 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:46:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ int	ft_is_onready(char *name)
 {
 	t_list	*env;
 
-	env = *ft_getenv(NULL);
-	name = ft_strjoin(name, "=");
+	env = *ft_env(NULL);
 	while (env)
 	{
-		if (!ft_strncmp(env->name, name, ft_strlen(name) + 1))
+		if (!ft_strncmp(env->name, name, INT_MAX))
 			return (1);
 		env = env->next;
 	}

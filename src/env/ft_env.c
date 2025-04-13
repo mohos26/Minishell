@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 17:57:22 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 14:43:08 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/03/09 14:30:21 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/03/10 08:15:09 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-void	ft_lstclear(t_list **lst)
+t_list	**ft_env(t_list *lst)
 {
-	t_list	*aid;
+	static t_list	*env;
 
 	if (!lst)
-		return ;
-	while (*lst)
-	{
-		aid = (*lst)->next;
-		free((*lst)->name);
-		free((*lst)->value);
-		free(*lst);
-		*lst = aid;
-	}
+		return (&env);
+	env = lst;
+	return (NULL);
 }

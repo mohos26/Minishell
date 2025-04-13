@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/12 09:04:58 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:35:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_exit(int status)
 	t_list	*lst;
 
 	ft_free(NULL, 1);
-	lst = *ft_getenv(NULL);
+	lst = *ft_env(NULL);
 	while (lst)
 	{
 		free(lst->name);

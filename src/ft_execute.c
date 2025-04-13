@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:03:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 09:33:16 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:15:59 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	**ft_create_lst(char *frist, char **args)
 	len = 0;
 	while (args[len])
 		len++;
-	res = ft_calloc(sizeof(char *) * (len + 1));
+	res = ft_calloc(sizeof(char *) * (len + 2));
 	head = res;
 	*res++ = frist;
 	while (len--)
@@ -37,7 +37,7 @@ char	**ft_convert_env(void)
 	t_list	*env;
 	char	*aid;
 
-	env = *ft_getenv(NULL);
+	env = *ft_env(NULL);
 	res = ft_calloc(ft_lstsize(env) * sizeof(char *) + 1);
 	head = res;
 	while (env)
@@ -60,8 +60,8 @@ void	ft_execute(t_args *args)
 	char	**lst;
 	pid_t	pid;
 
-	lst = ft_create_lst(args->frist, args->args);
 	pid = ft_fork();
+	lst = ft_create_lst(args->frist, args->args);
 	if (!pid && execve(*lst, lst, ft_convert_env()) == -1)
 	{
 		perror("Execve failed");

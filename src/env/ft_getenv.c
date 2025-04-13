@@ -5,19 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:30:21 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 08:15:09 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/04/12 15:36:53 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/04/12 15:40:34 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-t_list	**ft_getenv(t_list *lst)
+char	*ft_getenv(char *name)
 {
-	static t_list	*env;
+	t_list	*env;
 
-	if (!lst)
-		return (&env);
-	env = lst;
+	env = *ft_env(NULL);
+	while (env)
+	{
+		if (!ft_strncmp(env->name, name, INT_MAX))
+			return (env->value);
+		env = env->next;
+	}
 	return (NULL);
 }

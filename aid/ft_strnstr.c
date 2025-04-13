@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_env.c                                           :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 17:39:22 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/04/13 16:12:36 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/04/13 16:12:54 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	sh_env(void)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	t_list	*env;
+	size_t	i;
+	size_t	j;
 
-	env = *ft_env(NULL);
-	while (env)
+	if (!haystack && !len)
+		return (NULL);
+	if (!needle[0] || needle == haystack)
+		return ((char *)haystack);
+	i = 0;
+	while (haystack[i] && i < len)
 	{
-		if (env->active)
+		j = 0;
+		while (haystack[i + j] == needle[j] && (i + j) < len)
 		{
-			ft_putstr_fd(ft_strjoin(env->name, "="), 1);
-			if (env->value)
-				ft_putstr_fd(env->value, 1);
-			ft_putstr_fd("\n", 1);
+			if (!needle[j])
+				return ((char *)&haystack[i]);
+			j++;
 		}
-		env = env->next;
+		if (!needle[j])
+			return ((char *)(haystack + i));
+		i++;
 	}
+	return (NULL);
 }

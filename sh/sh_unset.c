@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 07:50:31 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:35:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void	ft_do(char *name)
 	int		i;
 
 	i = 0;
-	env = *ft_getenv(NULL);
+	env = *ft_env(NULL);
 	while (env)
 	{
 		if (!ft_strncmp(env->name, name, ft_strlen(name) + 1))
 		{
-			ft_lstdel_in(ft_getenv(NULL), i);
+			ft_lstdel_in(ft_env(NULL), i);
 			break ;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/14 17:34:38 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:20:21 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ t_list		*ft_lstnew(char *name, char *value, int active);
 t_list		*ft_lstlast(t_list *lst);
 void		ft_lstclear(t_list **lst);
 void		ft_lstdel_in(t_list **lst, int i);
+void		ft_putendl_fd(char *s, int fd);
+char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 /* shell commands */
 void		sh_pwd(void);
-void		sh_exit(void);
+void		sh_exit(t_args *args);
 void		sh_echo(t_args *args);
 void		sh_cd(t_args *args);
 void		sh_export(t_args *args);
@@ -102,7 +104,7 @@ void		ft_do_redirection(t_args *args);
 void		ft_close_redirection(t_args *args);
 t_prompt	*ft_init_prompt(char *s);
 t_list		*ft_build_env(char **env);
-t_list		**ft_getenv(t_list *lst);
+t_list		**ft_env(t_list *lst);
 char		*ft_env_strdup(char *s);
 char		**ft_convert_env(void);
 void		ft_clean(void);
@@ -110,6 +112,7 @@ void		ft_pipe_redirection(int fd, int flag);
 void		ft_close_pipe_redirection(int flag);
 void		ft_process_command(t_args *args);
 void		ft_process_prompt(t_prompt *prompt);
+char		*ft_getenv(char *name);
 
 /* export */
 char		**ft_var_split(char *s);

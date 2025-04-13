@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:08:08 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/26 09:30:02 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:26:23 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	sh_pwd(void)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	ft_putendl_fd(getcwd(NULL, 0), 1);
 }

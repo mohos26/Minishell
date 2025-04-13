@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 09:37:24 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:57:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_do_sh(t_args *args)
 	if (!ft_strncmp(args->frist, "pwd", 4))
 		sh_pwd();
 	else if (!ft_strncmp(args->frist, "exit", 5))
-		sh_exit();
+		sh_exit(args);
 	else if (!ft_strncmp(args->frist, "echo", 5))
 		sh_echo(args);
 	else if (!ft_strncmp(args->frist, "cd", 3))
