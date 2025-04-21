@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 15:35:43 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:19:54 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_do(char *name)
 {
-	t_list	*env;
+	t_env	*env;
 	int		i;
 
 	i = 0;
@@ -23,10 +23,11 @@ static void	ft_do(char *name)
 	{
 		if (!ft_strncmp(env->name, name, ft_strlen(name) + 1))
 		{
-			ft_lstdel_in(ft_env(NULL), i);
+			ft_lstdel_in_env(ft_env(NULL), i);
 			break ;
 		}
 		i++;
+		env = env->next;
 	}
 }
 
@@ -37,12 +38,12 @@ void	sh_unset(t_args *args)
 	lst = args->args;
 	while (lst && *lst)
 	{
-		if (ft_valid_name(*lst) && !ft_is_forbiden(*lst))
+		if (ft_valid_name(*lst))
 		{
 			if (ft_is_onready(*lst))
 				ft_do(*lst);
 		}
-		else if (!ft_is_forbiden(*lst))
+		else
 			ft_print_error("unset", *lst, "not a valid identifier");
 		lst++;
 	}

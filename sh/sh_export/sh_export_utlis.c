@@ -6,11 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 15:46:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:12:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
 char	**ft_var_split(char *s)
 {
@@ -35,12 +35,12 @@ char	**ft_var_split(char *s)
 
 int	ft_valid_name(char *s)
 {
-	if (!ft_isalpha(*s) && *s != '_')
+	if (!ft_isalpha(*s))
 		return (0);
 	s++;
 	while (*s)
 	{
-		if (!ft_isalnum(*s) && *s != '_')
+		if (!ft_isalnum(*s))
 			return (0);
 		s++;
 	}
@@ -49,7 +49,7 @@ int	ft_valid_name(char *s)
 
 int	ft_is_onready(char *name)
 {
-	t_list	*env;
+	t_env	*env;
 
 	env = *ft_env(NULL);
 	while (env)
@@ -59,9 +59,4 @@ int	ft_is_onready(char *name)
 		env = env->next;
 	}
 	return (0);
-}
-
-int	ft_is_forbiden(char *name)
-{
-	return (!ft_strncmp("_", name, 2));
 }

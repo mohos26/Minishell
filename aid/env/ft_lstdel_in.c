@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstdel_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 15:16:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 07:07:48 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/02/06 08:50:46 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/04/15 11:39:35 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-t_list	*ft_lstnew(char *name, char *value, int active)
+void	ft_lstdel_in_env(t_env **lst, int i)
 {
-	t_list	*res;
+	t_env	*aid;
+	int		j;
 
-	res = malloc(sizeof(t_list));
-	if (!res)
-		return (NULL);
-	res->name = name;
-	res->value = value;
-	res->active = active;
-	res->next = NULL;
-	return (res);
+	if (!lst || !*lst)
+		return ;
+	aid = *lst;
+	j = 0;
+	while (i && j != (i - 1))
+	{
+		aid = aid->next;
+		j++;
+	}
+	if (!i)
+		*lst = aid->next;
+	else
+		aid->next = aid->next->next;
 }

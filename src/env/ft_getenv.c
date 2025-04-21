@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:36:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 15:40:34 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:12:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_getenv(char *name)
 {
-	t_list	*env;
+	t_env	*env;
 
 	env = *ft_env(NULL);
 	while (env)

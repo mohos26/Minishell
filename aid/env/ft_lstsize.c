@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel_in.c                                     :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 08:50:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/10 07:48:00 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/31 15:55:44 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/04/15 11:39:46 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-void	ft_lstdel_in(t_list **lst, int i)
+int	ft_lstsize_env(t_env *lst)
 {
-	t_list	*aid;
-	int		j;
+	int	len;
 
-	if (!lst || !*lst)
-		return ;
-	aid = *lst;
-	j = 0;
-	while (i && j != (i - 1))
+	if (!lst)
+		return (0);
+	len = 0;
+	while (lst)
 	{
-		aid = aid->next;
-		j++;
+		lst = lst->next;
+		len++;
 	}
-	if (!i)
-		*lst = aid->next;
-	else
-		aid->next = aid->next->next;
+	return (len);
 }

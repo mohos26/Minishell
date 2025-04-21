@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 15:55:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/09 12:21:08 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/31 15:16:37 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/04/15 11:39:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-int	ft_lstsize(t_list *lst)
+t_env	*ft_lstnew_env(char *name, char *value, int active)
 {
-	int	len;
+	t_env	*res;
 
-	if (!lst)
-		return (0);
-	len = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		len++;
-	}
-	return (len);
+	res = malloc(sizeof(t_env));
+	if (!res)
+		return (NULL);
+	res->name = name;
+	res->value = value;
+	res->active = active;
+	res->next = NULL;
+	return (res);
 }

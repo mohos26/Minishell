@@ -12,9 +12,9 @@
 
 #include "../../header.h"
 
-t_list	**ft_env(t_list *lst)
+t_env	**ft_env(t_env *lst)
 {
-	static t_list	*env;
+	static t_env	*env;
 
 	if (!lst)
 		return (&env);

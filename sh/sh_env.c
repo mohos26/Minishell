@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 17:39:22 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:12:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sh_env(void)
 {
-	t_list	*env;
+	t_env	*env;
 
 	env = *ft_env(NULL);
 	while (env)

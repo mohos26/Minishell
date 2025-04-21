@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:03:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/13 15:15:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:21:22 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ char	**ft_convert_env(void)
 {
 	char	**head;
 	char	**res;
-	t_list	*env;
+	t_env	*env;
 	char	*aid;
 
 	env = *ft_env(NULL);
-	res = ft_calloc(ft_lstsize(env) * sizeof(char *) + 1);
+	res = ft_calloc(ft_lstsize_env(env) * sizeof(char *) + 1);
 	head = res;
 	while (env)
 	{

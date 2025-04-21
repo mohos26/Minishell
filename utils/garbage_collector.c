@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 15:35:43 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:12:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_clean(void)
 
 void	ft_exit(int status)
 {
-	t_list	*lst;
+	t_env	*lst;
 
 	ft_free(NULL, 1);
 	lst = *ft_env(NULL);

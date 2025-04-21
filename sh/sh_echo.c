@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 17:38:56 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:01:57 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char	*ft_aid(char **lst)
+static char	*ft_aid(char **lst)
 {
 	char	*res;
 
@@ -29,20 +29,24 @@ char	*ft_aid(char **lst)
 void	sh_echo(t_args *args)
 {
 	int		sing;
+	char	*aid;
 	char	*res;
 	char	**lst;
 
 	sing = 1;
 	lst = args->args;
 	if (!lst || !*lst)
+		return (ft_putstr_fd("\n", 1));
+	if (!ft_strncmp(*lst, "-n", 2))
 	{
-		ft_putstr_fd("\n", 1);
-		return ;
-	}
-	if (!ft_strncmp(*lst, "-n", 3))
-	{
-		sing--;
-		lst++;
+		aid = (*lst) + 2;
+		while (*aid == 'n')
+			aid++;
+		if (!*aid)
+		{
+			sing--;
+			lst++;
+		}
 	}
 	res = ft_aid(lst);
 	if (res)
