@@ -6,62 +6,30 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:03:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 17:41:48 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:10:09 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-char	*ft_env_strdup(char *s)
-{
-	char	*ptr;
-	char	*head;
-
-	ptr = malloc(ft_strlen(s) * sizeof(char) + 1);
-	if (!ptr)
-		ft_exit(1);
-	head = ptr;
-	while (*s)
-		*ptr++ = *s++;
-	*ptr = '\0';
-	return (head);
-}
-
-static void	ft_path_var(t_env *lst, char *s)
+static t_env	*ft_path_var(t_env *lst, char *s)
 {
 	char	**var;
 
-	if (!ft_strncmp(s, "PATH", 5))
+	if (!s)
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PATH"),
-				ft_env_strdup("/mnt/homes/mhoussas/.docker/bin:/usr/gnu/bin:\
-				/usr/local/bin:/bin:/usr/bin:."), 1));
-	else if (ft_strncmp(s, "PATH=/mnt/homes/mhoussas/.docker/bin:", 39))
-		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PATH"),
-				ft_env_strdup(ft_strjoin("/mnt/homes/mhoussas/.docker/bin:",
-						s + 5)), 1));
+				ft_env_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."), \
+					1));
 	else
 	{
 		var = ft_var_split(s);
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup(var[0]),
 				ft_env_strdup(var[1]), 1));
 	}
+	return (lst);
 }
 
-static int	ft_is_number(char *s)
-{
-	int	len;
-
-	len = 0;
-	if (*s == '+' || *s == '-')
-		s++;
-	if (!*s)
-		return (0);
-	while (len++ < 3 && ft_isdigit(*s))
-		s++;
-	return (!*s);
-}
-
-static void	ft_shlv_var(t_env *lst, char *s)
+static t_env	*ft_shlv_var(t_env *lst, char *s)
 {
 	char	**var;
 	int		n;
@@ -86,23 +54,32 @@ static void	ft_shlv_var(t_env *lst, char *s)
 	var = ft_var_split(aid);
 	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup(var[0]),
 			ft_env_strdup(var[1]), 1));
+	return (lst);
+}
+
+static int	ft_is_in(t_env *lst, char *s)
+{
+	while (lst)
+	{
+		if (!ft_strncmp(lst->name, s, INT_MAX))
+			return (1);
+		lst = lst->next;
+	}
+	return (0);
 }
 
 t_env	*ft_build_env(char **env)
 {
 	char			**var;
-	static t_env	*lst;
+	t_env		*lst;
 
 	while (env && *env)
 	{
 		var = ft_var_split(*env);
 		if (!ft_strncmp(var[0], "PATH", 5))
-			ft_path_var(lst, *env);
-		else if (!ft_strncmp(var[0], "_", 2))
-			ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("_"),
-					ft_env_strdup("/usr/bin/env"), 1));
+			lst = ft_path_var(lst, *env);
 		else if (!ft_strncmp(var[0], "SHLVL", 6))
-			ft_shlv_var(lst, *env);
+			lst = ft_shlv_var(lst, *env);
 		else if (!ft_strncmp(var[0], "OLDPWD", 7))
 			ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("OLDPWD"),
 					NULL, 0));
@@ -114,5 +91,15 @@ t_env	*ft_build_env(char **env)
 					ft_env_strdup(var[1]), !!ft_strchr(*env, '=')));
 		env++;
 	}
+	if (!ft_is_in(lst, "PATH"))
+		lst = ft_path_var(lst, NULL);
+	if (!ft_is_in(lst, "SHLVL"))
+		lst = ft_shlv_var(lst, "");
+	if (!ft_is_in(lst, "OLDPWD"))
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("OLDPWD"),
+				NULL, 0));
+	if (!ft_is_in(lst, "PWD"))
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PWD"),
+				ft_env_strdup(getcwd(NULL, 0)), 1));
 	return (lst);
 }

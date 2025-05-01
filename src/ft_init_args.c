@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:31:05 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/16 16:19:01 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:39:55 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char	*ft_aid(char **aid)
+static char	*ft_aid(char **aid)
 {
 	while (*aid)
 	{
@@ -30,8 +30,11 @@ char	*ft_aid(char **aid)
 	return (NULL);
 }
 
-char	**ft_aid2(char **aid)
+static char	**ft_aid2(char **aid)
 {
+	char	*s;
+
+	s = NULL;
 	while (*aid)
 	{
 		if (!ft_strncmp(*aid, "<", 2) || !ft_strncmp(*aid, ">", 2)
@@ -42,7 +45,22 @@ char	**ft_aid2(char **aid)
 				break ;
 		}
 		else
-			return (aid + 1);
+			if (!s)
+				s = ft_strjoin(s, " ");
+			else
+				s = ft_strjoin(ft_strjoin(s, " "), *aid);
+		aid++;
+	}
+	return (ft_split(s, ' '));
+}
+
+static char	*ft_aid3(char **aid)
+{
+	while (*aid)
+	{
+		if (!ft_strncmp(*aid, "<", 2) || !ft_strncmp(*aid, ">", 2)
+			|| !ft_strncmp(*aid, ">>", 2))
+			return (*aid + 1);
 		aid++;
 	}
 	return (NULL);
@@ -61,5 +79,7 @@ t_args	*ft_init_args(char *s)
 	args->is_cmd = ft_is_execute(args);
 	args->valid = args->is_cmd || args->is_sh;
 	args->redirections = ft_check_redirections(aid);
+	if (args->redirections)
+		args->file_redirections = ft_aid3(aid);
 	return (args);
 }

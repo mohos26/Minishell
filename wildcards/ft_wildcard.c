@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:21:22 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/19 19:48:02 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:06:20 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,9 @@ char	**ft_wildcard(char *s)
 	return (res);
 }
 
-
-int main()
-{
-	char **lst = ft_wildcard("***********ft**********.***********c************");
-	while (lst && *lst)
-		puts(*lst++);
-}
+// int main()
+// {
+// 	char **lst = ft_wildcard("***********ft**********.***********c***********");
+// 	while (lst && *lst)
+// 		puts(*lst++);
+// }

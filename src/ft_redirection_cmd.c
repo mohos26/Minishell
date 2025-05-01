@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:49:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 16:58:46 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:40:41 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_do_redirection(t_args *args)
 {
 	int	fd;
 
+	perror(args->file_redirections);
 	if (args->redirections == 1)
 		fd = open(args->file_redirections, O_RDONLY);
 	else if (args->redirections == 2)

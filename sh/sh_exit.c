@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/12 14:52:57 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:11:33 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static int	ft_is_number(char *s)
+static int	ft_is_number_exit(char *s)
 {
 	unsigned long long	limit;
 	int					sign;
@@ -48,7 +48,7 @@ void	sh_exit(t_args *args)
 	ft_putstr_fd("exit\n", 2);
 	if (*(args->args))
 	{
-		if (!ft_is_number(*(args->args)))
+		if (!ft_is_number_exit(*(args->args)))
 		{
 			status = 255;
 			ft_print_error("exit", *(args->args), "numeric argument required");

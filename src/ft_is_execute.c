@@ -6,11 +6,21 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:00:29 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/19 15:46:23 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:59:18 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
+
+static char	*ft_aid(void)
+{
+	char	*paths;
+
+	paths = ft_getenv("PATH");
+	if (!paths || !*paths)
+		return (".");
+	return (paths);
+}
 
 int	ft_is_execute(t_args *args)
 {
@@ -23,7 +33,7 @@ int	ft_is_execute(t_args *args)
 	s = args->frist;
 	if (ft_strchr(s, '/'))
 		return (!access(s, X_OK));
-	lst = ft_split(ft_getenv("PATH"), ':');
+	lst = ft_split(ft_aid(), ':');
 	s = ft_strjoin("/", s);
 	while (lst && *lst)
 	{

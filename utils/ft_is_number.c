@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fork.c                                          :+:      :+:    :+:   */
+/*   ft_is_number.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 09:41:18 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/30 21:15:51 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/04/30 18:08:49 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/04/30 18:09:47 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-pid_t	ft_fork(void)
+int	ft_is_number(char *s)
 {
-	pid_t	pid;
+	int	len;
 
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		ft_exit(1);
-	}
-	return (pid);
+	len = 0;
+	if (*s == '+' || *s == '-')
+		s++;
+	if (!*s)
+		return (0);
+	while (len++ < 3 && ft_isdigit(*s))
+		s++;
+	return (!*s);
 }

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 17:01:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:15:23 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void		ft_lstadd_back_env(t_env **lst, t_env *new);
 void		ft_lstdel_in_env(t_env **lst, int i);
 int			ft_lstsize_env(t_env *lst);
 t_env		*ft_lstlast_env(t_env *lst);
+char		*ft_env_strdup(char *s);
 /* redirection */
 void		ft_lstadd_back_red(t_red **lst, t_red *new);
 void		ft_lstdel_in_red(t_red **lst, int i);
@@ -130,6 +131,7 @@ void		ft_close_pipe_redirection(int flag);
 void		ft_process_command(t_args *args);
 void		ft_process_prompt(t_prompt *prompt);
 char		*ft_getenv(char *name);
+int			ft_is_number(char *s);
 /* -------------------------------------------------------------------------- */
 
 /* export */
