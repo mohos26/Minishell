@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:49:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/01 15:40:41 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/02 08:30:38 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static void	ft_stdin(int flag)
+static	void	ft_stdin(int flag)
 {
 	static int	std;
 
@@ -25,7 +25,7 @@ static void	ft_stdin(int flag)
 	}
 }
 
-static void	ft_stdout(int flag)
+static	void	ft_stdout(int flag)
 {
 	static int	std;
 
@@ -42,7 +42,6 @@ void	ft_do_redirection(t_args *args)
 {
 	int	fd;
 
-	perror(args->file_redirections);
 	if (args->redirections == 1)
 		fd = open(args->file_redirections, O_RDONLY);
 	else if (args->redirections == 2)
