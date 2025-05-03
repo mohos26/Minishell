@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:03:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/30 18:10:09 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/03 16:33:21 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,29 @@ static int	ft_is_in(t_env *lst, char *s)
 	return (0);
 }
 
+static t_env	*ft_aid(t_env *lst)
+{
+	if (!ft_is_in(lst, "PATH"))
+		lst = ft_path_var(lst, NULL);
+	if (!ft_is_in(lst, "SHLVL"))
+		lst = ft_shlv_var(lst, "");
+	if (!ft_is_in(lst, "OLDPWD"))
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("OLDPWD"),
+				NULL, 0));
+	if (!ft_is_in(lst, "PWD"))
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PWD"),
+				ft_env_strdup(getcwd(NULL, 0)), 1));
+	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("1PWD"),
+			ft_env_strdup(getcwd(NULL, 0)), 2));
+	return (lst);
+}
+
 t_env	*ft_build_env(char **env)
 {
 	char			**var;
-	t_env		*lst;
+	t_env			*lst;
 
+	lst = NULL;
 	while (env && *env)
 	{
 		var = ft_var_split(*env);
@@ -91,15 +109,5 @@ t_env	*ft_build_env(char **env)
 					ft_env_strdup(var[1]), !!ft_strchr(*env, '=')));
 		env++;
 	}
-	if (!ft_is_in(lst, "PATH"))
-		lst = ft_path_var(lst, NULL);
-	if (!ft_is_in(lst, "SHLVL"))
-		lst = ft_shlv_var(lst, "");
-	if (!ft_is_in(lst, "OLDPWD"))
-		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("OLDPWD"),
-				NULL, 0));
-	if (!ft_is_in(lst, "PWD"))
-		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PWD"),
-				ft_env_strdup(getcwd(NULL, 0)), 1));
-	return (lst);
+	return (ft_aid(lst));
 }

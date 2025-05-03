@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:03:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 12:21:22 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:04:55 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ char	**ft_convert_env(void)
 	head = res;
 	while (env)
 	{
+		if (env->active == 2)
+		{
+			env = env->next;
+			continue ;
+		}
 		aid = env->name;
 		if (env->active)
-		{
-			aid = ft_strjoin(aid, "=");
-			aid = ft_strjoin(aid, env->value);
-		}
+			aid = ft_strjoin(ft_strjoin(aid, "="), env->value);
 		*res++ = aid;
 		env = env->next;
 	}
@@ -60,7 +62,7 @@ void	ft_execute(t_args *args)
 	char	**lst;
 	pid_t	pid;
 
-	pid = ft_fork();
+	pid = fork();
 	lst = ft_create_lst(args->frist, args->args);
 	if (!pid && execve(*lst, lst, ft_convert_env()) == -1)
 	{

@@ -1,6 +1,9 @@
 {
 	"files.associations": {
 		"header.h": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"iostream": "cpp",
+		"string": "cpp",
+		"iosfwd": "cpp"
 	}
 }

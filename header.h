@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/30 21:15:23 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/03 16:55:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void		*ft_calloc(size_t size);
 void		ft_exit(int status);
 t_args		*ft_init_args(char *s);
 void		ft_execute(t_args *args);
-pid_t		ft_fork(void);
 void		ft_init(char **env);
 int			ft_check_redirections(char **lst);
 char		*ft_get_file(char **lst);

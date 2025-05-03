@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 11:12:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:04:48 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sh_env(void)
 	env = *ft_env(NULL);
 	while (env)
 	{
-		if (env->active)
+		if (env->active == 1)
 		{
 			ft_putstr_fd(ft_strjoin(env->name, "="), 1);
 			if (env->value)

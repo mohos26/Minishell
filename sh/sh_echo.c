@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/16 16:01:57 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:12:56 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	sh_echo(t_args *args)
 		}
 	}
 	res = ft_aid(lst);
-	if (res)
-		ft_putstr_fd(res, 1);
 	if (sing)
-		ft_putstr_fd("\n", 1);
+		res = ft_strjoin(res, "\n");
+	if (res)
+		write(1, res, ft_strlen(res));
 }

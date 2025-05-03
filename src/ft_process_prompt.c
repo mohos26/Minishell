@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:10:28 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/13 12:13:35 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:04:44 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	ft_handle_pipes(t_prompt *prompt)
 		if (i < prompt->length - 1)
 			pipe(pipefd);
 		pid = fork();
-		if (pid == 0)
+		if (!pid)
 			ft_execute_child(prompt, pipefd, in_fd, i);
 		close(in_fd);
 		if (i < prompt->length - 1)
