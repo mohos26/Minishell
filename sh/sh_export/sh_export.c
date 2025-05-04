@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 14:18:37 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:28:48 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,17 @@ static char	**ft_sort(void)
 static void	ft_print_env(void)
 {
 	char	**env;
+	char	*res;
 
+	res = NULL;
 	env = ft_sort();
 	while (env && *env)
 	{
-		ft_putendl_fd(ft_strjoin("declare -x ", *env), 1);
+		res = ft_strjoin(ft_strjoin(res, \
+				ft_strjoin("declare -x ", *env)), "\n");
 		env++;
 	}
+	ft_putstr_fd(res, 1);
 }
 
 static void	ft_add_var(char *var)

@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/03 22:12:56 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:36:48 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static char	*ft_aid(char **lst)
+static char	*ft_join_args_with_spaces(char **lst)
 {
 	char	*res;
 
@@ -26,31 +26,36 @@ static char	*ft_aid(char **lst)
 	return (res);
 }
 
+static int	ft_valid_flag(char *flag_suffix)
+{
+	while (*flag_suffix == 'n')
+		flag_suffix++;
+	return (!*flag_suffix);
+}
+
 void	sh_echo(t_args *args)
 {
-	int		sing;
-	char	*aid;
-	char	*res;
 	char	**lst;
+	int		sing;
+	char	*res;
 
 	sing = 1;
 	lst = args->args;
 	if (!lst || !*lst)
 		return (ft_putstr_fd("\n", 1));
-	if (!ft_strncmp(*lst, "-n", 2))
+	while (1)
 	{
-		aid = (*lst) + 2;
-		while (*aid == 'n')
-			aid++;
-		if (!*aid)
+		if (!ft_strncmp(*lst, "-n", 2) && ft_valid_flag(*lst + 2))
 		{
-			sing--;
+			sing = 0;
 			lst++;
 		}
+		else
+			break ;
 	}
-	res = ft_aid(lst);
+	res = ft_join_args_with_spaces(lst);
 	if (sing)
 		res = ft_strjoin(res, "\n");
 	if (res)
-		write(1, res, ft_strlen(res));
+		ft_putstr_fd(res, 1);
 }

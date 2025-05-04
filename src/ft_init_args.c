@@ -6,26 +6,26 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:31:05 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/02 08:32:27 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/04 21:42:22 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static char	*ft_aid(char **aid)
+static char	*ft_extract_command(char **tokens)
 {
-	while (*aid)
+	while (*tokens)
 	{
-		if (!ft_strncmp(*aid, "<", 2) || !ft_strncmp(*aid, ">", 2)
-			|| !ft_strncmp(*aid, ">>", 2))
+		if (!ft_strncmp(*tokens, "<", 2) || !ft_strncmp(*tokens, ">", 2)
+			|| !ft_strncmp(*tokens, ">>", 2))
 		{
-			aid++;
-			if (!*aid)
+			tokens++;
+			if (!*tokens)
 				break ;
 		}
 		else
-			return (*aid);
-		aid++;
+			return (*tokens);
+		tokens++;
 	}
 	return (NULL);
 }
@@ -38,7 +38,7 @@ t_args	*ft_init_args(char *s)
 
 	args = ft_calloc(sizeof(t_args));
 	aid = ft_split(s, ' ');
-	args->frist = ft_aid(aid);
+	args->frist = ft_extract_command(aid);
 	args->args = aid + 1;
 	args->is_sh = ft_is_sh(args->frist);
 	args->is_cmd = ft_is_execute(args);

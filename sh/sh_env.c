@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/03 15:04:48 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:19:38 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 void	sh_env(void)
 {
 	t_env	*env;
+	char	*res;
 
+	res = NULL;
 	env = *ft_env(NULL);
 	while (env)
 	{
 		if (env->active == 1)
 		{
-			ft_putstr_fd(ft_strjoin(env->name, "="), 1);
+			res = ft_strjoin(res, ft_strjoin(env->name, "="));
 			if (env->value)
-				ft_putstr_fd(env->value, 1);
-			ft_putstr_fd("\n", 1);
+				res = ft_strjoin(res, env->value);
+			res = ft_strjoin(res, "\n");
 		}
 		env = env->next;
 	}
+	ft_putstr_fd(res, 1);
 }
