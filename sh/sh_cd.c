@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/04 21:29:52 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:21:07 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static void	update_virtual_pwd(char *aid)
 		node->value = ft_env_strdup(getcwd(NULL, 0));
 	else
 	{
-		node->value = ft_env_strdup(ft_strjoin(ft_strjoin(node->value, "/"), \
-			aid));
+		if (node->value[ft_strlen(node->value) - 1] != '/')
+			aid = ft_strjoin("/", aid);
+		node->value = ft_env_strdup(ft_strjoin(node->value, aid));
 		ft_putendl_fd(ft_strjoin("cd: error retrieving current directory: ", \
 			ft_strjoin("getcwd: cannot access parent directories: No such fil", \
 				"e or directory")), 2);
