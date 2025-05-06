@@ -14,7 +14,7 @@ src/ft_process_command.c src/ft_process_prompt.c src/ft_redirection_cmd.c \
 src/ft_redirection_pipe.c src/ft_redirections_parsing.c src/main.c \
 src/parsing.c src/env/ft_build_env.c src/env/ft_getenv.c src/env/ft_env.c \
 utils/ft_print_error.c utils/garbage_collector.c utils/ft_is_number.c \
-src/env/ft_env_strdup.c
+src/env/ft_env_strdup.c src/ft_check_dir.c
 
 NAME = minishell
 

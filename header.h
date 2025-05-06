@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/04 21:15:42 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:27:49 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void		ft_process_command(t_args *args);
 void		ft_process_prompt(t_prompt *prompt);
 char		*ft_getenv(char *name);
 int			ft_is_number(char *s);
+int			ft_check_dir(char *s);
 /* -------------------------------------------------------------------------- */
 
 /* export */
