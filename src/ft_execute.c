@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:03:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/04 22:19:09 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:45:15 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**ft_convert_env(void)
 	t_env	*env;
 
 	env = *ft_env(NULL);
-	res = ft_calloc(ft_lstsize_env(env) * sizeof(char *) + 1);
+	res = ft_calloc((ft_lstsize_env(env) + 1) * sizeof(char *));
 	head = res;
 	while (env)
 	{
@@ -57,10 +57,11 @@ char	**ft_convert_env(void)
 	return (head);
 }
 
-void	ft_execute(t_args *args)
+int	ft_execute(t_args *args)
 {
 	char	**lst;
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	lst = ft_create_lst(args->frist, args->args);
@@ -69,5 +70,6 @@ void	ft_execute(t_args *args)
 		perror("Execve failed");
 		ft_exit(1);
 	}
-	wait(NULL);
+	wait(&status);
+	return (status);
 }

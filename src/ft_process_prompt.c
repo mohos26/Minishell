@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:10:28 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/03 17:04:44 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:19:51 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	ft_execute_child(t_prompt *prompt, int *pipefd, int in_fd, int i)
 {
+	int	status;
+
 	dup2(in_fd, STDIN_FILENO);
 	if (i < prompt->length - 1)
 	{
@@ -22,18 +24,22 @@ static void	ft_execute_child(t_prompt *prompt, int *pipefd, int in_fd, int i)
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	ft_process_command(prompt->args[i]);
-	ft_exit(0);
+	status = ft_process_command(prompt->args[i]);
+	ft_exit(status);
 }
 
-static void	ft_handle_pipes(t_prompt *prompt)
+static int	ft_handle_pipes(t_prompt *prompt)
 {
 	int		pipefd[2];
 	int		in_fd;
+	int		status;
+	int		wstatus;
 	pid_t	pid;
 	int		i;
+	int		last_pid;
 
 	i = 0;
+	status = 0;
 	in_fd = dup(0);
 	while (i < prompt->length)
 	{
@@ -42,6 +48,8 @@ static void	ft_handle_pipes(t_prompt *prompt)
 		pid = fork();
 		if (!pid)
 			ft_execute_child(prompt, pipefd, in_fd, i);
+		if (i == prompt->length - 1)
+			last_pid = pid;
 		close(in_fd);
 		if (i < prompt->length - 1)
 		{
@@ -51,17 +59,20 @@ static void	ft_handle_pipes(t_prompt *prompt)
 		i++;
 	}
 	(dup2(in_fd, STDIN_FILENO), close(in_fd));
-	while (wait(NULL) > 0)
-		;
+	while (1)
+	{
+		pid = wait(&wstatus);
+		if (pid <= 0)
+			break ;
+		if (pid == last_pid)
+			status = wstatus;
+	}
+	return (WEXITSTATUS(status));
 }
 
-void	ft_process_prompt(t_prompt *prompt)
+int	ft_process_prompt(t_prompt *prompt)
 {
 	if (prompt->length == 1)
-	{
-		ft_process_command(*(prompt->args));
-		waitpid(-1, NULL, 0);
-		return ;
-	}
-	ft_handle_pipes(prompt);
+		return (ft_process_command(*(prompt->args)));
+	return (ft_handle_pipes(prompt));
 }

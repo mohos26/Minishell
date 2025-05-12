@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:23:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/11 14:57:43 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:23:53 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_do_sh(t_args *args)
+int	ft_do_sh(t_args *args)
 {
 	if (!ft_strncmp(args->frist, "pwd", 4))
 		sh_pwd();
@@ -28,4 +28,5 @@ void	ft_do_sh(t_args *args)
 		sh_unset(args);
 	else if (!ft_strncmp(args->frist, "env", 4))
 		sh_env();
+	return (0);
 }
