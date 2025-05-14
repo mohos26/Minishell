@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 06:18:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/14 21:36:01 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/14 21:37:10 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ char	**ft_split_args(char *prompt)
 	int		flag2;
 
 	lst = NULL;
+	return NULL;
 	while (prompt && *prompt)
 	{
 		while (ft_is_space(*prompt))
