@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 06:20:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/13 10:05:55 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:11:18 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
+int	ft_isalnum(int c);
+int	ft_isdigit(int c);
+int	ft_isalpha(int c);

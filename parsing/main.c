@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 06:18:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/13 10:11:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:51:18 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,136 @@ int	ft_is_space(char c)
 	return (0);
 }
 
+int	ft_is_valid(char *s, char c)
+{
+	if (!ft_strlen(s) && (c == '?' || ft_isalpha(c) || c == '_'))
+		return (1);
+	else if ((ft_isalnum(c) || c == '_') && *s != '?')
+		return (1);
+	return (0);
+}
+
 char	**ft_split_args(char *prompt)
 {
 	char	**lst;
 	char	*aid;
+	char	*var;
 	int		flag;
+	int		flag2;
 
-	flag = 0;
 	lst = NULL;
 	while (prompt && *prompt)
 	{
 		while (ft_is_space(*prompt))
 			prompt++;
 		aid = NULL;
-		while (*prompt == '"' || *prompt == '\'' || (!ft_is_space(*prompt) && *prompt))
+		flag2 = 1;
+		while (flag2 && (*prompt == '"' || *prompt == '\'' || (!ft_is_space(*prompt) && *prompt)))
 		{
+			var = NULL;
+			flag = 0;
 			if (*prompt == '"' || *prompt == '\'')
 			{
 				if (*prompt++ == '"')
+				{
 					while (*prompt != '"' && *prompt)
-						aid = ft_append_str(aid, *prompt++);
+					{
+						if (*prompt == '$' && !flag)
+							flag = 1;
+						else if (flag && ft_is_valid(var, *prompt))
+							var = ft_append_str(var, *prompt);
+						else if (flag)
+						{
+							if (var)
+								aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+							flag = 0;
+							var = NULL;
+							prompt--;
+						}
+						else
+							aid = ft_append_str(aid, *prompt);
+						prompt++;
+					}
+					if (var)
+						aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+					var = NULL;
+					flag = 0;
+				}
 				else
 					while (*prompt != '\'' && *prompt)
 						aid = ft_append_str(aid, *prompt++);
 				if (*prompt)
 					prompt++;
 			}
-			while (!ft_is_space(*prompt) && *prompt && *prompt != '"' && *prompt != '\'')
-				aid = ft_append_str(aid, *prompt++);
+			var = NULL;
+			flag = 0;
+			while (flag2 && !ft_is_space(*prompt) && *prompt && *prompt != '"' && *prompt != '\'')
+			{
+				if (*prompt == '|')
+				{
+					if (var)
+						aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+					var = NULL;
+					if (aid)
+						lst = ft_append_array(lst, aid);
+					aid = NULL;
+					flag2 = 0;
+					lst = ft_append_array(lst, ft_strdup("|"));
+				}
+				else if (*prompt == '<')
+				{
+					if (var)
+						aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+					var = NULL;
+					if (aid)
+						lst = ft_append_array(lst, aid);
+					aid = NULL;
+					flag2 = 0;
+					if (*(prompt + 1) == '<')
+					{
+						lst = ft_append_array(lst, ft_strdup("<<"));
+						prompt++;
+					}
+					else
+						lst = ft_append_array(lst, ft_strdup("<"));
+				}
+				else if (*prompt == '>')
+				{
+					if (var)
+						aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+					var = NULL;
+					if (aid)
+						lst = ft_append_array(lst, aid);
+					aid = NULL;
+					flag2 = 0;
+					if (*(prompt + 1) == '>')
+					{
+						lst = ft_append_array(lst, ft_strdup(">>"));
+						prompt++;
+					}
+					else
+						lst = ft_append_array(lst, ft_strdup(">"));
+				}
+				else if (*prompt == '$' && !flag)
+					flag = 1;
+				else if (flag && ft_is_valid(var, *prompt))
+					var = ft_append_str(var, *prompt);
+				else if (flag)
+				{
+					if (var)
+						aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+					aid = ft_append_str(aid, *prompt);
+					flag = 0;
+					var = NULL;
+				}
+				else
+					aid = ft_append_str(aid, *prompt);
+				prompt++;
+			}
+			if (var)
+				aid = ft_strjoin(aid, ft_strjoin(ft_strjoin("{", var), "}"));
+			var = NULL;
+			flag = 0;
 		}
 		if (aid)
 			lst = ft_append_array(lst, aid);
@@ -95,9 +197,12 @@ int main()
 {
 	char	**lst;
 
-	lst = ft_split_args(readline("-> "));
-	while (lst && *lst)
+	while (1)
 	{
-		puts(*lst++);
+		lst = ft_split_args(readline("-> "));
+		while (lst && *lst)
+		{
+			puts(*lst++);
+		}
 	}
 }
