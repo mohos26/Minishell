@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 13:08:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/13 06:47:32 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/18 16:54:14 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/18 17:09:37 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+volatile sig_atomic_t	g_last_signal_received = 0;
+
+static void	signal_handler(int sig)
 {
-	unsigned char		*ptr;
-	const unsigned char	*aid;
+	g_last_signal_received = sig;
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		write (1, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
 
-	if (!dst && !src)
-		return (NULL);
-	if (dst == src)
-		return (dst);
-	ptr = (unsigned char *)dst;
-	aid = (const unsigned char *)src;
-	while (n--)
-		*ptr++ = *aid++;
-	return (dst);
+void	signal_util(void)
+{
+	printf("\r\033[K");
+	rl_catch_signals = 0;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 }

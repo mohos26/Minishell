@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 09:52:04 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/13 06:57:53 by mhoussas         ###   ########.fr       */
+/*   Created: 2024/10/31 16:00:15 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/16 09:48:31 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../../header.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
-	size_t	lenght;
+	t_token	*aid;
 
-	lenght = 0;
-	while (s && *s++)
-		lenght++;
-	return (lenght);
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		aid = *lst;
+		while (aid->next)
+			aid = aid->next;
+		aid->next = new;
+	}
 }

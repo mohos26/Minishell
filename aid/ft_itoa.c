@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 10:39:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/03/01 08:51:22 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:15:20 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_itoa(int n)
 	sing = ft_sing(n, 0);
 	n = ft_sing(n, 1);
 	loop = ft_log10(n) + 1;
-	res = (char *) malloc((loop + 1 + sing) * sizeof(char));
+	res = (char *) ft_calloc((loop + 1 + sing) * sizeof(char));
 	if (!res)
 		return (NULL);
 	head = res;

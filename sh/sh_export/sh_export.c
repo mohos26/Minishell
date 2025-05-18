@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/04 19:28:48 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:06:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void	ft_print_env(void)
 	while (env && *env)
 	{
 		res = ft_strjoin(ft_strjoin(res, \
-				ft_strjoin("declare -x ", *env)), "\n");
+				ft_strjoin("declare -x ", ft_strjoin("\"", ft_strjoin(*env,
+								"\"")))), "\n");
 		env++;
 	}
 	ft_putstr_fd(res, 1);

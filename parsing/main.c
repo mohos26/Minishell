@@ -6,48 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 06:18:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/14 21:36:01 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/18 20:07:54 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-
-char	**ft_append_array(char **lst, char *s)
-{
-	char	**res;
-	int		len;
-
-	len = 0;
-	while (lst && lst[len])
-		len++;
-	res = calloc((len + 2),  sizeof(char*));
-	len = 0;
-	while (lst && lst[len])
-	{
-		res[len] = lst[len];
-		len++;
-	}
-	res[len] = s;
-	res[len+ 1] = NULL;
-	return (res);
-}
-
-char	*ft_append_str(char	*s, char c)
-{
-	char	*res;
-	int		i;
-
-	i = 0;
-	res = calloc((ft_strlen(s) + 2), sizeof(char));
-	while (s && s[i])
-	{
-		res[i] = s[i];
-		i++;
-	}
-	res[i++] = c;
-	res[i] = '\0';
-	return (res);
-}
+#include "../header.h"
 
 int	ft_is_space(char c)
 {
@@ -65,9 +28,79 @@ int	ft_is_valid(char *s, char c)
 	return (0);
 }
 
-char	*ft_expand(char *s)
+char	*ft_expand_quotes(char *var)
 {
-	return (ft_strjoin(ft_strjoin("{", s), "}"));
+	var = ft_getenv(var);
+	if (var)
+		return (var);
+	return ("");
+}
+
+char	*ft_expand_split(t_token **lst, char *aid, char *var)
+{
+	char	**aid2;
+	int		len;
+	int		i;
+
+	len = 0;
+	aid2 = ft_split(ft_getenv(var), ' ');
+	while (aid2 && aid2[len])
+		len++;
+	i = 0;
+	while (i < len -1)
+	{
+		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strjoin(aid, aid2[i]), 0));
+		aid = NULL;
+		i++;
+	}
+	if (len)
+		return (ft_strjoin(aid, aid2[len-1]));
+	return (NULL);
+}
+
+int	ft_valid_quotes(char *s)
+{
+	while (*s)
+	{
+		if (*s == '"')
+		{
+			s++;
+			s = ft_strchr(s, '"');
+			if (!s)
+				return (0);
+		}
+		else if (*s == '\'')
+		{
+			s++;
+			s = ft_strchr(s, '\'');
+			if (!s)
+				return (0);
+		}
+		s++;
+	}
+	return (1);
+}
+
+char	*ft_aid2(char *prompt, char **aid, char *var)
+{
+	int		flag;
+
+	flag = 0;
+	if (*prompt == '$' && !flag)
+		flag = 1;
+	else if (flag && ft_is_valid(var, *prompt))
+		var = ft_append_str(var, *prompt);
+	else if (flag)
+	{
+		if (var)
+			*aid = ft_strjoin(*aid, ft_expand_quotes(var));
+		flag = 0;
+		var = NULL;
+		ft_aid2(prompt + 1, aid, var);
+	}
+	else
+		*aid = ft_append_str(*aid, *prompt);
+	return (var);
 }
 
 char	*ft_aid(char *prompt, char **aid)
@@ -89,7 +122,7 @@ char	*ft_aid(char *prompt, char **aid)
 			else if (flag)
 			{
 				if (var)
-					*aid = ft_strjoin(*aid, ft_expand(var));
+					*aid = ft_strjoin(*aid, ft_expand_quotes(var));
 				flag = 0;
 				var = NULL;
 				prompt--;
@@ -99,7 +132,7 @@ char	*ft_aid(char *prompt, char **aid)
 			prompt++;
 		}
 		if (var)
-			*aid = ft_strjoin(*aid, ft_expand(var));
+			*aid = ft_strjoin(*aid, ft_expand_quotes(var));
 	}
 	else if (*prompt == '\'')
 	{
@@ -112,9 +145,10 @@ char	*ft_aid(char *prompt, char **aid)
 	return (prompt);
 }
 
-char	**ft_split_args(char *prompt)
+
+t_token	*ft_split_args(char *prompt)
 {
-	char	**lst;
+	t_token	*lst;
 	char	*aid;
 	char	*var;
 	int		flag;
@@ -137,47 +171,47 @@ char	**ft_split_args(char *prompt)
 				if (*prompt == '|')
 				{
 					if (var)
-						aid = ft_strjoin(aid, ft_expand(var));
+						aid = ft_expand_split(&lst, aid, var);
 					var = NULL;
-					if (aid)
-						lst = ft_append_array(lst, aid);
+					if (aid && *aid)
+						ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
 					aid = NULL;
 					flag2 = 0;
-					lst = ft_append_array(lst, ft_strdup("|"));
+					ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup("|"), TOKEN_PIPE));
 				}
 				else if (*prompt == '<')
 				{
 					if (var)
-						aid = ft_strjoin(aid, ft_expand(var));
+						aid = ft_expand_split(&lst, aid, var);
 					var = NULL;
-					if (aid)
-						lst = ft_append_array(lst, aid);
+					if (aid && *aid)
+						ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
 					aid = NULL;
 					flag2 = 0;
 					if (*(prompt + 1) == '<')
 					{
-						lst = ft_append_array(lst, ft_strdup("<<"));
+						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup("<<"), TOKEN_HEREDOC));
 						prompt++;
 					}
 					else
-						lst = ft_append_array(lst, ft_strdup("<"));
+						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup("<"), TOKEN_RED_IN));
 				}
 				else if (*prompt == '>')
 				{
 					if (var)
-						aid = ft_strjoin(aid, ft_expand(var));
+						aid = ft_expand_split(&lst, aid, var);
 					var = NULL;
-					if (aid)
-						lst = ft_append_array(lst, aid);
+					if (aid && *aid)
+						ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
 					aid = NULL;
 					flag2 = 0;
 					if (*(prompt + 1) == '>')
 					{
-						lst = ft_append_array(lst, ft_strdup(">>"));
+						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup(">>"), TOKEN_RED_APP));
 						prompt++;
 					}
 					else
-						lst = ft_append_array(lst, ft_strdup(">"));
+						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup(">"), TOKEN_RED_OUT));
 				}
 				else if (*prompt == '$' && !flag)
 					flag = 1;
@@ -186,7 +220,7 @@ char	**ft_split_args(char *prompt)
 				else if (flag)
 				{
 					if (var)
-						aid = ft_strjoin(aid, ft_expand(var));
+						aid = ft_expand_split(&lst, aid, var);
 					aid = ft_append_str(aid, *prompt);
 					flag = 0;
 					var = NULL;
@@ -196,24 +230,90 @@ char	**ft_split_args(char *prompt)
 				prompt++;
 			}
 			if (var)
-				aid = ft_strjoin(aid, ft_expand(var));
+				aid = ft_expand_split(&lst, aid, var);
 		}
 		if (aid)
-			lst = ft_append_array(lst, aid);
+			ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
 	}
 	return (lst);
 }
 
-int main()
+int ft_syntax_error(t_token *tokens)
 {
-	char	**lst;
+	t_token *temp;
+	t_token *temp2;
 
-	while (1)
+	temp = tokens;
+	if (temp && temp->type == TOKEN_PIPE)
 	{
-		lst = ft_split_args(readline("-> "));
-		while (lst && *lst)
-		{
-			puts(*lst++);
-		}
+		printf("minishell$ syntax error near unexpected token\n");
+		return (258);
 	}
+	while (temp)
+	{
+		if (temp->type == TOKEN_RED_APP)
+		{
+			temp2 = temp->next;
+			if (!temp2 || temp2->type != TOKEN_WORD)
+			{
+				printf("minishell$ syntax error near unexpected token\n");
+				return (258);
+			}
+		}
+		if (temp->type == TOKEN_RED_IN)
+		{
+			t_token *temp2 = temp->next;
+			if (!temp2 || temp2->type != TOKEN_WORD)
+			{
+				printf ("minishell$ syntax error near unexpected token\n");
+				return (258);
+			}
+		}
+		if (temp->type == TOKEN_RED_OUT)
+		{
+			t_token *temp2 = temp->next;
+			if (!temp2 || temp2->type != TOKEN_WORD)
+			{
+				printf ("minishell$ syntax error near unexpected token\n");
+
+				return (258);
+			}
+		}
+		if (temp->type == TOKEN_HEREDOC)
+		{
+			t_token *temp2 = temp->next;
+			if (!temp2 || temp2->type != TOKEN_WORD)
+			{
+				printf ("minishell$ syntax error near unexpected token\n");
+
+				return (258);
+			}
+		}
+		temp = temp->next;
+	}
+	temp2 = ft_lstlast_token(tokens);
+	if (temp2 && temp2->type != TOKEN_WORD)
+	{
+		printf ("minishell$ syntax error near unexpected token\n");
+
+		return (258);
+	}
+	return (0);
 }
+
+// int main()
+// {
+// 	t_token	*lst;
+
+// 	while (1)
+// 	{
+// 		lst = ft_split_args(readline("-> "));
+// 		if (ft_syntax_error(lst))
+// 			continue;
+// 		while (lst)
+// 		{
+// 			printf("%s; -> %d\n", lst->value, lst->type);
+// 			lst = lst->next;
+// 		}
+// 	}
+// }

@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_append_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 08:45:22 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/13 12:11:08 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/18 19:30:44 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/18 19:32:36 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-int	ft_isalpha(int c)
+char	*ft_append_str(char	*s, char c)
 {
-	if ((c > 64 && c < 91) || (c > 96 && c < 123))
-		return (1);
-	return (0);
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = ft_calloc((ft_strlen(s) + 2) * sizeof(char));
+	while (s && s[i])
+	{
+		res[i] = s[i];
+		i++;
+	}
+	res[i++] = c;
+	res[i] = '\0';
+	return (res);
 }
