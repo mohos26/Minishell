@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:00:29 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/17 08:47:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:54:24 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_is_execute(t_args *args)
 	if (args->is_sh)
 		return (0);
 	s = args->frist;
-	if (!s || ft_check_dir(s))
+	if (!s || !*s || ft_check_dir(s))
 		return (0);
 	if (ft_strchr(s, '/'))
 		return (!access(s, X_OK));

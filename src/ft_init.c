@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:14:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 17:45:11 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:44:27 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_init(char **env)
 	if (!isatty(0))
 	{
 		ft_print_error("init", "this program must be run in an interactive \
-terminal", "Nothing");
+terminal.", "Nothing");
 		ft_exit(1);
 	}
 	ft_check_cwd();

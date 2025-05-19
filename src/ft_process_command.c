@@ -6,43 +6,74 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:09:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 18:01:00 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:08:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
+static void	ft_stdin(int flag)
+{
+	static int	std;
+
+	if (flag)
+		std = dup(0);
+	else
+	{
+		dup2(std, 0);
+		close(std);
+	}
+}
+
+static void	ft_stdout(int flag)
+{
+	static int	std;
+
+	if (flag)
+		std = dup(1);
+	else
+	{
+		dup2(std, 1);
+		close(std);
+	}
+}
+
 int	ft_not_valid(t_args *args)
 {
-	char	*aid;
 	int		status;
+	char	*aid;
 
-	status = 127;
+	status = 126;
 	aid = args->frist;
 	if (!ft_strlen(ft_getenv("PATH")))
-		if (!ft_strchr(aid, '/'))
-			aid = ft_strjoin(aid, "/");
-	if (ft_check_dir(aid) && ft_strchr(aid, '/'))
+		if (*aid && !ft_strchr(aid, '/'))
+			aid = ft_strjoin("./", aid);
+	if (!ft_strchr(aid, '/'))
 	{
-		status = 126;
-		ft_print_error(args->frist, "is a directory", "Nothing");
-	}
-	else if (ft_strchr(aid, '/'))
-		ft_print_error(args->frist, "No such file or directory", "Nothing");
-	else
 		ft_print_error(args->frist, "command not found", "Nothing");
+		status = 127;
+	}
+	else if (ft_check_dir(aid))
+		ft_print_error(args->frist, "is a directory", "Nothing");
+	else if (!access(aid, F_OK) && access(aid, X_OK))
+		ft_print_error(args->frist, "permission denied", "Nothing");
+	else
+	{
+		if (errno == 2)
+			status = 127;
+		ft_print_error(args->frist, strerror(errno), "Nothing");
+	}
 	return (status);
 }
 
 int	ft_process_command(t_args *args)
 {
-	char	*aid;
 	int		status;
 
 	status = 0;
-	aid = args->frist;
 	if (!args->valid && args->frist)
 		return (ft_not_valid(args));
+	(ft_stdin(1), ft_stdout(1));
 	if (ft_do_redirection(args->_redirections))
 		return (1);
 	if (args->is_sh)
@@ -52,6 +83,6 @@ int	ft_process_command(t_args *args)
 		status = ft_execute(args);
 		status = WEXITSTATUS(status);
 	}
-	ft_close_redirection(args->_redirections);
+	(ft_stdin(0), ft_stdout(0));
 	return (status);
 }

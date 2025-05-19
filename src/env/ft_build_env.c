@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:03:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 17:47:16 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:50:10 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ t_env	*ft_build_env(char **env)
 	while (env && *env)
 	{
 		env_kv_pair = ft_var_split(*env);
-		if (!ft_strncmp(env_kv_pair[0], "PATH", 5))
+		if (!ft_strncmp(env_kv_pair[0], "PATH", INT_MAX))
 			lst = ft_path_var(lst, *env);
-		else if (!ft_strncmp(env_kv_pair[0], "SHLVL", 6))
+		else if (!ft_strncmp(env_kv_pair[0], "SHLVL", INT_MAX))
 			lst = ft_shlv_var(lst, *env);
-		else if (!ft_strncmp(env_kv_pair[0], "OLDPWD", 7))
+		else if (!ft_strncmp(env_kv_pair[0], "OLDPWD", INT_MAX))
 			ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("OLDPWD"),
 					NULL, 0));
-		else if (!ft_strncmp(env_kv_pair[0], "PWD", 4))
+		else if (!ft_strncmp(env_kv_pair[0], "PWD", INT_MAX))
 			ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PWD"),
 					ft_env_strdup(getcwd(NULL, 0)), 1));
 		else

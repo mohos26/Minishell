@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:36:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/02/25 10:20:48 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:46:00 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_is_sh(char *s)
 	lst = ft_create_lst();
 	while (*lst)
 	{
-		if (s && !ft_strncmp(*lst, s, ft_strlen(s)))
+		if (s && !ft_strncmp(*lst, s, INT_MAX))
 			return (1);
 		lst++;
 	}

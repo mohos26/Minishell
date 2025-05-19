@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 14:06:02 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:47:49 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	ft_reset_var(char *s)
 	var = ft_var_split(s);
 	while (**(var + 1) && env)
 	{
-		if (!ft_strncmp(env->name, *var, ft_strlen(*var) + 1))
+		if (!ft_strncmp(env->name, *var, INT_MAX))
 		{
 			free(env->value);
 			env->value = ft_env_strdup(var[1]);

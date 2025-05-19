@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:11:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/02 12:14:41 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:43:52 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_print_error(char *command_name, char *arg, char *arg2)
 	s = ft_strjoin("Minishell: ", command_name);
 	s = ft_strjoin(s, ": ");
 	s = ft_strjoin(s, arg);
-	if (arg2 && !ft_strncmp(arg2, "Nothing", 9))
+	if (arg2 && !ft_strncmp(arg2, "Nothing", INT_MAX))
 		(ft_putstr_fd(s, 2), ft_putstr_fd("\n", 2));
 	else if (arg2)
 	{

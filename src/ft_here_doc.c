@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 20:18:03 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:13:25 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*ft_expand(char *var)
 {
+	if (!var)
+		return (NULL);
 	var = ft_getenv(var);
 	if (var)
 		return (var);
@@ -32,8 +34,8 @@ static int	ft_is_valid(char *s, char c)
 static char	*ft_aid(char *prompt)
 {
 	char	*res;
-	int		flag;
 	char	*var;
+	int		flag;
 
 	flag = 0;
 	var = NULL;
@@ -49,16 +51,13 @@ static char	*ft_aid(char *prompt)
 			if (var)
 				res = ft_strjoin(res, ft_expand(var));
 			var = NULL;
-			prompt--;
-			flag = 0;
+			prompt -= flag--;
 		}
 		else
 			res = ft_append_str(res, *prompt);
 		prompt++;
 	}
-	if (var)
-		res = ft_strjoin(res, ft_expand(var));
-	return (res);
+	return (ft_strjoin(res, ft_expand(var)));
 }
 
 static void	ft_child(char *name_file, char *limiter)
@@ -71,7 +70,8 @@ static void	ft_child(char *name_file, char *limiter)
 	while (1)
 	{
 		aid = readline("> ");
-		if (!ft_strncmp(aid, limiter, INT_MAX) || (!ft_strlen(aid) && !ft_strlen(limiter)))
+		if (!ft_strncmp(aid, limiter, INT_MAX) || (!ft_strlen(aid)
+				&& !ft_strlen(limiter)))
 			break ;
 		aid = ft_aid(aid);
 		if (res)

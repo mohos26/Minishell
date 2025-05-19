@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 17:42:21 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:41:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	sh_exit(t_args *args)
 	int	status;
 
 	status = 0;
-	ft_putstr_fd("exit\n", 2);
+	if (isatty(0))
+		ft_putstr_fd("exit\n", 2);
 	if (args->args && *(args->args))
 	{
 		if (!ft_is_number_exit(*(args->args)))
