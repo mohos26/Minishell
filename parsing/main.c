@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 06:18:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 20:07:54 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/19 06:43:07 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_token	*ft_split_args(char *prompt)
 	int		flag2;
 
 	lst = NULL;
+	return NULL;
 	while (prompt && *prompt)
 	{
 		while (ft_is_space(*prompt))
