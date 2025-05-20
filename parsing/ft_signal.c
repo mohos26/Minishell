@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 16:54:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/18 17:09:37 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:46:05 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ volatile sig_atomic_t	g_last_signal_received = 0;
 static void	signal_handler(int sig)
 {
 	g_last_signal_received = sig;
+	if (waitpid(-1, &sig, WNOHANG) == 0)
+		return ;
 	if (sig == SIGINT)
 	{
 		rl_replace_line("", 0);

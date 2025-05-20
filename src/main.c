@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 09:27:39 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:09:19 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,17 @@ void	ft_update_status(int status)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*prompt;
-	int		status;
+	char			*prompt;
+	struct termios	term;
 
 	ft_init(env);
+	tcgetattr(STDIN_FILENO, &term);
 	while (ac || av)
 	{
 		g_last_signal_received = 0;
 		prompt = readline("minishell$ ");
 		if (g_last_signal_received == SIGINT)
-			status = 1;
+			ft_update_status(1);
 		if (!prompt)
 		{
 			ft_putendl_fd("exit", 2);
@@ -50,6 +51,7 @@ int	main(int ac, char **av, char **env)
 			ft_update_status(ft_process_prompt(ft_init_prompt(prompt)));
 			add_history(prompt);
 		}
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		ft_clean();
 	}
 	ft_exit(0);

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 06:18:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 21:55:14 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:30:22 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,47 +54,20 @@ static char	*ft_expand_split(t_token **lst, char *aid, char *var)
 		i++;
 	}
 	if (len)
-		return (ft_strjoin(aid, aid2[len-1]));
+		return (ft_strjoin(aid, aid2[len - 1]));
 	return (NULL);
 }
 
-static char	*ft_aid(char *prompt, char **aid)
+static char	*ft_aid4(char *prompt, char **aid)
 {
-	char	*var;
-	int		flag;
+	prompt++;
+	while (*prompt != '\'' && *prompt)
+		*aid = ft_append_str(*aid, *prompt++);
+	return (prompt);
+}
 
-	var = NULL;
-	flag = 0;
-	if (*prompt == '"')
-	{
-		prompt++;
-		while (*prompt != '"' && *prompt)
-		{
-			if (*prompt == '$' && !flag)
-				flag = 1;
-			else if (flag && ft_is_valid(var, *prompt))
-				var = ft_append_str(var, *prompt);
-			else if (flag)
-			{
-				if (var)
-					*aid = ft_strjoin(*aid, ft_expand_quotes(var));
-				flag = 0;
-				var = NULL;
-				prompt--;
-			}
-			else
-				*aid = ft_append_str(*aid, *prompt);
-			prompt++;
-		}
-		if (var)
-			*aid = ft_strjoin(*aid, ft_expand_quotes(var));
-	}
-	else if (*prompt == '\'')
-	{
-		prompt++;
-		while (*prompt != '\'' && *prompt)
-			*aid = ft_append_str(*aid, *prompt++);
-	}
+static char	*ft_aid5(char *prompt, char **aid)
+{
 	if (*prompt == '"' || *prompt == '\'')
 	{
 		if (!*aid)
@@ -104,12 +77,123 @@ static char	*ft_aid(char *prompt, char **aid)
 	return (prompt);
 }
 
+static char	*ft_aid6(char *prompt, char **aid, char **var, int *flag)
+{
+	if (*var)
+		*aid = ft_strjoin(*aid, ft_expand_quotes(*var));
+	*flag = 0;
+	*var = NULL;
+	return (--prompt);
+}
+
+static char	*ft_aid(char *prompt, char **aid)
+{
+	char	*var;
+	int		flag;
+
+	flag = 0;
+	var = NULL;
+	if (*prompt++ == '"')
+	{
+		while (*prompt != '"' && *prompt)
+		{
+			if (*prompt == '$' && !flag)
+				flag = 1;
+			else if (flag && ft_is_valid(var, *prompt))
+				var = ft_append_str(var, *prompt);
+			else if (flag)
+				prompt = ft_aid6(prompt, aid, &var, &flag);
+			else
+				*aid = ft_append_str(*aid, *prompt);
+			prompt++;
+		}
+		if (var)
+			*aid = ft_strjoin(*aid, ft_expand_quotes(var));
+	}
+	else if (*--prompt == '\'')
+		prompt = ft_aid4(prompt, aid);
+	return (ft_aid5(prompt, aid));
+}
+
+static char	*ft_aid2(t_token **lst, char *prompt)
+{
+	if (*prompt == '<' && *(prompt + 1) == '<')
+	{
+		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strdup("<<"),
+				TOKEN_HEREDOC));
+		prompt++;
+	}
+	else if (*prompt == '>' && *(prompt + 1) == '>')
+	{
+		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strdup(">>"),
+				TOKEN_RED_APP));
+		prompt++;
+	}
+	else if (*prompt == '>')
+		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strdup(">"),
+				TOKEN_RED_OUT));
+	else if (*prompt == '<')
+		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strdup("<"),
+				TOKEN_RED_IN));
+	else
+		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strdup("|"),
+				TOKEN_PIPE));
+	return (prompt);
+}
+
+static int	ft_rest(t_token **lst, char **aid, char **var)
+{
+	if (*var)
+		*aid = ft_expand_split(lst, *aid, *var);
+	*var = NULL;
+	if (*aid && **aid)
+		ft_lstadd_back_token(lst, ft_lstnew_token(*aid, TOKEN_WORD));
+	*aid = NULL;
+	return (0);
+}
+
+static int	ft_aid7(t_token **lst, char **aid, char **var, char c)
+{
+	if (*var)
+		*aid = ft_expand_split(lst, *aid, *var);
+	*aid = ft_append_str(*aid, c);
+	var = NULL;
+	return (0);
+}
+
+static int	ft_aid3(t_token **lst, char **s, char **aid, int flag2)
+{
+	char	*var;
+	int		flag;
+
+	flag = 0;
+	var = NULL;
+	while (flag2 && !ft_is_space(**s) && **s && **s != '"' && **s != '\'')
+	{
+		if (**s == '|' || **s == '<' || **s == '>')
+		{
+			flag2 = ft_rest(lst, aid, &var);
+			*s = ft_aid2(lst, *s);
+		}
+		else if (**s == '$' && !flag)
+			flag = 1;
+		else if (flag && ft_is_valid(var, **s))
+			var = ft_append_str(var, **s);
+		else if (flag)
+			flag = ft_aid7(lst, aid, &var, **s);
+		else
+			*aid = ft_append_str(*aid, **s);
+		(*s)++;
+	}
+	if (var)
+		*aid = ft_expand_split(lst, *aid, var);
+	return (flag2);
+}
+
 t_token	*ft_split_args(char *prompt)
 {
 	t_token	*lst;
 	char	*aid;
-	char	*var;
-	int		flag;
 	int		flag2;
 
 	lst = NULL;
@@ -119,76 +203,11 @@ t_token	*ft_split_args(char *prompt)
 			prompt++;
 		aid = NULL;
 		flag2 = 1;
-		while (flag2 && (*prompt == '"' || *prompt == '\'' || (!ft_is_space(*prompt) && *prompt)))
+		while (flag2 && (*prompt == '"' || *prompt == '\''
+				|| (!ft_is_space(*prompt) && *prompt)))
 		{
 			prompt = ft_aid(prompt, &aid);
-			var = NULL;
-			flag = 0;
-			while (flag2 && !ft_is_space(*prompt) && *prompt && *prompt != '"' && *prompt != '\'')
-			{
-				if (*prompt == '|')
-				{
-					if (var)
-						aid = ft_expand_split(&lst, aid, var);
-					var = NULL;
-					if (aid && *aid)
-						ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
-					aid = NULL;
-					flag2 = 0;
-					ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup("|"), TOKEN_PIPE));
-				}
-				else if (*prompt == '<')
-				{
-					if (var)
-						aid = ft_expand_split(&lst, aid, var);
-					var = NULL;
-					if (aid && *aid)
-						ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
-					aid = NULL;
-					flag2 = 0;
-					if (*(prompt + 1) == '<')
-					{
-						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup("<<"), TOKEN_HEREDOC));
-						prompt++;
-					}
-					else
-						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup("<"), TOKEN_RED_IN));
-				}
-				else if (*prompt == '>')
-				{
-					if (var)
-						aid = ft_expand_split(&lst, aid, var);
-					var = NULL;
-					if (aid && *aid)
-						ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));
-					aid = NULL;
-					flag2 = 0;
-					if (*(prompt + 1) == '>')
-					{
-						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup(">>"), TOKEN_RED_APP));
-						prompt++;
-					}
-					else
-						ft_lstadd_back_token(&lst, ft_lstnew_token(ft_strdup(">"), TOKEN_RED_OUT));
-				}
-				else if (*prompt == '$' && !flag)
-					flag = 1;
-				else if (flag && ft_is_valid(var, *prompt))
-					var = ft_append_str(var, *prompt);
-				else if (flag)
-				{
-					if (var)
-						aid = ft_expand_split(&lst, aid, var);
-					aid = ft_append_str(aid, *prompt);
-					flag = 0;
-					var = NULL;
-				}
-				else
-					aid = ft_append_str(aid, *prompt);
-				prompt++;
-			}
-			if (var)
-				aid = ft_expand_split(&lst, aid, var);
+			flag2 = ft_aid3(&lst, &prompt, &aid, flag2);
 		}
 		if (aid)
 			ft_lstadd_back_token(&lst, ft_lstnew_token(aid, TOKEN_WORD));

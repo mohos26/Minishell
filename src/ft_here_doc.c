@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 19:13:25 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:17:34 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	ft_child(char *name_file, char *limiter)
 	int		fd;
 
 	res = NULL;
+	fd = open(name_file, O_CREAT | O_WRONLY, 0644);
 	while (1)
 	{
 		aid = readline("> ");
@@ -81,7 +82,6 @@ static void	ft_child(char *name_file, char *limiter)
 	}
 	if (res)
 		res = ft_strjoin(res, "\n");
-	fd = open(name_file, O_CREAT | O_WRONLY, 0644);
 	ft_putstr_fd(res, fd);
 	close(fd);
 	ft_exit(0);
