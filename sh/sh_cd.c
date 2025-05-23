@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 21:44:42 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:20:49 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ static t_env	*find_virtual_pwd_env(void)
 static void	update_virtual_pwd(char *aid)
 {
 	t_env	*node;
+	char	*tmp;
 
 	node = find_virtual_pwd_env();
-	if (getcwd(NULL, 0))
-		node->value = ft_env_strdup(getcwd(NULL, 0));
+	tmp = node->value;
+	if (ft_getcwd(NULL, 0))
+		node->value = ft_env_strdup(ft_getcwd(NULL, 0));
 	else
 	{
 		if (node->value[ft_strlen(node->value) - 1] != '/')
@@ -42,6 +44,7 @@ static void	update_virtual_pwd(char *aid)
 			ft_strjoin("getcwd: cannot access parent directories: No such fil", \
 				"e or directory")), 2);
 	}
+	free(tmp);
 }
 
 int	sh_cd(t_args *args)

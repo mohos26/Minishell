@@ -6,21 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 21:38:38 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:43:55 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-static void	ft_local_exit(void)
-{
-	int	status;
-
-	status = ft_atoi(ft_getenv("?"));
-	if (status == 258)
-		status = 2;
-	ft_exit(status);
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -48,5 +38,5 @@ int	main(int ac, char **av, char **env)
 		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		ft_clean();
 	}
-	ft_local_exit();
+	ft_exit(ft_atoi(ft_getenv("?")));
 }

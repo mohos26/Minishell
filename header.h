@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 07:47:22 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:51:14 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 # define HEADER_H
 
-# include <libc.h>
 # include <stdio.h>
+# include <limits.h>
 # include <stdlib.h>
-# include <string.h>
+# include <unistd.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/ioctl.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <dirent.h>
 # include <term.h>
-# include <curses.h>
 # include <errno.h>
 
 volatile sig_atomic_t	g_last_signal_received;
@@ -46,6 +42,23 @@ typedef struct s_token
 	struct s_token		*next;
 	char				*value;
 }						t_token;
+
+typedef struct s_helper
+{
+	t_token	*lst;
+	char	*aid;
+	char	*var;
+	int		flag;
+	int		flag2;
+}			t_helper;
+
+typedef struct s_env
+{
+	struct s_env	*next;
+	char			*name;
+	char			*value;
+	int				active;
+}					t_env;
 
 typedef struct s_redirections
 {
@@ -71,23 +84,6 @@ typedef struct s_prompt
 	int		length;
 	t_args	**args;
 }			t_prompt;
-
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			*name;
-	char			*value;
-	int				active;
-}					t_env;
-
-typedef struct s_helper
-{
-	t_token	*lst;
-	char	*aid;
-	char	*var;
-	int		flag;
-	int		flag2;
-}			t_helper;
 
 /* --------------------------- aid files ------------------------------- */
 char		*ft_itoa(int n);
@@ -132,6 +128,14 @@ int			sh_echo(t_args *args);
 int			sh_unset(t_args *args);
 int			sh_export(t_args *args);
 
+/* ------------------------- export -------------------------------------- */
+char		**ft_sort(void);
+int			ft_append(char *var);
+int			ft_valid_name(char *s);
+int			ft_is_append(char *var);
+char		**ft_var_split(char *s);
+int			ft_is_onready(char *name);
+
 /* -------------------------- src ---------------------------------------- */
 void		ft_clean(void);
 int			ft_is_sh(char *s);
@@ -166,13 +170,6 @@ void		ft_process_prompt(t_prompt *prompt);
 void		ft_pipe_redirection(int fd, int flag);
 t_red		*ft_extract_redirections(t_token *lst, int *flag);
 void		ft_print_error(char *command_name, char *arg, char *arg2);
-/* ------------------------- export -------------------------------------- */
-char		**ft_sort(void);
-int			ft_append(char *var);
-int			ft_valid_name(char *s);
-int			ft_is_append(char *var);
-char		**ft_var_split(char *s);
-int			ft_is_onready(char *name);
 
 /* ---------------------------- parsing ------------------------------------*/
 void		signal_util(void);
@@ -186,10 +183,10 @@ char		*ft_expand_quotes(char *var);
 t_token		*ft_lstlast_token(t_token *lst);
 int			ft_syntax_error(t_token *tokens);
 t_token		*ft_lstnew_token(char *value, int type);
+void		ft_handle_token(t_helper *helper, int type);
 void		ft_lstadd_back_token(t_token **lst, t_token *new);
 char		*ft_parse_quoted_string(char *prompt, char **aid);
-char		*ft_expand_split(t_token **lst, char *aid, char *var);
 char		*ft_analyze_next_segment(char *prompt, t_helper *helper);
-void		ft_handle_token(t_token **lst, char **aid, char **var, int type);
+char		*ft_expand_split(t_token **lst, char *aid, char *var, int flag);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 12:52:56 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 07:47:17 by mhoussas         ###   ########.fr       */
+/*   Created: 2025-05-23 10:04:06 by amaliari          #+#    #+#             */
+/*   Updated: 2025-05-23 10:04:06 by amaliari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,27 @@
 
 char	*ft_expand_quotes(char *var)
 {
-	var = ft_getenv(var);
+	if (!ft_strlen(var))
+		var = ft_strdup("$");
+	else
+		var = ft_getenv(var);
 	if (var)
 		return (var);
 	return ("");
 }
 
-char	*ft_expand_split(t_token **lst, char *aid, char *var)
+char	*ft_expand_split(t_token **lst, char *aid, char *var, int flag)
 {
 	char	**aid2;
+	char	*aid3;
 	int		len;
 	int		i;
 
 	len = 0;
-	aid2 = ft_split(ft_getenv(var), ' ');
+	aid3 = ft_getenv(var);
+	if (!ft_strlen(var) && flag)
+		aid3 = ft_strdup("$");
+	aid2 = ft_split(aid3, ' ');
 	while (aid2 && aid2[len])
 		len++;
 	i = 0;

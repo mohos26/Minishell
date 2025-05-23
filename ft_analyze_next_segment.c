@@ -3,45 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyze_next_segment.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:08:30 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 13:20:27 by mhoussas         ###   ########.fr       */
+/*   Created: 2025-05-23 10:03:28 by amaliari          #+#    #+#             */
+/*   Updated: 2025-05-23 10:03:28 by amaliari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static void	process_special_help(t_helper *helper)
-{
-	ft_handle_token(&(helper->lst), &(helper->aid),
-		&(helper->var), TOKEN_HEREDOC);
-}
-
 static char	*process_special(char *prompt, t_helper *helper)
 {
 	if (*prompt == '|')
-		ft_handle_token(&(helper->lst), &(helper->aid),
-			&(helper->var), TOKEN_PIPE);
+		ft_handle_token(helper, TOKEN_PIPE);
 	else if (*prompt == '<')
 	{
-		if (*(prompt++ + 1) == '<')
-			process_special_help(helper);
+		if (*(prompt + 1) == '<')
+		{
+			ft_handle_token(helper, TOKEN_HEREDOC);
+			prompt++;
+		}
 		else
-			ft_handle_token(&(helper->lst), &(helper->aid),
-				&(helper->var), TOKEN_RED_IN);
+			ft_handle_token(helper, TOKEN_RED_IN);
 	}
 	else if (*prompt == '>')
 	{
 		if (*(prompt + 1) == '>')
 		{
-			ft_handle_token(&(helper->lst), &(helper->aid),
-				&(helper->var), TOKEN_RED_APP);
+			ft_handle_token(helper, TOKEN_RED_APP);
 			prompt++;
 		}
 		else
-			ft_handle_token(&(helper->lst), &(helper->aid),
-				&(helper->var), TOKEN_RED_OUT);
+			ft_handle_token(helper, TOKEN_RED_OUT);
 	}
 	helper->flag2 = 0;
 	return (prompt + 1);
@@ -55,9 +48,8 @@ static char	*process_char(char *prompt, t_helper *helper)
 		helper->var = ft_append_str((helper->var), *prompt);
 	else if (helper->flag)
 	{
-		if (helper->var)
-			helper->aid = ft_expand_split(&(helper->lst),
-					(helper->aid), (helper->var));
+		helper->aid = ft_expand_split(&(helper->lst),
+				(helper->aid), (helper->var), 1);
 		prompt--;
 		helper->flag = 0;
 		(helper->var) = NULL;

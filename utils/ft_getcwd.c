@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:34:06 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 18:36:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:11:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_getcwd(char *s, size_t n)
 	char	*tmp;
 
 	tmp = getcwd(s, n);
+	if (!tmp)
+		return (NULL);
 	res = ft_strdup(tmp);
 	free(tmp);
 	return (res);

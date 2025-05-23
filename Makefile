@@ -74,6 +74,7 @@ SRCS =	sh/sh_cd.c \
 		aid/redirection/ft_lstadd_back.c \
 		parsing/ft_parse_quoted_string.c \
 		parsing/ft_analyze_next_segment.c
+
 OBJS = ${SRCS:.c=.o}
 
 NAME = minishell
@@ -84,8 +85,8 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	# cc $^ -lreadline -o $@
-	cc $^ -lreadline -fsanitize=address -g3 -o $@
+	cc $^ -lreadline -o $@
+	# cc $^ -lreadline -fsanitize=address -g3 -o $@
 
 clean:
 	rm -f $(OBJS)

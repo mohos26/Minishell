@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 16:54:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 15:05:25 by mhoussas         ###   ########.fr       */
+/*   Created: 2025-05-23 10:03:48 by amaliari          #+#    #+#             */
+/*   Updated: 2025-05-23 10:03:48 by amaliari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	signal_handler(int sig)
 
 void	signal_util(void)
 {
-	printf("\r\033[K");
 	rl_catch_signals = 0;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);

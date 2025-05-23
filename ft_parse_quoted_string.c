@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_quoted_string.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 13:07:25 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 13:07:42 by mhoussas         ###   ########.fr       */
+/*   Created: 2025-05-23 10:03:42 by amaliari          #+#    #+#             */
+/*   Updated: 2025-05-23 10:03:42 by amaliari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	ft_handle_dollar_quote(char **aid, char **var,
 		*var = ft_append_str(*var, **prompt);
 	else if (*flag)
 	{
-		if (*var)
-			*aid = ft_strjoin(*aid, ft_expand_quotes(*var));
+		*aid = ft_strjoin(*aid, ft_expand_quotes(*var));
 		*flag = 0;
 		*var = NULL;
 		(*prompt)--;
@@ -42,8 +41,11 @@ char	*ft_parse_quoted_string(char *prompt, char **aid)
 	{
 		while (*++prompt != '"' && *prompt)
 			ft_handle_dollar_quote(aid, &var, &flag, &prompt);
-		if (var)
+		if (flag)
+		{
+			flag = 0;
 			*aid = ft_strjoin(*aid, ft_expand_quotes(var));
+		}
 	}
 	else if (*prompt == '\'')
 	{

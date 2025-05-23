@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:46:26 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 07:00:16 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:41:46 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ char	**ft_var_split(char *s)
 
 int	ft_valid_name(char *s)
 {
-	if (!ft_isalpha(*s))
+	if (!s || (!ft_isalpha(*s) && *s != '_'))
 		return (0);
 	s++;
 	while (*s)
 	{
-		if (!ft_isalnum(*s))
+		if (!ft_isalnum(*s) && *s != '_')
 			return (0);
 		s++;
 	}

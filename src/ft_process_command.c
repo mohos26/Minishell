@@ -47,12 +47,12 @@ int	ft_process_command(t_args *args)
 	int		in_fd;
 
 	status = 0;
-	if (!args->valid && args->frist)
-		return (ft_not_valid(args));
 	in_fd = dup(0);
 	out_fd = dup(1);
 	if (ft_do_redirection(args->_redirections))
 		return (dup2(in_fd, 0), dup2(out_fd, 1), 1);
+	if (!args->valid && args->frist)
+		return (dup2(in_fd, 0), dup2(out_fd, 1), ft_not_valid(args));
 	if (args->is_sh)
 		status = ft_do_sh(args);
 	else if (args->is_cmd)
