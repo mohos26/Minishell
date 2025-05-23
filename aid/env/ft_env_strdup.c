@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:07:12 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 11:04:33 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:44:55 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_env_strdup(char *s)
 	if (!ptr)
 		ft_exit(1);
 	head = ptr;
-	while (*s)
+	while (s && *s)
 		*ptr++ = *s++;
 	*ptr = '\0';
 	return (head);

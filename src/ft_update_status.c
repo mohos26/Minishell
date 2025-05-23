@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_update_status.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 15:55:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 16:29:38 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/21 17:54:26 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/21 18:13:21 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../header.h"
 
-int	ft_lstsize_red(t_red *lst)
+void	ft_update_status(int status)
 {
-	int	len;
+	t_env	*env;
 
-	if (!lst)
-		return (0);
-	len = 0;
-	while (lst)
+	env = *ft_env(NULL);
+	while (env)
 	{
-		lst = lst->next;
-		len++;
+		if (!ft_strncmp(env->name, "?", INT_MAX))
+			break ;
+		env = env->next;
 	}
-	return (len);
+	free(env->value);
+	env->value = ft_env_strdup(ft_itoa(status));
 }

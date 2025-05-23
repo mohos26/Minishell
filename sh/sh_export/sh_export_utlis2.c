@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:31:13 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 09:47:36 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 06:52:55 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ int	ft_is_append(char *var)
 	return (!!ft_strnstr(var, "+=", INT_MAX));
 }
 
-void	ft_append(char *var)
+int	ft_append(char *var)
 {
 	char	**lst;
+	int		status;
 
+	status = 0;
 	lst = ft_split(var, '+');
 	(*(lst + 1))++;
 	if (ft_valid_name(*lst))
@@ -57,5 +59,9 @@ void	ft_append(char *var)
 			ft_add_var(lst);
 	}
 	else
+	{
 		ft_print_error("export", var, "not a valid identifier");
+		status = 1;
+	}
+	return (status);
 }

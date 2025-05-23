@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_number.c                                     :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 18:08:49 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 18:55:26 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/22 18:35:55 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/22 18:36:09 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	ft_is_number(char *s)
+void	ft_exit(int status)
 {
-	int	len;
+	t_env	*lst;
+	t_env	*tmp;
 
-	len = 0;
-	if (s && (*s == '+' || *s == '-'))
-		s++;
-	if (!s || !*s)
-		return (0);
-	while (len++ < 3 && ft_isdigit(*s))
-		s++;
-	return (!*s);
+	ft_clean();
+	rl_clear_history();
+	lst = *ft_env(NULL);
+	while (lst)
+	{
+		tmp = lst;
+		free(lst->name);
+		free(lst->value);
+		lst = lst->next;
+		free(tmp);
+	}
+	exit(status);
 }

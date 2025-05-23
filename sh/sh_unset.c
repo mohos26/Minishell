@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:32:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 09:47:25 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 06:49:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ static void	ft_do(char *name)
 	}
 }
 
-void	sh_unset(t_args *args)
+int	sh_unset(t_args *args)
 {
 	char	**lst;
+	int		status;
 
+	status = 0;
 	lst = args->args;
 	while (lst && *lst)
 	{
@@ -44,7 +46,11 @@ void	sh_unset(t_args *args)
 				ft_do(*lst);
 		}
 		else
+		{
 			ft_print_error("unset", *lst, "not a valid identifier");
+			status = 1;
+		}
 		lst++;
 	}
+	return (status);
 }

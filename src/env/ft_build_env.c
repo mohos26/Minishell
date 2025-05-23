@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:03:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 09:50:10 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:37:49 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static t_env	*ft_ensure_default_env_vars(t_env *lst)
 				NULL, 0));
 	if (!ft_is_in(lst, "PWD"))
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PWD"),
-				ft_env_strdup(getcwd(NULL, 0)), 1));
+				ft_env_strdup(ft_getcwd(NULL, 0)), 1));
 	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("1PWD"),
-			ft_env_strdup(getcwd(NULL, 0)), 2));
+			ft_env_strdup(ft_getcwd(NULL, 0)), 2));
 	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("?"),
 			ft_env_strdup("0"), 2));
 	return (lst);
@@ -105,7 +105,7 @@ t_env	*ft_build_env(char **env)
 					NULL, 0));
 		else if (!ft_strncmp(env_kv_pair[0], "PWD", INT_MAX))
 			ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("PWD"),
-					ft_env_strdup(getcwd(NULL, 0)), 1));
+					ft_env_strdup(ft_getcwd(NULL, 0)), 1));
 		else
 			ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup(*env_kv_pair),
 					ft_env_strdup(env_kv_pair[1]), !!ft_strchr(*env, '=')));

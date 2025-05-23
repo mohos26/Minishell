@@ -6,13 +6,14 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:08:08 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/03 15:59:40 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:40:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	sh_pwd(void)
+int	sh_pwd(void)
 {
 	ft_putendl_fd(ft_getenv("1PWD"), 1);
+	return (0);
 }

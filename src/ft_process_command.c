@@ -6,37 +6,11 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:09:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 20:08:29 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:30:15 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-static void	ft_stdin(int flag)
-{
-	static int	std;
-
-	if (flag)
-		std = dup(0);
-	else
-	{
-		dup2(std, 0);
-		close(std);
-	}
-}
-
-static void	ft_stdout(int flag)
-{
-	static int	std;
-
-	if (flag)
-		std = dup(1);
-	else
-	{
-		dup2(std, 1);
-		close(std);
-	}
-}
 
 int	ft_not_valid(t_args *args)
 {
@@ -69,13 +43,16 @@ int	ft_not_valid(t_args *args)
 int	ft_process_command(t_args *args)
 {
 	int		status;
+	int		out_fd;
+	int		in_fd;
 
 	status = 0;
 	if (!args->valid && args->frist)
 		return (ft_not_valid(args));
-	(ft_stdin(1), ft_stdout(1));
+	in_fd = dup(0);
+	out_fd = dup(1);
 	if (ft_do_redirection(args->_redirections))
-		return (1);
+		return (dup2(in_fd, 0), dup2(out_fd, 1), 1);
 	if (args->is_sh)
 		status = ft_do_sh(args);
 	else if (args->is_cmd)
@@ -83,6 +60,6 @@ int	ft_process_command(t_args *args)
 		status = ft_execute(args);
 		status = WEXITSTATUS(status);
 	}
-	(ft_stdin(0), ft_stdout(0));
+	(dup2(in_fd, 0), dup2(out_fd, 1));
 	return (status);
 }

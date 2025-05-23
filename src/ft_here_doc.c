@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 15:17:34 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:33:19 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,6 @@ static char	*ft_expand(char *var)
 	if (var)
 		return (var);
 	return ("");
-}
-
-static int	ft_is_valid(char *s, char c)
-{
-	if (!ft_strlen(s) && (c == '?' || ft_isalpha(c) || c == '_'))
-		return (1);
-	else if ((ft_isalnum(c) || c == '_') && *s != '?')
-		return (1);
-	return (0);
 }
 
 static char	*ft_aid(char *prompt)
@@ -60,17 +51,16 @@ static char	*ft_aid(char *prompt)
 	return (ft_strjoin(res, ft_expand(var)));
 }
 
-static void	ft_child(char *name_file, char *limiter)
+static void	ft_child(int *fds, char *limiter)
 {
 	char	*res;
 	char	*aid;
-	int		fd;
 
 	res = NULL;
-	fd = open(name_file, O_CREAT | O_WRONLY, 0644);
+	signal(SIGINT, heredoc_signal);
 	while (1)
 	{
-		aid = readline("> ");
+		aid = ft_readline("> ");
 		if (!ft_strncmp(aid, limiter, INT_MAX) || (!ft_strlen(aid)
 				&& !ft_strlen(limiter)))
 			break ;
@@ -82,24 +72,33 @@ static void	ft_child(char *name_file, char *limiter)
 	}
 	if (res)
 		res = ft_strjoin(res, "\n");
-	ft_putstr_fd(res, fd);
-	close(fd);
+	ft_putstr_fd(res, fds[1]);
+	close(fds[1]);
+	close(fds[0]);
 	ft_exit(0);
 }
 
 char	*ft_here_doc(char *limiter)
 {
-	char	*name_file;
+	int		status;
+	int		fds[2];
 	pid_t	pid;
-	int		n;
 
-	n = 1;
-	while (!access(ft_strjoin("/tmp/.herdoc", ft_itoa(n)), F_OK))
-		n++;
-	name_file = ft_strjoin("/tmp/.herdoc", ft_itoa(n));
+	pipe(fds);
 	pid = fork();
+	if (pid == -1)
+		return (ft_print_error("fork", "Resource temporarily unavailable",
+				"Nothing"), NULL);
+	signal(SIGINT, SIG_IGN);
 	if (!pid)
-		ft_child(name_file, limiter);
-	wait(NULL);
-	return (name_file);
+		ft_child(fds, limiter);
+	close(fds[1]);
+	waitpid(pid, &status, 0);
+	signal(SIGINT, signal_handler);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
+	{
+		close(fds[0]);
+		return (NULL);
+	}
+	return (ft_itoa(fds[0]));
 }

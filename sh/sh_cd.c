@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 18:18:15 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:44:42 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,22 @@ static void	update_virtual_pwd(char *aid)
 	}
 }
 
-void	sh_cd(t_args *args)
+int	sh_cd(t_args *args)
 {
-	DIR		*ptr;
 	char	*target_path;
 
 	if (!args->args || !*(args->args))
 	{
 		target_path = ft_getenv("HOME");
 		if (!target_path)
-			return (ft_print_error("cd", "HOME not set", "Nothing"));
+			return (ft_print_error("cd", "HOME not set", "Nothing"), 1);
 		else if (!*target_path)
-			return ;
+			return (0);
 	}
 	else
 		target_path = *(args->args);
-	ptr = opendir(target_path);
-	if (ptr)
-	{
-		chdir(target_path);
-		closedir(ptr);
-	}
-	else
-		return (ft_print_error("cd", target_path, NULL));
+	if (chdir(target_path))
+		return (ft_print_error("cd", target_path, NULL), 1);
 	update_virtual_pwd(target_path);
+	return (0);
 }

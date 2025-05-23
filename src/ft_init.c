@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:14:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 17:07:40 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:37:34 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_check_cwd(void)
 {
-	if (!getcwd(NULL, 0))
+	if (!ft_getcwd(NULL, 0))
 	{
 		ft_print_error("init", ft_strjoin("error retrieving current directory:",
 				" getcwd: cannot access parent directories"), NULL);

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_number.c                                     :+:      :+:    :+:   */
+/*   ft_getcwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 18:08:49 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 18:55:26 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/20 18:34:06 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/20 18:36:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	ft_is_number(char *s)
+char	*ft_getcwd(char *s, size_t n)
 {
-	int	len;
+	char	*res;
+	char	*tmp;
 
-	len = 0;
-	if (s && (*s == '+' || *s == '-'))
-		s++;
-	if (!s || !*s)
-		return (0);
-	while (len++ < 3 && ft_isdigit(*s))
-		s++;
-	return (!*s);
+	tmp = getcwd(s, n);
+	res = ft_strdup(tmp);
+	free(tmp);
+	return (res);
 }

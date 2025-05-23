@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_number.c                                     :+:      :+:    :+:   */
+/*   ft_extract_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 18:08:49 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 18:55:26 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/21 16:37:04 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/21 16:46:40 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	ft_is_number(char *s)
+char	*ft_extract_command(t_token *lst)
 {
-	int	len;
-
-	len = 0;
-	if (s && (*s == '+' || *s == '-'))
-		s++;
-	if (!s || !*s)
-		return (0);
-	while (len++ < 3 && ft_isdigit(*s))
-		s++;
-	return (!*s);
+	while (lst)
+	{
+		if (lst->type == TOKEN_PIPE)
+			break ;
+		else if (lst->type == TOKEN_RED_IN || lst->type == TOKEN_RED_OUT
+			|| lst->type == TOKEN_RED_APP || lst->type == TOKEN_HEREDOC)
+			lst = lst->next;
+		else if (lst->type == TOKEN_WORD)
+			return (lst->value);
+		if (lst)
+			lst = lst->next;
+	}
+	return (NULL);
 }

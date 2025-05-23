@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 17:41:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:04:32 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	ft_is_number_exit(char *s)
 	return (*s == '\0');
 }
 
-void	sh_exit(t_args *args)
+int	sh_exit(t_args *args)
 {
 	int	status;
 
@@ -55,9 +55,10 @@ void	sh_exit(t_args *args)
 			ft_print_error("exit", *(args->args), "numeric argument required");
 		}
 		else if (*(args->args + 1))
-			return (ft_print_error("exit", "too many arguments", "Nothing"));
+			return (ft_print_error("exit", "too many arguments", "Nothing"), 1);
 		else
 			status = ft_atoi(*(args->args));
 	}
 	ft_exit(status);
+	return (0);
 }

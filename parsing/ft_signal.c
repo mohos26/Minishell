@@ -6,15 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 16:54:14 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 16:46:05 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:05:25 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-volatile sig_atomic_t	g_last_signal_received = 0;
-
-static void	signal_handler(int sig)
+void	signal_handler(int sig)
 {
 	g_last_signal_received = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
@@ -34,4 +32,11 @@ void	signal_util(void)
 	rl_catch_signals = 0;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
+}
+
+void	heredoc_signal(int sig)
+{
+	(void)sig;
+	printf("\n");
+	ft_exit(1);
 }

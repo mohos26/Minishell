@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:21:52 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/04 19:19:38 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 06:50:30 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	sh_env(void)
+int	sh_env(void)
 {
 	t_env	*env;
 	char	*res;
@@ -31,4 +31,5 @@ void	sh_env(void)
 		env = env->next;
 	}
 	ft_putstr_fd(res, 1);
+	return (0);
 }

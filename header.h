@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 17:08:21 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 07:47:22 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <curses.h>
 # include <errno.h>
 
+volatile sig_atomic_t	g_last_signal_received;
+
 enum	e_token_type
 {
 	TOKEN_WORD,
@@ -48,6 +50,7 @@ typedef struct s_token
 typedef struct s_redirections
 {
 	int						flag;
+	int						flag2;
 	struct s_redirections	*next;
 	char					*file_name;
 }							t_red;
@@ -77,6 +80,15 @@ typedef struct s_env
 	int				active;
 }					t_env;
 
+typedef struct s_helper
+{
+	t_token	*lst;
+	char	*aid;
+	char	*var;
+	int		flag;
+	int		flag2;
+}			t_helper;
+
 /* --------------------------- aid files ------------------------------- */
 char		*ft_itoa(int n);
 int			ft_isalnum(int c);
@@ -105,23 +117,22 @@ void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(char *name, char *value, int active);
 /* redirection */
 char		*ft_itoa(int n);
-int			ft_lstsize_red(t_red *lst);
 t_red		*ft_lstlast_red(t_red *lst);
 char		*ft_here_doc(char *limiter);
 void		ft_lstdel_in_red(t_red **lst, int i);
-t_red		*ft_lstnew_red(char *name, int value);
 void		ft_lstadd_back_red(t_red **lst, t_red *new);
+t_red		*ft_lstnew_red(char *name, int value, int flag2);
 
 /* ------------------------- shell commands --------------------------------- */
-void		sh_pwd(void);
-void		sh_env(void);
-void		sh_cd(t_args *args);
-void		sh_exit(t_args *args);
-void		sh_echo(t_args *args);
-void		sh_unset(t_args *args);
-void		sh_export(t_args *args);
+int			sh_pwd(void);
+int			sh_env(void);
+int			sh_cd(t_args *args);
+int			sh_exit(t_args *args);
+int			sh_echo(t_args *args);
+int			sh_unset(t_args *args);
+int			sh_export(t_args *args);
 
-/* -------------------------- utils ---------------------------------------- */
+/* -------------------------- src ---------------------------------------- */
 void		ft_clean(void);
 int			ft_is_sh(char *s);
 void		ft_init(char **env);
@@ -129,6 +140,7 @@ void		ft_exit(int status);
 t_env		**ft_env(t_env *lst);
 int			ft_is_number(char *s);
 int			ft_check_dir(char *s);
+char		*ft_readline(char *s);
 char		**ft_convert_env(void);
 int			ft_do_sh(t_args *args);
 char		*ft_getenv(char *name);
@@ -140,17 +152,23 @@ int			ft_execute(t_args *args);
 t_env		*ft_build_env(char **env);
 t_args		*ft_init_args(t_token *lst);
 int			ft_is_execute(t_args *args);
+void		ft_update_status(int status);
+char		*ft_getcwd(char *s, size_t n);
 int			ft_do_redirection(t_red *lst);
+char		**ft_extract_args(t_token *lst);
 char		*ft_append_str(char	*s, char c);
 int			ft_process_command(t_args *args);
 int			ft_check_redirections(char **lst);
+char		*ft_extract_command(t_token *lst);
+int			ft_handle_pipes(t_prompt *prompt);
 void		ft_close_pipe_redirection(int flag);
-int			ft_process_prompt(t_prompt *prompt);
+void		ft_process_prompt(t_prompt *prompt);
 void		ft_pipe_redirection(int fd, int flag);
+t_red		*ft_extract_redirections(t_token *lst, int *flag);
 void		ft_print_error(char *command_name, char *arg, char *arg2);
-
 /* ------------------------- export -------------------------------------- */
-void		ft_append(char *var);
+char		**ft_sort(void);
+int			ft_append(char *var);
 int			ft_valid_name(char *s);
 int			ft_is_append(char *var);
 char		**ft_var_split(char *s);
@@ -158,11 +176,20 @@ int			ft_is_onready(char *name);
 
 /* ---------------------------- parsing ------------------------------------*/
 void		signal_util(void);
+int			ft_is_space(char c);
+void		heredoc_signal(int sig);
+void		signal_handler(int sig);
 int			ft_valid_quotes(char *s);
 t_token		*ft_split_args(char *prompt);
+int			ft_is_valid(char *s, char c);
+char		*ft_expand_quotes(char *var);
 t_token		*ft_lstlast_token(t_token *lst);
 int			ft_syntax_error(t_token *tokens);
 t_token		*ft_lstnew_token(char *value, int type);
 void		ft_lstadd_back_token(t_token **lst, t_token *new);
+char		*ft_parse_quoted_string(char *prompt, char **aid);
+char		*ft_expand_split(t_token **lst, char *aid, char *var);
+char		*ft_analyze_next_segment(char *prompt, t_helper *helper);
+void		ft_handle_token(t_token **lst, char **aid, char **var, int type);
 
 #endif
