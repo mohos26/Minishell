@@ -61,14 +61,11 @@ SRCS =	sh/sh_cd.c \
 		parsing/ft_handel_token.c \
 		parsing/ft_syntax_error.c \
 		parsing/ft_valid_quotes.c \
-		src/ft_redirection_pipe.c \
 		utils/garbage_collector.c \
 		aid/token/ft_lstadd_back.c \
 		aid/redirection/ft_lstnew.c \
 		aid/redirection/ft_lstlast.c \
 		src/ft_extract_redirections.c \
-		src/ft_redirections_parsing.c \
-		aid/redirection/ft_lstdel_in.c \
 		sh/sh_export/sh_export_utlis.c \
 		sh/sh_export/sh_export_utlis2.c \
 		aid/redirection/ft_lstadd_back.c \

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:14:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 09:28:09 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 22:50:57 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ terminal.", "Nothing");
 	}
 	ft_check_cwd();
 	ft_env(ft_build_env(env));
-	signal_util();
+	ft_signal_util();
 }

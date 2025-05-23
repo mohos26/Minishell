@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 18:33:19 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 22:51:23 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	ft_child(int *fds, char *limiter)
 	char	*aid;
 
 	res = NULL;
-	signal(SIGINT, heredoc_signal);
+	signal(SIGINT, ft_heredoc_signal);
 	while (1)
 	{
 		aid = ft_readline("> ");
@@ -94,7 +94,7 @@ char	*ft_here_doc(char *limiter)
 		ft_child(fds, limiter);
 	close(fds[1]);
 	waitpid(pid, &status, 0);
-	signal(SIGINT, signal_handler);
+	signal(SIGINT, ft_signal_handler);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
 	{
 		close(fds[0]);

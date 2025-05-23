@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 21:51:14 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/23 22:55:11 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char		*ft_itoa(int n);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
-int			ft_lstsize(t_env *lst);
+void		*ft_calloc(size_t size);
 size_t		ft_strlen(const char *s);
 int			ft_atoi(const char *str);
 char		*ft_strdup(const char *s1);
@@ -100,7 +100,6 @@ void		ft_putendl_fd(char *s, int fd);
 char		*ft_strchr(const char *s, int c);
 char		**ft_split(const char *s, char c);
 char		*ft_strjoin(char const *s1, char const *s2);
-t_env		*ft_lstnew(char *name, char *value, int active);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
@@ -112,10 +111,8 @@ void		ft_lstdel_in_env(t_env **lst, int i);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(char *name, char *value, int active);
 /* redirection */
-char		*ft_itoa(int n);
 t_red		*ft_lstlast_red(t_red *lst);
 char		*ft_here_doc(char *limiter);
-void		ft_lstdel_in_red(t_red **lst, int i);
 void		ft_lstadd_back_red(t_red **lst, t_red *new);
 t_red		*ft_lstnew_red(char *name, int value, int flag2);
 
@@ -148,9 +145,6 @@ char		*ft_readline(char *s);
 char		**ft_convert_env(void);
 int			ft_do_sh(t_args *args);
 char		*ft_getenv(char *name);
-void		*ft_calloc(size_t size);
-char		*ft_env_strdup(char *s);
-char		*ft_get_file(char **lst);
 t_prompt	*ft_init_prompt(char *s);
 int			ft_execute(t_args *args);
 t_env		*ft_build_env(char **env);
@@ -162,20 +156,17 @@ int			ft_do_redirection(t_red *lst);
 char		**ft_extract_args(t_token *lst);
 char		*ft_append_str(char	*s, char c);
 int			ft_process_command(t_args *args);
-int			ft_check_redirections(char **lst);
 char		*ft_extract_command(t_token *lst);
 int			ft_handle_pipes(t_prompt *prompt);
-void		ft_close_pipe_redirection(int flag);
 void		ft_process_prompt(t_prompt *prompt);
-void		ft_pipe_redirection(int fd, int flag);
 t_red		*ft_extract_redirections(t_token *lst, int *flag);
 void		ft_print_error(char *command_name, char *arg, char *arg2);
 
 /* ---------------------------- parsing ------------------------------------*/
-void		signal_util(void);
+void		ft_signal_util(void);
 int			ft_is_space(char c);
-void		heredoc_signal(int sig);
-void		signal_handler(int sig);
+void		ft_heredoc_signal(int sig);
+void		ft_signal_handler(int sig);
 int			ft_valid_quotes(char *s);
 t_token		*ft_split_args(char *prompt);
 int			ft_is_valid(char *s, char c);

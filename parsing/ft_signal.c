@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
+/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-23 10:03:48 by amaliari          #+#    #+#             */
-/*   Updated: 2025-05-23 10:03:48 by amaliari         ###   ########.fr       */
+/*   Created: 2025/05/23 10:03:48 by amaliari          #+#    #+#             */
+/*   Updated: 2025/05/23 22:51:23 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	signal_handler(int sig)
+void	ft_signal_handler(int sig)
 {
 	g_last_signal_received = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
@@ -26,14 +26,14 @@ void	signal_handler(int sig)
 	}
 }
 
-void	signal_util(void)
+void	ft_signal_util(void)
 {
 	rl_catch_signals = 0;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGINT, ft_signal_handler);
+	signal(SIGQUIT, ft_signal_handler);
 }
 
-void	heredoc_signal(int sig)
+void	ft_heredoc_signal(int sig)
 {
 	(void)sig;
 	printf("\n");
