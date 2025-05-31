@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:14:11 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 22:50:57 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/31 15:24:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_check_cwd(void)
 
 void	ft_init(char **env)
 {
-	if (!isatty(0))
+	if (!isatty(0) || !isatty(1))
 	{
 		ft_print_error("init", "this program must be run in an interactive \
 terminal.", "Nothing");

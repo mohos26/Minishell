@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_update_ctrl_flag.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 15:58:29 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/04/15 11:39:38 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/05/25 18:09:20 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/05/25 18:14:07 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "header.h"
 
-t_env	*ft_lstlast_env(t_env *lst)
+void	ft_update_ctrl_flag(int flag)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	t_env	*env;
+
+	env = *ft_env(NULL);
+	while (env)
+	{
+		if (!ft_strncmp(env->name, "1ctrl", INT_MAX))
+			break ;
+		env = env->next;
+	}
+	free(env->value);
+	env->value = ft_env_strdup(ft_itoa(flag));
 }

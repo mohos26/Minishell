@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:03:27 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/20 18:37:49 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:09:56 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ static t_env	*ft_ensure_default_env_vars(t_env *lst)
 	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("1PWD"),
 			ft_env_strdup(ft_getcwd(NULL, 0)), 2));
 	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("?"),
+			ft_env_strdup("0"), 2));
+	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_env_strdup("1ctrl"),
 			ft_env_strdup("0"), 2));
 	return (lst);
 }

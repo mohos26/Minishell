@@ -36,7 +36,6 @@ SRCS =	sh/sh_cd.c \
 		parsing/ft_signal.c \
 		src/env/ft_getenv.c \
 		src/ft_is_execute.c \
-		aid/env/ft_lstlast.c \
 		aid/env/ft_lstsize.c \
 		src/ft_init_prompt.c \
 		src/ft_convert_env.c \
@@ -60,11 +59,12 @@ SRCS =	sh/sh_cd.c \
 		src/ft_redirection_cmd.c \
 		parsing/ft_handel_token.c \
 		parsing/ft_syntax_error.c \
+		parsing/ft_split_wspace.c \
 		parsing/ft_valid_quotes.c \
+		src/ft_update_ctrl_flag.c \
 		utils/garbage_collector.c \
 		aid/token/ft_lstadd_back.c \
 		aid/redirection/ft_lstnew.c \
-		aid/redirection/ft_lstlast.c \
 		src/ft_extract_redirections.c \
 		sh/sh_export/sh_export_utlis.c \
 		sh/sh_export/sh_export_utlis2.c \
@@ -83,7 +83,6 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	cc $^ -lreadline -o $@
-	# cc $^ -lreadline -fsanitize=address -g3 -o $@
 
 clean:
 	rm -f $(OBJS)

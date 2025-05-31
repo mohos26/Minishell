@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 10:20:49 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/30 08:08:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static t_env	*find_virtual_pwd_env(void)
+static t_env	*ft_find_virtual_pwd_env(void)
 {
 	t_env	*env;
 
@@ -26,12 +26,12 @@ static t_env	*find_virtual_pwd_env(void)
 	return (env);
 }
 
-static void	update_virtual_pwd(char *aid)
+static void	ft_update_virtual_pwd(char *aid)
 {
 	t_env	*node;
 	char	*tmp;
 
-	node = find_virtual_pwd_env();
+	node = ft_find_virtual_pwd_env();
 	tmp = node->value;
 	if (ft_getcwd(NULL, 0))
 		node->value = ft_env_strdup(ft_getcwd(NULL, 0));
@@ -47,8 +47,47 @@ static void	update_virtual_pwd(char *aid)
 	free(tmp);
 }
 
+static char	*ft_get_parent_path(char *pwd)
+{
+	int	len;
+
+	len = ft_strlen(pwd);
+	while (len && pwd[len - 1] != '/')
+		len--;
+	pwd[len - 1] = '\0';
+	return (ft_strdup(pwd));
+}
+
+static int	ft_attempt_virtual(char *target_path)
+{
+	char	*aid;
+	char	**lst;
+
+	if (target_path[0] == '/')
+		return (0);
+	lst = ft_split(target_path, '/');
+	aid = ft_strdup(ft_getenv("1PWD"));
+	while (lst && *lst)
+	{
+		if (ft_strncmp(*lst, ".", INT_MAX))
+		{
+			if (!ft_strncmp(*lst, "..", INT_MAX))
+				aid = ft_get_parent_path(aid);
+			else
+				aid = ft_strjoin(aid, ft_strjoin("/", *lst));
+			if (!ft_check_dir(aid))
+				return (0);
+		}
+		lst++;
+	}
+	if (!ft_check_dir(aid))
+		return (0);
+	return (chdir(aid), 1);
+}
+
 int	sh_cd(t_args *args)
 {
+	DIR		*ptr;
 	char	*target_path;
 
 	if (!args->args || !*(args->args))
@@ -61,8 +100,14 @@ int	sh_cd(t_args *args)
 	}
 	else
 		target_path = *(args->args);
-	if (chdir(target_path))
+	ptr = opendir(target_path);
+	if (ptr)
+	{
+		chdir(target_path);
+		closedir(ptr);
+	}
+	else if (!(errno == 13 && ft_attempt_virtual(target_path)))
 		return (ft_print_error("cd", target_path, NULL), 1);
-	update_virtual_pwd(target_path);
+	ft_update_virtual_pwd(target_path);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:10:28 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 14:53:10 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/27 09:44:12 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_process_prompt(t_prompt *prompt)
 {
+	int	status;
+
 	if (!prompt)
 	{
 		if (!ft_atoi(ft_getenv("?")))
@@ -21,7 +23,8 @@ void	ft_process_prompt(t_prompt *prompt)
 		return ;
 	}
 	if (prompt->length == 1)
-		ft_update_status(ft_process_command(*(prompt->args)));
+		status = ft_process_command(*(prompt->args));
 	else
-		ft_update_status(ft_handle_pipes(prompt));
+		status = ft_handle_pipes(prompt);
+	ft_update_status(status);
 }

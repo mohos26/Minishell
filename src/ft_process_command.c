@@ -6,13 +6,13 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:09:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 15:30:15 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/27 09:51:19 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	ft_not_valid(t_args *args)
+static int	ft_not_valid(t_args *args)
 {
 	int		status;
 	char	*aid;
@@ -30,7 +30,7 @@ int	ft_not_valid(t_args *args)
 	else if (ft_check_dir(aid))
 		ft_print_error(args->frist, "is a directory", "Nothing");
 	else if (!access(aid, F_OK) && access(aid, X_OK))
-		ft_print_error(args->frist, "permission denied", "Nothing");
+		ft_print_error(args->frist, "Permission denied", "Nothing");
 	else
 	{
 		if (errno == 2)
@@ -60,6 +60,9 @@ int	ft_process_command(t_args *args)
 		status = ft_execute(args);
 		status = WEXITSTATUS(status);
 	}
+	if (ft_atoi(ft_getenv("1ctrl")))
+		status = ft_atoi(ft_getenv("?"));
+	ft_update_ctrl_flag(0);
 	(dup2(in_fd, 0), dup2(out_fd, 1));
 	return (status);
 }

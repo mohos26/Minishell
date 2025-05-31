@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 22:55:11 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/31 15:20:10 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 # define HEADER_H
 
-# include <stdio.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <term.h>
+# include <stdio.h>
+# include <fcntl.h>
 # include <errno.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <unistd.h>
+# include <dirent.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 volatile sig_atomic_t	g_last_signal_received;
 
@@ -85,7 +86,7 @@ typedef struct s_prompt
 	t_args	**args;
 }			t_prompt;
 
-/* --------------------------- aid files ------------------------------- */
+/* --------------------------- aid files ------------------------------------ */
 char		*ft_itoa(int n);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
@@ -106,15 +107,16 @@ char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 /* env */
 char		*ft_env_strdup(char *s);
 int			ft_lstsize_env(t_env *lst);
-t_env		*ft_lstlast_env(t_env *lst);
 void		ft_lstdel_in_env(t_env **lst, int i);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(char *name, char *value, int active);
 /* redirection */
-t_red		*ft_lstlast_red(t_red *lst);
-char		*ft_here_doc(char *limiter);
 void		ft_lstadd_back_red(t_red **lst, t_red *new);
 t_red		*ft_lstnew_red(char *name, int value, int flag2);
+/* tokens */
+t_token		*ft_lstlast_token(t_token *lst);
+t_token		*ft_lstnew_token(char *value, int type);
+void		ft_lstadd_back_token(t_token **lst, t_token *new);
 
 /* ------------------------- shell commands --------------------------------- */
 int			sh_pwd(void);
@@ -125,7 +127,7 @@ int			sh_echo(t_args *args);
 int			sh_unset(t_args *args);
 int			sh_export(t_args *args);
 
-/* ------------------------- export -------------------------------------- */
+/* ------------------------- export ----------------------------------------- */
 char		**ft_sort(void);
 int			ft_append(char *var);
 int			ft_valid_name(char *s);
@@ -133,7 +135,7 @@ int			ft_is_append(char *var);
 char		**ft_var_split(char *s);
 int			ft_is_onready(char *name);
 
-/* -------------------------- src ---------------------------------------- */
+/* -------------------------- src ------------------------------------------- */
 void		ft_clean(void);
 int			ft_is_sh(char *s);
 void		ft_init(char **env);
@@ -150,6 +152,7 @@ int			ft_execute(t_args *args);
 t_env		*ft_build_env(char **env);
 t_args		*ft_init_args(t_token *lst);
 int			ft_is_execute(t_args *args);
+char		*ft_here_doc(char *limiter);
 void		ft_update_status(int status);
 char		*ft_getcwd(char *s, size_t n);
 int			ft_do_redirection(t_red *lst);
@@ -162,22 +165,21 @@ void		ft_process_prompt(t_prompt *prompt);
 t_red		*ft_extract_redirections(t_token *lst, int *flag);
 void		ft_print_error(char *command_name, char *arg, char *arg2);
 
-/* ---------------------------- parsing ------------------------------------*/
-void		ft_signal_util(void);
+/* ---------------------------- parsing ------------------------------------- */
 int			ft_is_space(char c);
+void		ft_signal_util(void);
+int			ft_valid_quotes(char *s);
 void		ft_heredoc_signal(int sig);
 void		ft_signal_handler(int sig);
-int			ft_valid_quotes(char *s);
 t_token		*ft_split_args(char *prompt);
 int			ft_is_valid(char *s, char c);
 char		*ft_expand_quotes(char *var);
-t_token		*ft_lstlast_token(t_token *lst);
+void		ft_update_ctrl_flag(int flag);
 int			ft_syntax_error(t_token *tokens);
-t_token		*ft_lstnew_token(char *value, int type);
 void		ft_handle_token(t_helper *helper, int type);
-void		ft_lstadd_back_token(t_token **lst, t_token *new);
 char		*ft_parse_quoted_string(char *prompt, char **aid);
 char		*ft_analyze_next_segment(char *prompt, t_helper *helper);
 char		*ft_expand_split(t_token **lst, char *aid, char *var, int flag);
+char		**ft_split_wspace(const char *s);
 
 #endif

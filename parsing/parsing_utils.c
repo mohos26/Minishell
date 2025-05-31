@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
+/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-23 10:04:06 by amaliari          #+#    #+#             */
-/*   Updated: 2025-05-23 10:04:06 by amaliari         ###   ########.fr       */
+/*   Created: 2025/05/23 10:04:06 by amaliari          #+#    #+#             */
+/*   Updated: 2025/05/31 15:21:01 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,20 @@ char	*ft_expand_split(t_token **lst, char *aid, char *var, int flag)
 	aid3 = ft_getenv(var);
 	if (!ft_strlen(var) && flag)
 		aid3 = ft_strdup("$");
-	aid2 = ft_split(aid3, ' ');
+	aid2 = ft_split_wspace(ft_strjoin(aid, aid3));
 	while (aid2 && aid2[len])
 		len++;
 	i = 0;
 	while (i < len -1)
 	{
-		ft_lstadd_back_token(lst, ft_lstnew_token(ft_strjoin(aid, aid2[i]), 0));
+		ft_lstadd_back_token(lst, ft_lstnew_token(aid2[i], 0));
 		aid = NULL;
 		i++;
 	}
+	if (aid3 && ft_is_space(aid3[ft_strlen(aid3) - 1]))
+		return (ft_lstadd_back_token(lst, ft_lstnew_token(aid2[i], 0)), NULL);
 	if (len)
-		return (ft_strjoin(aid, aid2[len - 1]));
+		return (aid2[len - 1]);
 	return (aid);
 }
 

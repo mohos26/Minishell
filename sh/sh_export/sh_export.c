@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:42:43 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 06:59:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:22:51 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ft_reset_var(char *s)
 	}
 }
 
-void	ft_aid(char *var, char *lst)
+static void	ft_aid(char *var, char *lst)
 {
 	if (ft_is_onready(var))
 		ft_reset_var(lst);
