@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:03:48 by amaliari          #+#    #+#             */
-/*   Updated: 2025/05/27 22:08:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:30:37 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ void	ft_signal_handler(int sig)
 {
 	g_last_signal_received = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
-	{
-		ft_update_status(128 + g_last_signal_received);
-		return (ft_update_ctrl_flag(1));
-	}
+		return ;
 	if (sig == SIGINT)
 	{
 		rl_replace_line("", 0);
@@ -32,6 +29,7 @@ void	ft_signal_handler(int sig)
 void	ft_signal_util(void)
 {
 	rl_catch_signals = 0;
+	g_last_signal_received = 0;
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGQUIT, ft_signal_handler);
 }

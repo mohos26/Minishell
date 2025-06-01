@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
+/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-23 10:04:19 by amaliari          #+#    #+#             */
-/*   Updated: 2025-05-23 10:04:19 by amaliari         ###   ########.fr       */
+/*   Created: 2025/05/23 10:04:19 by amaliari          #+#    #+#             */
+/*   Updated: 2025/06/01 10:29:24 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	second_affectation(t_helper *helper)
 
 static void	process_token(char **prompt, t_helper *helper)
 {
+	helper->flag3 = 0;
 	while (helper->flag2 && (**prompt == '"' || **prompt == '\''
 			|| (!ft_is_space(**prompt) && **prompt)))
 	{
@@ -45,13 +46,17 @@ static void	process_token(char **prompt, t_helper *helper)
 			helper->aid = ft_expand_split(&(helper->lst), helper->aid,
 					helper->var, 1);
 			second_affectation(helper);
+			helper->flag3 = 1;
 		}
 	}
 	if (helper->flag)
 		helper->aid = ft_expand_split(&(helper->lst), helper->aid,
 				helper->var, 1);
-	if (helper->aid)
+	if (helper->aid || helper->flag3)
+	{
 		ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(helper->aid, 0));
+		helper->flag3 = 0;
+	}
 }
 
 t_token	*ft_split_args(char *prompt)

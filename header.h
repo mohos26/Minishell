@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/31 15:20:10 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:56:50 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_helper
 	char	*var;
 	int		flag;
 	int		flag2;
+	int		flag3;
 }			t_helper;
 
 typedef struct s_env
@@ -174,7 +175,6 @@ void		ft_signal_handler(int sig);
 t_token		*ft_split_args(char *prompt);
 int			ft_is_valid(char *s, char c);
 char		*ft_expand_quotes(char *var);
-void		ft_update_ctrl_flag(int flag);
 int			ft_syntax_error(t_token *tokens);
 void		ft_handle_token(t_helper *helper, int type);
 char		*ft_parse_quoted_string(char *prompt, char **aid);

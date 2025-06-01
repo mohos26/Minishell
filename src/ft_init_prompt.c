@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:32:34 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/21 17:56:30 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 10:21:06 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_prompt	*ft_init_prompt(char *s)
 	t_prompt	*prompt;
 	t_token		*lst;
 
+	add_history(s);
 	if (!ft_valid_quotes(s))
 		return (ft_print_error("syntax error", "unexpected end of file",
 				"Nothing"), NULL);

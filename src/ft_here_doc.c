@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/26 15:48:17 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:54:43 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	ft_child(int *fds, char *limiter)
 	while (1)
 	{
 		aid = ft_readline("> ");
-		if (!ft_strncmp(aid, limiter, INT_MAX) || (!ft_strlen(aid)
+		if (!aid || !ft_strncmp(aid, limiter, INT_MAX) || (!ft_strlen(aid)
 				&& !ft_strlen(limiter)))
 			break ;
 		aid = ft_aid(aid);

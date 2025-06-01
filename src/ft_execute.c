@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:03:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/26 15:48:08 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:01:28 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,20 @@ static char	**ft_create_lst(char *frist, char **args)
 
 int	ft_execute(t_args *args)
 {
+	int		status;
 	char	**lst;
 	pid_t	pid;
-	int		status;
 
 	lst = ft_create_lst(args->frist, args->args);
 	pid = fork();
 	if (pid == -1)
 		return (ft_print_error("fork", "Resource temporarily unavailable", \
 				"Nothing"), 1);
-	if (!pid && execve(*lst, lst, ft_convert_env()) == -1)
+	if (!pid)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		execve(*lst, lst, ft_convert_env());
 		perror("Execve failed");
 		ft_exit(1);
 	}

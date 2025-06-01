@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:10:28 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/27 09:44:12 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:31:04 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,9 @@ void	ft_process_prompt(t_prompt *prompt)
 		status = ft_process_command(*(prompt->args));
 	else
 		status = ft_handle_pipes(prompt);
+	if (g_last_signal_received == SIGINT)
+		ft_putendl_fd("", 1);
+	else if (g_last_signal_received == SIGQUIT)
+		ft_putendl_fd("Quit: 3", 1);
 	ft_update_status(status);
 }

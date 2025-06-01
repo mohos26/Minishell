@@ -61,7 +61,6 @@ SRCS =	sh/sh_cd.c \
 		parsing/ft_syntax_error.c \
 		parsing/ft_split_wspace.c \
 		parsing/ft_valid_quotes.c \
-		src/ft_update_ctrl_flag.c \
 		utils/garbage_collector.c \
 		aid/token/ft_lstadd_back.c \
 		aid/redirection/ft_lstnew.c \

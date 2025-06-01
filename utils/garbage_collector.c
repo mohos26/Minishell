@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 08:59:44 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/27 10:10:33 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:31:12 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_clean(void)
 	while (fd <= OPEN_MAX)
 		close(fd++);
 	ft_free(NULL, 1);
+	ft_signal_util();
 }
 
 char	*ft_readline(char *s)

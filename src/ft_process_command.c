@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:09:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/27 09:51:19 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:54:48 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,31 @@ static int	ft_not_valid(t_args *args)
 	return (status);
 }
 
+static int	ft_aid(t_args *args)
+{
+	int	status;
+
+	status = ft_execute(args);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		status = 128 + WTERMSIG(status);
+		g_last_signal_received = WTERMSIG(status);
+	}
+	else
+		status = 1;
+	return (status);
+}
+
 int	ft_process_command(t_args *args)
 {
 	int		status;
 	int		out_fd;
 	int		in_fd;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	status = 0;
 	in_fd = dup(0);
 	out_fd = dup(1);
@@ -56,13 +75,7 @@ int	ft_process_command(t_args *args)
 	if (args->is_sh)
 		status = ft_do_sh(args);
 	else if (args->is_cmd)
-	{
-		status = ft_execute(args);
-		status = WEXITSTATUS(status);
-	}
-	if (ft_atoi(ft_getenv("1ctrl")))
-		status = ft_atoi(ft_getenv("?"));
-	ft_update_ctrl_flag(0);
+		status = ft_aid(args);
 	(dup2(in_fd, 0), dup2(out_fd, 1));
 	return (status);
 }
