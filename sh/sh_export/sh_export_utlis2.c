@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:31:13 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/25 16:21:33 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:38:08 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void	ft_append_env_value(char **var)
 	char	*tmp;
 
 	env = *ft_env(NULL);
-	while (**(var + 1) && env)
+	while (env)
 	{
-		if ((!ft_strncmp(env->name, *var, INT_MAX)))
+		if (!ft_strncmp(env->name, *var, INT_MAX))
 		{
 			tmp = env->value;
 			env->value = ft_env_strdup(ft_strjoin(tmp, var[1]));

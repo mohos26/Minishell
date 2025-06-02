@@ -1,0 +1,12 @@
+minishell$ export PATH=.
+minishell$ ls
+Minishell: ls: command not found
+minishell$ echo $?
+127
+----------------------------------------
+bash-3.2$ << $PWD
+> $OLDPWD
+> WDW
+>
+> $PWD
+bash-3.2$%

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyze_next_segment.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaliari <amaliari@student.42.fr>          #+#  +:+       +#+        */
+/*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-23 10:03:28 by amaliari          #+#    #+#             */
-/*   Updated: 2025-05-23 10:03:28 by amaliari         ###   ########.fr       */
+/*   Created: 2025/05/23 10:03:28 by amaliari          #+#    #+#             */
+/*   Updated: 2025/06/01 16:38:33 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:03:48 by amaliari          #+#    #+#             */
-/*   Updated: 2025/06/01 15:30:37 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:30:38 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		rl_replace_line("", 0);
-		write (1, "\n", 1);
+		ft_putendl_fd("", 1);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -37,6 +37,6 @@ void	ft_signal_util(void)
 void	ft_heredoc_signal(int sig)
 {
 	(void)sig;
-	printf("\n");
+	ft_putendl_fd("", 1);
 	ft_exit(1);
 }
