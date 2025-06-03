@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:04:06 by amaliari          #+#    #+#             */
-/*   Updated: 2025/06/01 10:16:28 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:33:45 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_is_valid(char *s, char c)
 
 int	ft_is_space(char c)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
+	if (c == 32 || c == 9)
 		return (1);
 	return (0);
 }

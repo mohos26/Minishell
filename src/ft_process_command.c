@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:09:54 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/01 15:54:48 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:08:29 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_not_valid(t_args *args)
 	if (!ft_strlen(ft_getenv("PATH")))
 		if (*aid && !ft_strchr(aid, '/'))
 			aid = ft_strjoin("./", aid);
-	if (!ft_strchr(aid, '/'))
+	if (!ft_strchr(aid, '/') && !args->is_cmd)
 	{
 		ft_print_error(args->frist, "command not found", "Nothing");
 		status = 127;
@@ -74,7 +74,7 @@ int	ft_process_command(t_args *args)
 		return (dup2(in_fd, 0), dup2(out_fd, 1), ft_not_valid(args));
 	if (args->is_sh)
 		status = ft_do_sh(args);
-	else if (args->is_cmd)
+	else if (args->is_cmd > 0)
 		status = ft_aid(args);
 	(dup2(in_fd, 0), dup2(out_fd, 1));
 	return (status);

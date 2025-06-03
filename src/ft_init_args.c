@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:31:05 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/21 16:38:03 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:06:37 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_args	*ft_init_args(t_token *lst)
 	args->args = ft_extract_args(lst);
 	args->is_sh = ft_is_sh(args->frist);
 	args->is_cmd = ft_is_execute(args);
-	args->valid = args->is_cmd || args->is_sh;
+	args->valid = args->is_cmd > 0 || args->is_sh;
 	args->_redirections = ft_extract_redirections(lst, &flag);
 	if (flag)
 		return (NULL);

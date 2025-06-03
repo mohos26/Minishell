@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:00:29 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/19 09:54:24 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:29:27 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ static char	*ft_aid(void)
 	if (!paths || !*paths)
 		return (".");
 	return (paths);
+}
+
+static int	ft_aid2(t_args *args, char *path)
+{
+	if (access(path, X_OK))
+		return (-1);
+	args->frist = path;
+	return (1);
 }
 
 int	ft_is_execute(t_args *args)
@@ -40,11 +48,8 @@ int	ft_is_execute(t_args *args)
 	while (lst && *lst)
 	{
 		path = ft_strjoin(*lst, s);
-		if (!access(path, X_OK))
-		{
-			args->frist = path;
-			return (1);
-		}
+		if (!access(path, F_OK))
+			return (ft_aid2(args, path));
 		lst++;
 	}
 	return (0);
