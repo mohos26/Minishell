@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/03 20:40:47 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:39:06 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <limits.h>
 # include <unistd.h>
 # include <dirent.h>
+# include <signal.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
@@ -151,12 +152,14 @@ char		*ft_getenv(char *name);
 t_prompt	*ft_init_prompt(char *s);
 int			ft_execute(t_args *args);
 t_env		*ft_build_env(char **env);
+int			ft_not_valid(t_args *args);
 t_args		*ft_init_args(t_token *lst);
 int			ft_is_execute(t_args *args);
 char		*ft_here_doc(char *limiter);
 void		ft_update_status(int status);
 char		*ft_getcwd(char *s, size_t n);
 int			ft_do_redirection(t_red *lst);
+int			*ft_append_int(int *lst, int n);
 char		**ft_extract_args(t_token *lst);
 char		*ft_append_str(char	*s, char c);
 int			ft_process_command(t_args *args);
@@ -177,12 +180,12 @@ int			ft_is_valid(char *s, char c);
 char		*ft_expand_quotes(char *var);
 int			ft_syntax_error(t_token *tokens);
 char		**ft_split_wspace(const char *s);
+t_token		*ft_split_args_without_expand(char *prompt);
 void		ft_handle_token(t_helper *helper, int type);
 char		*ft_parse_quoted_string(char *prompt, char **aid);
 char		*ft_analyze_next_segment(char *prompt, t_helper *helper);
 char		*ft_expand_split(t_token **lst, char *aid, char *var, int flag);
-
-t_token		*ft_split_args_without_expand(char *prompt);
 t_token		*ft_here_doc_limiters(t_token *base_lst, t_token *lst_no_expand);
+
 
 #endif

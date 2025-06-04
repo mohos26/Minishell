@@ -29,6 +29,7 @@ SRCS =	sh/sh_cd.c \
 		utils/ft_getcwd.c \
 		aid/ft_putstr_fd.c \
 		src/ft_check_dir.c \
+		src/ft_not_valid.c \
 		src/ft_init_args.c \
 		aid/env/ft_lstnew.c \
 		aid/ft_putendl_fd.c \
@@ -42,6 +43,7 @@ SRCS =	sh/sh_cd.c \
 		aid/token/ft_lstnew.c \
 		src/ft_extract_args.c \
 		src/ft_handle_pipes.c \
+		utils/ft_append_int.c \
 		utils/ft_append_str.c \
 		aid/env/ft_lstdel_in.c \
 		aid/token/ft_lstlast.c \
@@ -83,7 +85,8 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	cc $^ -lreadline -o $@ -fsanitize=address -g
+	cc $^ -lreadline -o $@
+	# cc $^ -lreadline -o $@ -fsanitize=address -g
 
 clean:
 	rm -f $(OBJS)
