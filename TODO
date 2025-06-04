@@ -1,6 +1,11 @@
-bash-3.2$ << $PWD
-> $OLDPWD
-> WDW
->
-> $PWD
-bash-3.2$%
+minishell$ export a="qw -e"
+minishell$ cat << $a
+> qwert
+> $a
+qwert$
+-----------------
+minishell$ export HOME
+minishell$ cd
+------------------
++ multipeles cats
+-----------------

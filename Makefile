@@ -25,7 +25,6 @@ SRCS =	sh/sh_cd.c \
 		aid/ft_strnstr.c \
 		src/env/ft_env.c \
 		src/ft_execute.c \
-		parsing/parsing.c \
 		src/ft_here_doc.c \
 		utils/ft_getcwd.c \
 		aid/ft_putstr_fd.c \
@@ -49,6 +48,7 @@ SRCS =	sh/sh_cd.c \
 		src/env/ft_build_env.c \
 		src/ft_update_status.c \
 		utils/ft_print_error.c \
+		parsing/ft_split_args.c \
 		aid/env/ft_env_strdup.c \
 		parsing/parsing_utils.c \
 		src/ft_process_prompt.c \
@@ -65,11 +65,13 @@ SRCS =	sh/sh_cd.c \
 		aid/token/ft_lstadd_back.c \
 		aid/redirection/ft_lstnew.c \
 		src/ft_extract_redirections.c \
+		parsing/ft_here_doc_limiters.c \
 		sh/sh_export/sh_export_utlis.c \
 		sh/sh_export/sh_export_utlis2.c \
-		aid/redirection/ft_lstadd_back.c \
 		parsing/ft_parse_quoted_string.c \
-		parsing/ft_analyze_next_segment.c
+		aid/redirection/ft_lstadd_back.c \
+		parsing/ft_analyze_next_segment.c \
+		parsing/ft_split_args_without_expand.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -81,7 +83,7 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	cc $^ -lreadline -o $@
+	cc $^ -lreadline -o $@ -fsanitize=address -g
 
 clean:
 	rm -f $(OBJS)

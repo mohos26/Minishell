@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:32:34 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/01 10:21:06 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:20:55 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_prompt	*ft_init_prompt(char *s)
 		return (NULL);
 	if (ft_check_maximum_her_doc(lst))
 		ft_exit(2);
+	lst = ft_here_doc_limiters(lst, ft_split_args_without_expand(s));
 	prompt = ft_calloc(sizeof(t_prompt));
 	prompt->length = ft_len(lst);
 	prompt->args = ft_get_args(lst, prompt->length);

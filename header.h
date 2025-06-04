@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/01 16:39:44 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:40:47 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,10 +176,13 @@ t_token		*ft_split_args(char *prompt);
 int			ft_is_valid(char *s, char c);
 char		*ft_expand_quotes(char *var);
 int			ft_syntax_error(t_token *tokens);
+char		**ft_split_wspace(const char *s);
 void		ft_handle_token(t_helper *helper, int type);
 char		*ft_parse_quoted_string(char *prompt, char **aid);
 char		*ft_analyze_next_segment(char *prompt, t_helper *helper);
 char		*ft_expand_split(t_token **lst, char *aid, char *var, int flag);
-char		**ft_split_wspace(const char *s);
+
+t_token		*ft_split_args_without_expand(char *prompt);
+t_token		*ft_here_doc_limiters(t_token *base_lst, t_token *lst_no_expand);
 
 #endif
