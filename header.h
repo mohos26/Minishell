@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/04 13:39:06 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:06:39 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ t_prompt	*ft_init_prompt(char *s);
 int			ft_execute(t_args *args);
 t_env		*ft_build_env(char **env);
 int			ft_not_valid(t_args *args);
+int			ft_pipe_wait(int *pid_lst);
 t_args		*ft_init_args(t_token *lst);
 int			ft_is_execute(t_args *args);
 char		*ft_here_doc(char *limiter);
@@ -168,6 +169,7 @@ int			ft_handle_pipes(t_prompt *prompt);
 void		ft_process_prompt(t_prompt *prompt);
 t_red		*ft_extract_redirections(t_token *lst, int *flag);
 void		ft_print_error(char *command_name, char *arg, char *arg2);
+void		ft_execute_child(t_prompt *prompt, int *pipefd, int in_fd, int i);
 
 /* ---------------------------- parsing ------------------------------------- */
 int			ft_is_space(char c);
@@ -186,6 +188,5 @@ char		*ft_parse_quoted_string(char *prompt, char **aid);
 char		*ft_analyze_next_segment(char *prompt, t_helper *helper);
 char		*ft_expand_split(t_token **lst, char *aid, char *var, int flag);
 t_token		*ft_here_doc_limiters(t_token *base_lst, t_token *lst_no_expand);
-
 
 #endif

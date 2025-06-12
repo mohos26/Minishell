@@ -27,6 +27,7 @@ SRCS =	sh/sh_cd.c \
 		src/ft_execute.c \
 		src/ft_here_doc.c \
 		utils/ft_getcwd.c \
+		src/ft_pipe_wait.c \
 		aid/ft_putstr_fd.c \
 		src/ft_check_dir.c \
 		src/ft_not_valid.c \
@@ -45,6 +46,7 @@ SRCS =	sh/sh_cd.c \
 		src/ft_handle_pipes.c \
 		utils/ft_append_int.c \
 		utils/ft_append_str.c \
+		src/ft_execute_child.c \
 		aid/env/ft_lstdel_in.c \
 		aid/token/ft_lstlast.c \
 		src/env/ft_build_env.c \
