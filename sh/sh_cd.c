@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:48 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/12 18:32:27 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:22:18 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	sh_cd(t_args *args)
 	if (!args->args || !*(args->args))
 	{
 		target_path = ft_getenv("HOME");
-		printf("%s; %p\n", target_path, target_path);
 		if (!target_path)
 			return (ft_print_error("cd", "HOME not set", "Nothing"), 1);
 		else if (!*target_path)

@@ -1,9 +1,0 @@
-minishell$ export a="qw -e"
-minishell$ cat << $a
-> qwert
-> $a
-qwert$
------------------
-minishell$ export HOME
-minishell$ cd
-------------------
