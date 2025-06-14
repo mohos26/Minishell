@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:10:28 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/02 12:58:15 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:58:19 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	ft_process_prompt(t_prompt *prompt)
 
 	if (!prompt)
 	{
-		if (!ft_atoi(ft_getenv("?")))
+		if (ft_atoi(ft_getenv("?")) == -1)
+			ft_update_status(1);
+		else
 			ft_update_status(258);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:42:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/22 22:03:38 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:51:02 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	sh_echo(t_args *args)
 	sing = 1;
 	lst = args->args;
 	if (!lst || !*lst)
-		return (ft_putstr_fd("\n", 1), 0);
+		return (ft_putendl_fd("", 1), 0);
 	while (lst && *lst)
 	{
 		if (!ft_strncmp(*lst, "-n", 2) && ft_valid_flag(*lst + 2))

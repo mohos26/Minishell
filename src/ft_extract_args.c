@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:35:53 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/21 16:46:32 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:20:09 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**ft_extract_args(t_token *lst)
 			break ;
 		else if (lst->type == TOKEN_WORD && flag)
 			res = ft_append_array(res, lst->value);
-		else if (lst->type == TOKEN_WORD)
+		else if (lst->type == TOKEN_WORD && lst->value)
 			flag = 1;
 		else if (lst->type == TOKEN_RED_IN || lst->type == TOKEN_RED_OUT
 			|| lst->type == TOKEN_RED_APP || lst->type == TOKEN_HEREDOC)

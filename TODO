@@ -3,7 +3,8 @@ minishell$ cat << $a
 > qwert
 > $a
 qwert$
------------------
-minishell$ export HOME
-minishell$ cd
-------------------
+----------------------
+minishell$ cat << $a''
+> $PWD
+/mnt/homes/mhoussas/new_code/Minishell
+----------------------------

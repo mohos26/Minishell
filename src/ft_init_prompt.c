@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:32:34 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/04 13:26:36 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:58:16 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static t_args	**ft_get_args(t_token *lst, int len)
 	t_args	**args;
 	int		i;
 
-	args = ft_calloc(sizeof(t_args *) * (len + 1));
 	i = 0;
+	args = ft_calloc(sizeof(t_args *) * (len + 1));
 	while (i < len)
 	{
 		args[i++] = ft_init_args(lst);
@@ -85,6 +85,6 @@ t_prompt	*ft_init_prompt(char *s)
 	prompt->length = ft_len(lst);
 	prompt->args = ft_get_args(lst, prompt->length);
 	if (!prompt->args)
-		return (ft_update_status(1), NULL);
+		return (ft_update_status(-1), NULL);
 	return (prompt);
 }

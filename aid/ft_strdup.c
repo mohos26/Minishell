@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:16 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/23 10:09:52 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:50:06 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(const char *s1)
 	char	*ptr;
 	char	*head;
 
-	ptr = ft_calloc(ft_strlen(s1) * sizeof(char) + 1);
+	ptr = ft_calloc((ft_strlen(s1) * sizeof(char)) + 1);
 	head = ptr;
 	while (s1 && *s1)
 		*ptr++ = *s1++;

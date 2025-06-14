@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/03 19:28:58 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:03:24 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*ft_aid(char *prompt)
 
 	flag = 0;
 	var = NULL;
-	res = NULL;
+	res = "";
 	while (prompt && *prompt)
 	{
 		if (*prompt == '$' && !flag)
