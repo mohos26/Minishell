@@ -88,7 +88,6 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	cc $^ -lreadline -o $@
-	# cc $^ -lreadline -o $@ -fsanitize=address -g
 
 clean:
 	rm -f $(OBJS)
