@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:37:04 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/14 22:19:27 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:01:42 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_extract_command(t_token *lst)
 {
 	while (lst)
 	{
-		// printf("%s; %d\n", lst->value, lst->type);
 		if (lst->type == TOKEN_PIPE)
 			break ;
 		else if (lst->type == TOKEN_RED_IN || lst->type == TOKEN_RED_OUT
