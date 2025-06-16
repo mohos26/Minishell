@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:17 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/03 14:29:46 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 18:19:15 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **env)
 	tcgetattr(STDIN_FILENO, &term);
 	while (ac || av)
 	{
-		prompt = ft_readline("minishell$ ");
+		prompt = ft_strtrim(ft_readline("minishell$ "));
 		if (g_last_signal_received == SIGINT)
 			ft_update_status(1);
 		g_last_signal_received = 0;

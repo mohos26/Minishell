@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:18:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/14 15:53:59 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 18:19:03 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ enum	e_token_type
 
 typedef struct s_token
 {
+	int					flag;
 	enum e_token_type	type;
 	struct s_token		*next;
 	char				*value;
@@ -97,6 +98,7 @@ void		*ft_calloc(size_t size);
 size_t		ft_strlen(const char *s);
 int			ft_atoi(const char *str);
 char		*ft_strdup(const char *s1);
+char		*ft_strtrim(char const *s1);
 void		ft_bzero(void *s, size_t n);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
@@ -117,7 +119,7 @@ void		ft_lstadd_back_red(t_red **lst, t_red *new);
 t_red		*ft_lstnew_red(char *name, int value, int flag2);
 /* tokens */
 t_token		*ft_lstlast_token(t_token *lst);
-t_token		*ft_lstnew_token(char *value, int type);
+t_token		*ft_lstnew_token(char *value, int type, int flag);
 void		ft_lstadd_back_token(t_token **lst, t_token *new);
 
 /* ------------------------- shell commands --------------------------------- */
@@ -152,11 +154,11 @@ char		*ft_getenv(char *name);
 t_prompt	*ft_init_prompt(char *s);
 int			ft_execute(t_args *args);
 t_env		*ft_build_env(char **env);
+char		*ft_here_doc(t_token *lst);
 int			ft_not_valid(t_args *args);
 int			ft_pipe_wait(int *pid_lst);
 t_args		*ft_init_args(t_token *lst);
 int			ft_is_execute(t_args *args);
-char		*ft_here_doc(char *limiter);
 void		ft_update_status(int status);
 char		*ft_getcwd(char *s, size_t n);
 int			ft_do_redirection(t_red *lst);

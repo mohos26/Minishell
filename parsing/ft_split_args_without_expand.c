@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:37:34 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/04 11:45:00 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:13:20 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void	ft_aid3(t_helper *helper, int type)
 		str = ft_strdup(">>");
 	if (helper->aid)
 		ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(helper->aid,
-				TOKEN_WORD));
+				TOKEN_WORD, 0));
 	helper->aid = NULL;
-	ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(str, type));
+	ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(str, type, 0));
 }
 
 static char	*process_special(char *prompt, t_helper *helper)
@@ -61,7 +61,7 @@ static char	*process_special(char *prompt, t_helper *helper)
 	return (prompt + 1);
 }
 
-static char	*ft_aid(char *prompt, char **aid)
+static char	*ft_aid(char *prompt, char **aid, int *flag)
 {
 	char	*var;
 
@@ -76,16 +76,22 @@ static char	*ft_aid(char *prompt, char **aid)
 	if ((*prompt == '"' || *prompt == '\'') && !*aid)
 		*aid = ft_strdup("");
 	if (*prompt == '"' || *prompt == '\'')
+	{
 		prompt++;
+		*flag = 1;
+	}
 	return (prompt);
 }
 
 static void	process_token(char **prompt, t_helper *helper)
 {
+	int	flag;
+
+	flag = 0;
 	while ((**prompt == '"' || **prompt == '\''
 			|| (!ft_is_space(**prompt) && **prompt)))
 	{
-		*prompt = ft_aid(*prompt, &(helper->aid));
+		*prompt = ft_aid(*prompt, &(helper->aid), &flag);
 		while (!ft_is_space(**prompt) && **prompt
 			&& **prompt != '"' && **prompt != '\'')
 		{
@@ -96,7 +102,8 @@ static void	process_token(char **prompt, t_helper *helper)
 		}
 	}
 	if (helper->aid)
-		ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(helper->aid, 0));
+		ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(helper->aid, 0,
+				flag));
 }
 
 t_token	*ft_split_args_without_expand(char *prompt)

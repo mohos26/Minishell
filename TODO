@@ -4,7 +4,3 @@ minishell$ cat << $a
 > $a
 qwert$
 ----------------------
-minishell$ cat << $a''
-> $PWD
-/mnt/homes/mhoussas/new_code/Minishell
-----------------------------

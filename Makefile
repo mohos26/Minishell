@@ -22,10 +22,12 @@ SRCS =	sh/sh_cd.c \
 		aid/ft_isdigit.c \
 		aid/ft_strjoin.c \
 		aid/ft_strncmp.c \
+		aid/ft_strtrim.c \
 		aid/ft_strnstr.c \
 		src/env/ft_env.c \
 		src/ft_execute.c \
 		src/ft_here_doc.c \
+		aid/ft_is_space.c \
 		utils/ft_getcwd.c \
 		src/ft_pipe_wait.c \
 		aid/ft_putstr_fd.c \
@@ -87,7 +89,8 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	cc $^ -lreadline -o $@
+	# cc $^ -lreadline -o $@
+	cc $^ -lreadline -o $@ -fsanitize=address -g
 
 clean:
 	rm -f $(OBJS)

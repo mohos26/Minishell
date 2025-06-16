@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_is_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 15:16:37 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/15 11:14:43 by mhoussas         ###   ########.fr       */
+/*   Created: 2025/06/15 18:17:47 by mhoussas          #+#    #+#             */
+/*   Updated: 2025/06/16 14:27:52 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../header.h"
 
-t_token	*ft_lstnew_token(char *value, int type, int flag)
+int	ft_is_space(char c)
 {
-	t_token	*res;
-
-	res = (t_token *) ft_calloc(sizeof(t_token));
-	if (!res)
-		return (NULL);
-	res->value = value;
-	res->type = type;
-	res->flag = flag;
-	res->next = NULL;
-	return (res);
+	if (c == 32 || c == 9)
+		return (1);
+	return (0);
 }

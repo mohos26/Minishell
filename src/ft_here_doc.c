@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:04:40 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/13 10:03:24 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:07:28 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*ft_aid(char *prompt)
 	return (ft_strjoin(res, ft_expand(var)));
 }
 
-static void	ft_child(int *fds, char *limiter)
+static void	ft_child(int *fds, char *limiter, int flag)
 {
 	char	*res;
 	char	*aid;
@@ -64,7 +64,8 @@ static void	ft_child(int *fds, char *limiter)
 		if (!aid || !ft_strncmp(aid, limiter, INT_MAX) || (!ft_strlen(aid)
 				&& !ft_strlen(limiter)))
 			break ;
-		aid = ft_aid(aid);
+		if (!flag)
+			aid = ft_aid(aid);
 		if (res)
 			res = ft_strjoin(ft_strjoin(res, "\n"), aid);
 		else
@@ -78,7 +79,7 @@ static void	ft_child(int *fds, char *limiter)
 	ft_exit(0);
 }
 
-char	*ft_here_doc(char *limiter)
+char	*ft_here_doc(t_token *lst)
 {
 	int		status;
 	int		fds[2];
@@ -91,7 +92,7 @@ char	*ft_here_doc(char *limiter)
 				"Nothing"), NULL);
 	signal(SIGINT, SIG_IGN);
 	if (!pid)
-		ft_child(fds, limiter);
+		ft_child(fds, lst->value, lst->flag);
 	close(fds[1]);
 	waitpid(pid, &status, 0);
 	signal(SIGINT, ft_signal_handler);

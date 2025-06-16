@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:37:46 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/05/21 16:46:53 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:11:25 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_aid(t_token **lst, t_red **res, int *flag)
 	char	*aid;
 
 	*lst = (*lst)->next;
-	aid = ft_here_doc((*lst)->value);
+	aid = ft_here_doc(*lst);
 	if (!aid)
 	{
 		*flag = 1;

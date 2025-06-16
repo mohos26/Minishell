@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:04:19 by amaliari          #+#    #+#             */
-/*   Updated: 2025/06/03 13:36:44 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:14:37 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,32 @@ static void	second_affectation(t_helper *helper)
 	helper->flag = 0;
 }
 
-static void	process_token(char **prompt, t_helper *helper)
+static void	process_token(char **prompt, t_helper *help)
 {
-	helper->flag3 = 0;
-	while (helper->flag2 && (**prompt == '"' || **prompt == '\''
+	help->flag3 = 0;
+	while (help->flag2 && (**prompt == '"' || **prompt == '\''
 			|| (!ft_is_space(**prompt) && **prompt)))
 	{
-		*prompt = ft_parse_quoted_string(*prompt, &(helper->aid));
-		second_affectation(helper);
-		while (helper->flag2 && !ft_is_space(**prompt) && **prompt
+		*prompt = ft_parse_quoted_string(*prompt, &(help->aid));
+		second_affectation(help);
+		while (help->flag2 && !ft_is_space(**prompt) && **prompt
 			&& **prompt != '"' && **prompt != '\'')
-			*prompt = ft_analyze_next_segment(*prompt, helper);
-		if (helper->var)
+			*prompt = ft_analyze_next_segment(*prompt, help);
+		if (help->var)
 		{
-			helper->aid = ft_expand_split(&(helper->lst), helper->aid,
-					helper->var, 1);
-			second_affectation(helper);
-			helper->flag3 = 1;
+			help->aid = ft_expand_split(&(help->lst), help->aid,
+					help->var, 1);
+			second_affectation(help);
+			help->flag3 = 1;
 		}
 	}
-	if (helper->flag)
-		helper->aid = ft_expand_split(&(helper->lst), helper->aid,
-				helper->var, 1);
-	if (helper->aid || helper->flag3)
+	if (help->flag)
+		help->aid = ft_expand_split(&(help->lst), help->aid,
+				help->var, 1);
+	if (help->aid || help->flag3)
 	{
-		ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(helper->aid, 0));
-		helper->flag3 = 0;
+		ft_lstadd_back_token(&(help->lst), ft_lstnew_token(help->aid, 0, 0));
+		help->flag3 = 0;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:03:37 by amaliari          #+#    #+#             */
-/*   Updated: 2025/06/01 10:16:22 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:18:35 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	ft_handle_token(t_helper *helper, int type)
 	if (helper->aid || helper->flag3)
 	{
 		ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(helper->aid,
-				TOKEN_WORD));
+				TOKEN_WORD, 0));
 		helper->flag3 = 0;
 	}
 	helper->aid = NULL;
-	ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(str, type));
+	ft_lstadd_back_token(&(helper->lst), ft_lstnew_token(str, type, 0));
 }
