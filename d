@@ -1,0 +1,11 @@
+Makefile
+aid
+d
+header.h
+minishell
+out
+outfile
+parsing
+sh
+src
+utils
