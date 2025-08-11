@@ -1,0 +1,21 @@
+# Output binaries
+minishell
+
+# Object files directory
+obj/
+
+# VS Code settings
+.vscode/
+
+# Backup files
+*~
+
+# macOS specific
+.DS_Store
+
+# Debugger files
+vgcore.*
+
+# Temporary files from editors
+*.swp
+*.swo

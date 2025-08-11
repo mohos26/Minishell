@@ -6,7 +6,7 @@
 /*   By: mhoussas <mhoussas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 08:30:55 by mhoussas          #+#    #+#             */
-/*   Updated: 2025/06/14 15:51:21 by mhoussas         ###   ########.fr       */
+/*   Updated: 2025/08/11 23:01:54 by mhoussas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_is_number_exit(char *s)
 	int					sign;
 	unsigned long long	n;
 
-	while (*s == ' ')
+	while (*s == ' ' || (*s >= 9 && *s <= 13))
 		s++;
 	sign = 0;
 	if (*s == '-' || *s == '+')

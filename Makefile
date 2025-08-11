@@ -79,20 +79,25 @@ SRCS =	sh/sh_cd.c \
 		parsing/ft_analyze_next_segment.c \
 		parsing/ft_split_args_without_expand.c
 
-OBJS = ${SRCS:.c=.o}
+OBJDIR = obj
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 NAME = minishell
 
-%.o: %.c header.h
-	cc -Wall -Wextra -Werror -c $< -o $@
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
-all: ${NAME}
+$(OBJDIR)/%.o: %.c header.h
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-${NAME}: ${OBJS}
-	cc $^ -lreadline -o $@
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -lreadline -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -f $(NAME)
