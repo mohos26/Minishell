@@ -12,6 +12,8 @@
 
 #include "../header.h"
 
+volatile sig_atomic_t	g_last_signal_received;
+
 int	main(int ac, char **av, char **env)
 {
 	char			*prompt;

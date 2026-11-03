@@ -23,10 +23,11 @@
 # include <unistd.h>
 # include <dirent.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
-volatile sig_atomic_t	g_last_signal_received;
+extern volatile sig_atomic_t	g_last_signal_received;
 
 enum	e_token_type
 {

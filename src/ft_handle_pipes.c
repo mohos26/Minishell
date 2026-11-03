@@ -51,8 +51,12 @@ int	ft_handle_pipes(t_prompt *prompt)
 		else if (!pid)
 			ft_execute_child(prompt, pipefd, in_fd, i);
 		pid_lst = ft_append_int(pid_lst, pid);
-		if (close(in_fd) * 0 || i < prompt->length - 1)
-			in_fd = pipefd[0] + close(pipefd[1]) * 0;
+		close(in_fd);
+		if (i < prompt->length - 1)
+		{
+			in_fd = pipefd[0];
+			close(pipefd[1]);
+		}
 		i++;
 	}
 	return (dup2(in_fd, STDIN_FILENO), close(in_fd), ft_pipe_wait(pid_lst));

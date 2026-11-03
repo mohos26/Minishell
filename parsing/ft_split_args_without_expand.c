@@ -63,9 +63,6 @@ static char	*process_special(char *prompt, t_helper *helper)
 
 static char	*ft_aid(char *prompt, char **aid, int *flag)
 {
-	char	*var;
-
-	var = NULL;
 	if (*prompt == '"')
 		prompt++;
 	else if (*prompt == '\'')

@@ -12,24 +12,46 @@
 
 #include "../header.h"
 
+#ifndef OPEN_MAX
+# define OPEN_MAX 1024
+#endif
+
 static void	ft_free(void *ptr, int flag)
 {
-	static void	*lst[INT_MAX];
-	static int	i;
-	int			j;
+	static void	**lst;
+	static size_t	count;
+	static size_t	capacity;
+	void		**new_lst;
+	size_t		j;
 
 	if (flag)
 	{
 		j = 0;
-		while (j < i)
+		while (j < count)
 		{
 			free(lst[j]);
-			lst[j++] = NULL;
+			j++;
 		}
-		i = 0;
+		free(lst);
+		lst = NULL;
+		count = 0;
+		capacity = 0;
 	}
 	else
-		lst[i++] = ptr;
+	{
+		if (count == capacity)
+		{
+			if (capacity == 0)
+				capacity = 64;
+			else
+				capacity *= 2;
+			new_lst = realloc(lst, capacity * sizeof(*lst));
+			if (!new_lst)
+				ft_exit(1);
+			lst = new_lst;
+		}
+		lst[count++] = ptr;
+	}
 }
 
 void	ft_clean(void)
